@@ -148,6 +148,7 @@ export default {
     /*
      ** You can extend webpack config here
      */
+    postcss: null,
     babel: {
       plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
     },
