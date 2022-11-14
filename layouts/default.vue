@@ -1,5 +1,8 @@
 <template>
-  <v-app dark>
+  <v-app
+    dark
+    class="app"
+  >
     <v-main>
       <v-container
         fluid
@@ -19,4 +22,8 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.app {
+  color: var(--v-primary-dark-base);
+  background-color: var(--v-primary-base);
+}
 </style>
