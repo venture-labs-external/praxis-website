@@ -1,5 +1,6 @@
 import LRU from 'lru-cache';
 import minifyTheme from 'minify-css-string';
+
 import themeLight from '~/assets/theme';
 
 const themeCache = new LRU({
@@ -20,5 +21,4 @@ export default {
       light: themeLight,
     },
   },
-  icons: { iconfont: 'mdiSvg' },
 };

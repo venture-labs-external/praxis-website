@@ -1,0 +1,9 @@
+node_modules
+ ./dist
+ .nuxt
+ .github
+ /static/*
+ static
+ /**/*.test.js
+/static/sw.js
+

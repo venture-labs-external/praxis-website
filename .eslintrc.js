@@ -1,33 +1,41 @@
 module.exports = {
   root: true,
   env: {
-    browser: true,
     node: true,
     jest: true,
   },
+  extends: ['plugin:vue/essential', 'eslint:recommended', '@vue/prettier'],
+  plugins: ['simple-import-sort'],
   parserOptions: {
     parser: 'babel-eslint',
-    ecmaVersion: 2018,
-    sourceType: 'module',
   },
-  plugins: ['html'],
-  extends: ['@vue/airbnb', 'plugin:vue/recommended'],
   rules: {
-    'max-len': 0,
-    'linebreak-style': 0,
-    'template-curly-spacing': 'off',
-    indent: [
-      'error',
-      2,
-      {
-        ignoredNodes: ['TemplateLiteral'],
-      },
+    'max-len': 'off',
+    'linebreak-style': 'off',
+    'no-use-before-define': 'off',
+    'vue-scoped-css/no-unused-selector': 'off',
+    'import/prefer-default-export': 'off',
+    'no-param-reassign': 'off',
+    'no-unused-selector': 'off',
+    'vue/multi-word-component-names': 'off',
+    'no-console':
+      process.env.NODE_ENV === 'production'
+        ? ['error', { allow: ['warn', 'error', 'info'] }]
+        : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-unused-vars': [
+      process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+      { argsIgnorePattern: '^_' },
     ],
-  },
-  globals: {},
-  settings: {
-    'import/resolver': {
-      webpack: 'webpack.config.js',
-    },
+    'template-curly-spacing': 'off',
+    'no-mutating-props': 'off',
+    'vue/no-mutating-props': 'off',
+    'vue/order-in-components': 'error',
+    'prettier/prettier': [
+      'warn',
+      { singleQuote: true, semi: true, trailingComma: 'all' },
+    ],
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
   },
 };

@@ -17,17 +17,17 @@ spec:
         app: payfree-webapp
     spec:
       containers:
-      - name: payfree-webapp
-        image: gcr.io/GOOGLE_CLOUD_PROJECT/payfree-webapp:COMMIT_SHA
-        ports:
-        - containerPort: 80
-        # env:
-        # - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
-        #   value: "http://dev-payfree.de/auth/realms/payfree"
-        # readinessProbe:
-        #   httpGet:
-        #     path: /api/actuator/health
-        #     port: 8080
+        - name: payfree-webapp
+          image: gcr.io/GOOGLE_CLOUD_PROJECT/payfree-webapp:COMMIT_SHA
+          ports:
+            - containerPort: 80
+          # env:
+          # - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
+          #   value: "http://dev-payfree.de/auth/realms/payfree"
+          # readinessProbe:
+          #   httpGet:
+          #     path: /api/actuator/health
+          #     port: 8080
 
 ---
 apiVersion: v1
@@ -37,14 +37,13 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - name: httpwebapp
-    port: 80
-    targetPort: 80
-    protocol: TCP
-    nodePort: 32002
+    - name: httpwebapp
+      port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 32002
   selector:
     app: payfree-webapp
-
 # ---
 # apiVersion: v1
 # kind: Service
