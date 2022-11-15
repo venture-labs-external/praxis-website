@@ -30,12 +30,12 @@
         depressed
         class="nav__button white--text font-weight-bold"
       >
-        <img src="/arrow-right.svg" alt=" " class="mr-4" />
+        <img src="/arrow-right.svg" alt="right arrow" class="mr-4" />
         Termin buchen
       </v-btn>
       <div v-show="$vuetify.breakpoint.smAndDown">
         <!-- TODO: add mobile menu when design will be ready -->
-        <img src="/menu-list.svg" alt=" " />
+        <img src="/menu-list.svg" alt="menu" />
       </div>
     </nav>
   </div>
