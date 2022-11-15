@@ -1,8 +1,6 @@
 <template>
   <v-app class="app d-flex justify-center">
-    <v-container>
-      <Navigation />
-    </v-container>
+    <Navigation />
   </v-app>
 </template>
 
