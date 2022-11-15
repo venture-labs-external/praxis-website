@@ -1,5 +1,5 @@
 <template>
-  <v-app class="d-flex justify-center">
+  <v-app class="app d-flex justify-center">
     <v-container>
       <Navigation />
     </v-container>
@@ -14,4 +14,9 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.app {
+  color: var(--v-dark-gray-base);
+  background-color: var(--v-beige-base);
+}
+</style>
