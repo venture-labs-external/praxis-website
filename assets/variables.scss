@@ -6,3 +6,15 @@
 
 $body-font-family: 'Roboto', sans-serif;
 $heading-font-family: 'Roboto', sans-serif;
+
+$xl-only: map-get($display-breakpoints, 'xl-only');
+$lg-and-down: map-get($display-breakpoints, 'lg-and-down');
+$lg-and-up: map-get($display-breakpoints, 'lg-and-up');
+$lg-only: map-get($display-breakpoints, 'lg-only');
+$md-and-up: map-get($display-breakpoints, 'md-and-up');
+$md-only: map-get($display-breakpoints, 'md-only');
+$md-and-down: map-get($display-breakpoints, 'md-and-down');
+$sm-only: map-get($display-breakpoints, 'sm-only');
+$sm-and-up: map-get($display-breakpoints, 'sm-and-up');
+$sm-and-down: map-get($display-breakpoints, 'sm-and-down');
+$xs-only: map-get($display-breakpoints, 'xs-only');

@@ -1,63 +1,111 @@
 <template>
   <header class="header">
-    <div>
+    <div class="header__title">
       <span class="light-green--text">Willkommen</span>
       <h1>Frauenärztinnen Gerresheim</h1>
+      <!-- <CardWithButton :cardInfo="cardInfo" /> -->
     </div>
-    <!-- <div class="image__wrapper pa-3"> -->
-    <img
-      class="header__image image"
-      src="doctors-office/doctors-office.png"
-      srcset="
-        /doctors-office/doctors-office_w_330.webp   330w,
-        /doctors-office/doctors-office_w_687.webp   687w,
-        /doctors-office/doctors-office_w_927.webp   927w,
-        /doctors-office/doctors-office_w_1137.webp 1137w,
-        /doctors-office/doctors-office_w_1310.webp 1310w
-      "
-      alt="Doctor's office"
-    />
-    <!-- <div class="image__border"></div> -->
-    <!-- </div> -->
+    <div class="image__wrapper py-6">
+      <img
+        class="header__image image"
+        src="doctors-office/doctors-office.png"
+        srcset="
+          /doctors-office/doctors-office_w_330.webp   330w,
+          /doctors-office/doctors-office_w_687.webp   687w,
+          /doctors-office/doctors-office_w_927.webp   927w,
+          /doctors-office/doctors-office_w_1137.webp 1137w,
+          /doctors-office/doctors-office_w_1310.webp 1310w
+        "
+        alt="Doctor's office"
+      />
+      <div v-show="$vuetify.breakpoint.mdAndUp" class="image__border"></div>
+    </div>
+    <div class="header__card">
+      <CardWithButton :cardInfo="cardInfo">
+        <slot>
+          <div class="table">
+            <v-row
+              v-for="(time, index) in cardInfo.workingTime"
+              :key="index"
+              class="table__row"
+            >
+              <v-col class="font-weight-bold">{{ time.day }}</v-col>
+              <v-col>{{ time.hours }}</v-col>
+            </v-row>
+          </div>
+        </slot>
+      </CardWithButton>
+    </div>
   </header>
 </template>
 
 <script>
+import CardWithButton from '~/components/CardWithButton';
+import cardInfo from '~/mixins/headerData.js';
 export default {
   name: 'Header',
-  // components: {
-  //   Button,
-  //   HeaderBox,
-  // },
+  components: {
+    CardWithButton,
+  },
+  mixins: [cardInfo],
 };
 </script>
 
 <style lang="scss" scoped>
 .header {
-  //mobile
-  &__image {
-    max-width: 100%;
-    height: auto;
+  @media #{$md-and-up} {
+    padding-top: 5rem;
+    display: grid;
+    grid-template:
+      'title image'
+      'card image';
+    column-gap: 3rem;
+    padding-top: 2rem;
+  }
+  &__title {
+    grid-area: title;
+    font-family: 'Roboto Serif';
+    // font-size: 3rem;
+    // line-height: 1.1;
+  }
+  &__card {
+    grid-area: card;
   }
 }
-// .image {
-//   position: absolute;
-//   width: 41rem;
-//   height: 27.8rem;
-//   z-index: 2;
-//   &__border {
-//     position: absolute;
-//     border: 3px solid var(--v-dark-green-base);
-//     width: 41rem;
-//     height: 27.8rem;
-//     border-radius: 6px;
-//     margin-top: -2.8rem;
-//     margin-left: 2.8rem;
-//   }
-//   &__wrapper {
-//     position: relative;
-//     width: 45rem;
-//     height: 35rem;
-//   }
-// }
+.image {
+  width: 100%;
+  height: auto;
+  @media #{$md-and-up} {
+    position: absolute;
+    width: 41rem;
+    height: 27.8rem;
+    z-index: 2;
+  }
+  &__border {
+    position: absolute;
+    border: 3px solid var(--v-dark-green-base);
+    width: 41rem;
+    height: 27.8rem;
+    border-radius: 6px;
+    inset: -1.5rem 3rem;
+  }
+  &__wrapper {
+    grid-area: image;
+    @media #{$md-and-up} {
+      position: relative;
+      width: 45rem;
+      height: 35rem;
+    }
+  }
+}
+.table {
+  white-space: pre-line;
+  &:first-line {
+    line-height: 0;
+  }
+  &__row {
+    display: grid;
+    grid-template-columns: 25% auto;
+  }
+}
 </style>
