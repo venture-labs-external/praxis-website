@@ -1,6 +1,9 @@
 <template>
   <v-app class="app d-flex justify-center">
     <Navigation />
+    <v-container>
+      <nuxt />
+    </v-container>
   </v-app>
 </template>
 

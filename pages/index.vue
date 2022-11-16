@@ -1,7 +1,14 @@
 <template>
-  <div><h1>DRAWER ITEM 1 CONTENT - STARTING PAGE</h1></div>
+  <div>
+    <Header />
+  </div>
 </template>
 
 <script>
-export default {};
+import Header from '~/components/Header';
+export default {
+  components: {
+    Header,
+  },
+};
 </script>
