@@ -1,2 +1,55 @@
 // Some global styles
 @import 'typography';
+
+.v-application {
+  h1.text-h1,
+  h2.text-h1 {
+    @media #{$md-and-up} {
+      font-size: 3rem !important;
+    }
+  }
+  h2.text-h2 {
+    @media #{$md-and-up} {
+      font-size: 1.5rem !important;
+      line-height: 1.2 !important;
+    }
+  }
+  h3.text-h3,
+  p.text-h3,
+  div.text-h3  {
+    @media #{$md-and-up} {
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      line-height: 1.2 !important;
+    }
+  }
+  h4.text-h4,
+  p.text-h4,
+  div.text-h4 {
+    @media #{$md-and-up} {
+      font-size: 1.125rem !important;
+      font-weight: 700 !important;
+    }
+  }
+  h5.text-h5,
+  p.text-h5,
+  div.text-h5 {
+    @media #{$md-and-up} {
+      font-weight: 700 !important;
+      line-height: 1.2 !important;
+    }
+  }
+  p.body-1,
+  div.body-1 {
+    @media #{$md-and-up} {
+      font-size: 1.125rem !important;
+      font-weight: 400 !important;
+    }
+  }
+  p.subtitle-1,
+  span.subtitle-1 {
+    @media #{$md-and-up} {
+      font-weight: 700 !important;
+    }
+  }
+}

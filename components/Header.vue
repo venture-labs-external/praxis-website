@@ -1,9 +1,8 @@
 <template>
   <header class="header">
-    <div class="header__title">
-      <span class="light-green--text">Willkommen</span>
-      <h1>Frauenärztinnen Gerresheim</h1>
-      <!-- <CardWithButton :cardInfo="cardInfo" /> -->
+    <div class="header__title-container">
+      <span class="subtitle-1 light-green--text">Willkommen</span>
+      <h1 class="header__title text-h1">Frauenärztinnen Gerresheim</h1>
     </div>
     <div class="image__wrapper py-6">
       <img
@@ -21,7 +20,7 @@
       <div v-show="$vuetify.breakpoint.mdAndUp" class="image__border"></div>
     </div>
     <div class="header__card">
-      <CardWithButton :cardInfo="cardInfo">
+      <CardWithButton :cardInfo="cardInfo" class="mt-md-8">
         <slot>
           <div class="table">
             <v-row
@@ -29,8 +28,8 @@
               :key="index"
               class="table__row"
             >
-              <v-col class="font-weight-bold">{{ time.day }}</v-col>
-              <v-col>{{ time.hours }}</v-col>
+              <v-col class="text-h4">{{ time.day }}</v-col>
+              <v-col class="body-1">{{ time.hours }}</v-col>
             </v-row>
           </div>
         </slot>
@@ -63,10 +62,10 @@ export default {
     padding-top: 2rem;
   }
   &__title {
-    grid-area: title;
-    font-family: 'Roboto Serif';
-    // font-size: 3rem;
-    // line-height: 1.1;
+    font-family: 'Roboto Serif' !important;
+    &-container {
+      grid-area: title;
+    }
   }
   &__card {
     grid-area: card;
@@ -94,7 +93,6 @@ export default {
     @media #{$md-and-up} {
       position: relative;
       width: 45rem;
-      height: 35rem;
     }
   }
 }
@@ -105,7 +103,7 @@ export default {
   }
   &__row {
     display: grid;
-    grid-template-columns: 25% auto;
+    grid-template-columns: 30% auto;
   }
 }
 </style>

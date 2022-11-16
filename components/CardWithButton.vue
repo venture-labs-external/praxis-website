@@ -2,7 +2,7 @@
   <div class="card white pt-6">
     <div class="card__title d-flex mx-6 pb-4">
       <img :src="cardInfo.icon" alt="right arrow" class="mr-4" />
-      <h3>{{ cardInfo.title }}</h3>
+      <h3 class="text-h3">{{ cardInfo.title }}</h3>
     </div>
     <div class="card__content mx-6 my-4"><slot /></div>
     <div class="card__button white--text dark-green pa-5">
@@ -11,7 +11,7 @@
         target="_blank"
         class="button text-decoration-none white--text"
       >
-        <div class="button">
+        <div class="button text-h5">
           <img src="/arrow-right.svg" alt="right arrow" class="mr-4" />
           Termin buchen
         </div>
