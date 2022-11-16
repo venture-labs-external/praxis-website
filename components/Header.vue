@@ -61,7 +61,6 @@ export default {
       'title image'
       'card image';
     column-gap: 3rem;
-    padding-top: 2rem;
   }
   &__title {
     font-family: 'Roboto Serif' !important;
