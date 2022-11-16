@@ -25,6 +25,7 @@
     "lru-cache": "^6.0.0",
     "minify-css-string": "^1.0.0",
     "nuxt": "^2.15.3",
+    "nuxt-i18n": "^6.28.1",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.14",
     "vue-fragment": "1.5.2",

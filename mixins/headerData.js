@@ -2,13 +2,16 @@ export default {
   computed: {
     cardInfo() {
       return {
-        title: 'Sprechzeiten:',
+        title: this.$t('homepage.officeHours'),
         icon: '/clock.svg',
         workingTime: [
-          { day: 'Mo. -Do.:', hours: '08:00 - 13:00 \n 14:00 - 19:00' },
-          { day: 'Fr.', hours: '08:00 - 13:00' },
+          {
+            day: this.$t('homepage.mondayThursday'),
+            hours: '08:00 - 13:00 \n 14:00 - 19:00',
+          },
+          { day: this.$t('homepage.friday'), hours: '08:00 - 13:00' },
         ],
-        link: 'http://www.meteo.pl',
+        link: '/',
       };
     },
   },

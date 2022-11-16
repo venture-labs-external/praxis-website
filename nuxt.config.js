@@ -29,10 +29,11 @@ export default {
   css: ['~/assets/main.scss'],
   plugins: ['~/plugins/vue-fragment'],
   buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/vuetify'],
-  modules: ['@nuxtjs/axios', '@nuxtjs/pwa'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/pwa', 'nuxt-i18n'],
   i18n: {
     locales: ['en', 'de'],
     defaultLocale: 'de',
+    strategy: 'no_prefix',
     vueI18n: {
       fallbackLocale: 'de',
       detectBrowserLanguage: {

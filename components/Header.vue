@@ -1,8 +1,10 @@
 <template>
   <header class="header">
     <div class="header__title-container">
-      <span class="subtitle-1 light-green--text">Willkommen</span>
-      <h1 class="header__title text-h1">Frauenärztinnen Gerresheim</h1>
+      <span class="subtitle-1 light-green--text">{{
+        $t('homepage.welcome')
+      }}</span>
+      <h1 class="header__title text-h1">{{ $t('homepage.gynecologists') }}</h1>
     </div>
     <div class="image__wrapper py-6">
       <img
