@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header mb-10">
     <div class="header__title-container">
       <span class="subtitle-1 light-green--text">{{
         $t('homepage.welcome')
@@ -56,6 +56,7 @@ export default {
 .header {
   @media #{$md-and-up} {
     padding-top: 5rem;
+    padding-bottom: 5rem;
     display: grid;
     grid-template:
       'title image'
