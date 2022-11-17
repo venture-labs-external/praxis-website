@@ -1,10 +1,10 @@
 <template>
   <header class="header">
-    <div class="header__title-container">
+    <div class="header__title">
       <span class="subtitle-1 light-green--text">{{
         $t('homepage.welcome')
       }}</span>
-      <h1 class="header__title text-h1">{{ $t('homepage.gynecologists') }}</h1>
+      <h1 class="text-h1">{{ $t('homepage.gynecologists') }}</h1>
     </div>
     <div class="image__wrapper py-6">
       <img
@@ -63,10 +63,7 @@ export default {
     column-gap: 3rem;
   }
   &__title {
-    font-family: 'Roboto Serif' !important;
-    &-container {
-      grid-area: title;
-    }
+    grid-area: title;
   }
   &__card {
     grid-area: card;

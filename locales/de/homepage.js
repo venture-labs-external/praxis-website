@@ -2,7 +2,7 @@ export default {
   welcome: 'Willkommen',
   gynecologists: 'Frauenärztinnen Gerresheim',
   bookAppointment: 'Termin buchen',
-  officeHours: 'Sprechzeiten:',
+  officeHours: 'Sprechzeiten',
   mondayThursday: 'Mo. -Do.:',
   friday: 'Fr.',
   mondayThursdayLong: 'Montag-Donnerstag:',
@@ -11,4 +11,6 @@ export default {
   email: 'Email:',
   imprint: 'Impressum',
   privacy: 'Datenschutzbestimmungen',
+  location: 'Standort',
+  whereYouCanFindUs: 'Wo Sie uns finden',
 };
