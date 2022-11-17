@@ -1,7 +1,7 @@
 <template>
   <div class="contact pt-16">
     <div class="contact__title">
-      <span class="subtitle-1 light-green--text">{{
+      <span class="subtitle-1 dark-green--text">{{
         $t('homepage.location')
       }}</span>
       <h2 class="text-h1">

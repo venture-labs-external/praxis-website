@@ -9,4 +9,13 @@ export default {
   whereYouCanFindUs: 'Wo Sie uns finden',
   services: 'Services',
   whatWeDo: 'Was wir tun',
+  familyPlanning: 'Familienplanung',
+  pregnancy: 'Schwangerschaft',
+  generalGynecology: 'Allgemeine Gynäkologie',
+  incontinence: 'Inkontinenz- und Senkungsbeschwerden',
+  precaution: 'Vorsorge',
+  girlsConsultation: 'Mädchensprechstunde',
+  menopause: 'Menopause',
+  hormones: 'Hormone',
+  breastDisease: 'Brusterkrankung',
 };
