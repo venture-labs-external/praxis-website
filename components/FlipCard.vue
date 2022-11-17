@@ -1,9 +1,12 @@
 <template>
-  <div class="flip-card mx-auto mb-4" :class="show ? 'flip-card--click' : ''">
+  <div
+    class="flip-card mx-auto mb-4 mb-md-0"
+    :class="show ? 'flip-card--click' : ''"
+  >
     <div class="flip-card--inner">
       <div class="flip-card--front">
         <div v-show="!show">
-          <div class="flip-card__icon mint-blue mx-auto">
+          <div class="flip-card__icon mint-blue mx-auto" @click="show = true">
             <img :src="cardInfo.iconName" class="pa-5" />
           </div>
           <h5 class="text-h5 text-center mt-6 mx-10">{{ cardInfo.title }}</h5>
@@ -21,9 +24,9 @@
               <img src="/cross.svg" />
             </v-btn>
           </div>
-          <div class="mx-6">
+          <div class="text-left mx-6">
             <h5 class="text-h5 mb-4">{{ cardInfo.title }}</h5>
-            <p class="subtitle-2 text-left">
+            <p class="subtitle-2">
               {{ cardInfo.description }}
             </p>
           </div>

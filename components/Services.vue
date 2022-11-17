@@ -8,7 +8,7 @@
         {{ $t('homepage.whatWeDo') }}
       </h2>
     </div>
-    <div>
+    <div class="services__cards">
       <FlipCard
         v-for="(service, index) in services"
         :key="index"
@@ -34,5 +34,13 @@ export default {
 .services {
   padding-top: 5rem;
   max-width: 58.75rem;
+  &__cards {
+    @media #{$md-and-up} {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+  }
 }
 </style>
