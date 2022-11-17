@@ -78,7 +78,7 @@ export default {
   }
   &--front,
   &--back {
-    background-color: white;
+    background-color: var(--v-white-base);
     position: absolute;
     width: 100%;
     height: 100%;
