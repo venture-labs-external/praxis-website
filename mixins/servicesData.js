@@ -6,7 +6,8 @@ export default {
         {
           iconName: '/baby.svg',
           title: this.$t('homepage.familyPlanning'),
-          description: 'lorem ipsum dolor sit amet, consectetur adipiscing',
+          description:
+            'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
         },
         {
           iconName: '/hearts.svg',

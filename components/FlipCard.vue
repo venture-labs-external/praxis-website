@@ -13,27 +13,32 @@
         </v-card-actions>
       </div>
     </div>
-    <!-- <v-card-actions>
-      <v-btn icon @click="show = true" class="mx-auto">
-        <img src="/arrow-right.svg" />
-      </v-btn>
-      <v-btn icon @click="show = false" class="mx-auto">
-        <img src="/cross.svg" />
-      </v-btn>
-    </v-card-actions>
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
-
-        <v-card-text>
-          I'm a thing. But, like most politicians, he promised more than he
-          could deliver. You won't have time for sleeping, soldier, not with all
-          the bed making you'll be doing. Then we'll go with that data file!
-          Hey, you add a one and two zeros to that or we walk! You're going t
-          do his laundry? I've got to find a way to escape.
-        </v-card-text>
+    <!-- flip card reverse  -->
+    <div v-show="show" class="flip-card__reverse">
+      <v-card-actions class="d-flex flex-row-reverse">
+        <v-btn icon @click="show = false" v-show="show">
+          <img src="/cross.svg" />
+        </v-btn>
+      </v-card-actions>
+      <v-card-text>
+        <h5 class="text-h5 mb-4">{{ cardInfo.title }}</h5>
+        <p>
+          {{ cardInfo.description }}
+        </p>
+      </v-card-text>
+      <div class="flip-card__button pa-5">
+        <a
+          :href="cardInfo.link"
+          target="_blank"
+          class="button text-decoration-none"
+        >
+          <div class="button text-h5">
+            <img src="/arrow-right.svg" alt="right arrow" class="mr-4" />
+            {{ $t('homepage.bookAppointment') }}
+          </div>
+        </a>
       </div>
-    </v-expand-transition> -->
+    </div>
   </v-card>
 </template>
 <script>
@@ -59,6 +64,9 @@ export default {
   &__icon {
     height: 4rem;
     width: 4rem;
+  }
+  &__button {
+    border-top: 4px solid var(--v-mint-blue-base);
   }
 }
 </style>
