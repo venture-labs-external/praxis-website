@@ -1,5 +1,5 @@
 <template>
-  <div class="contact pt-16">
+  <div class="contact">
     <div class="contact__title">
       <span class="subtitle-1 light-green--text">{{
         $t('homepage.location')
@@ -44,6 +44,9 @@ export default {
 
 <style lang="scss" scoped>
 .contact {
+  @media #{$md-and-up} {
+    padding-top: 5rem;
+  }
   &__map {
     border: 7px solid var(--v-white-base);
     border-radius: 6px;
@@ -54,7 +57,6 @@ export default {
       'title map map map'
       'card map map map';
     column-gap: 3rem;
-    padding-top: 2rem;
   }
   &__title {
     grid-area: title;
