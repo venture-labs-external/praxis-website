@@ -7,4 +7,6 @@ export default {
   friday: 'Fr.',
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
+  services: 'Services',
+  whatWeDo: 'Was wir tun',
 };
