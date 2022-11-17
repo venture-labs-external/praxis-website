@@ -19,7 +19,7 @@
         <h4 class="h4-text">{{ news.header }}</h4>
         <p class="body-1 ma-0">{{ news.description }}</p>
         <div class="body-1">{{ news.footer }}</div>
-        <div class="text-h4">{{ news.name }}</div>
+        <div class="text-h4">Dr. Rahel Korbmacher</div>
         <div class="body-1">{{ news.title }}</div>
       </div>
     </div>
