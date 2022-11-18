@@ -1,6 +1,6 @@
 <template>
   <v-card class="expanding-card mx-auto mb-6" max-width="940">
-    <div class="pa-8">
+    <div class="pa-8" @click="show = !show">
       <div
         class="d-flex flex-column flex-md-row align-center justify-md-space-between"
       >
@@ -14,7 +14,7 @@
           </div>
         </div>
         <v-card-actions class="pa-0">
-          <v-btn icon @click="show = !show" class="mx-auto">
+          <v-btn icon class="mx-auto">
             <img :src="show ? '/arrow-up.svg' : '/arrow-down.svg'" />
           </v-btn>
         </v-card-actions>

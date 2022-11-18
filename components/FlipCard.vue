@@ -3,15 +3,15 @@
     class="flip-card mx-auto mb-4 mb-md-0"
     :class="show ? 'flip-card--click' : ''"
   >
-    <div class="flip-card--inner">
+    <div class="flip-card--inner" @click="show = !show">
       <div class="flip-card--front">
         <div v-show="!show">
-          <div class="flip-card__icon mint-blue mx-auto" @click="show = true">
+          <div class="flip-card__icon mint-blue mx-auto">
             <img :src="cardInfo.iconName" class="pa-5" />
           </div>
           <h5 class="text-h5 text-center mt-6 mx-10">{{ cardInfo.title }}</h5>
           <div>
-            <v-btn icon @click="show = true" class="mx-auto">
+            <v-btn icon class="mx-auto">
               <img src="/arrow-right.svg" />
             </v-btn>
           </div>
@@ -20,7 +20,7 @@
       <div class="flip-card--back">
         <div v-show="show">
           <div class="d-flex flex-row-reverse">
-            <v-btn icon @click="show = false">
+            <v-btn icon>
               <img src="/cross.svg" />
             </v-btn>
           </div>
@@ -36,7 +36,7 @@
               target="_blank"
               class="button text-decoration-none"
             >
-              <div class="button text-h5">
+              <div class="text-h5">
                 <img src="/arrow-right.svg" alt="right arrow" class="mr-4" />
                 {{ $t('homepage.bookAppointment') }}
               </div>
