@@ -19,6 +19,7 @@ export default {
   privacy: 'Datenschutzbestimmungen',
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
+  contact: 'Kontakt',
   drRahelKorbmacher: 'Dr. Rahel Korbmacher',
   aboutUs: 'Über uns',
   ourDoctors: 'Unsere Ärzte',
