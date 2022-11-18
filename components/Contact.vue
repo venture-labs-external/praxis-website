@@ -32,13 +32,22 @@
 
 <script>
 import CardWithButton from '~/components/CardWithButton';
-import cardInfo from '~/mixins/contactData.js';
+import { CONTACT_DATA } from '~/constants';
 export default {
   name: 'Header',
   components: {
     CardWithButton,
   },
-  mixins: [cardInfo],
+  computed: {
+    cardInfo() {
+      return {
+        title: this.$t('homepage.location'),
+        icon: '/map-pin.svg',
+        address: CONTACT_DATA.address,
+        link: '/',
+      };
+    },
+  },
 };
 </script>
 
