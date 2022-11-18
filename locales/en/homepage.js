@@ -18,4 +18,10 @@ export default {
   menopause: 'Menopause',
   hormones: 'Hormone',
   breastDisease: 'Brusterkrankung',
+  mondayThursdayLong: 'Montag-Donnerstag:',
+  fridayLong: 'Freitag:',
+  telephone: 'Tel.:',
+  email: 'Email:',
+  imprint: 'Impressum',
+  privacy: 'Datenschutzbestimmungen',
 };
