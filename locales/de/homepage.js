@@ -20,4 +20,21 @@ export default {
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
   drRahelKorbmacher: 'Dr. Rahel Korbmacher',
+  aboutUs: 'Über uns',
+  ourDoctors: 'Unsere Ärzte',
+  specialistInGynecologyAndObstetrics:
+    'Fachärztin für Frauenheilkunde und Geburtshilfe',
+  afterTheExtensiveTraining:
+    'Nach der umfangreichen Ausbildung in verschiedenen Kliniken in Düsseldorf und Umgebung freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir sehr am Herzen.  Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.',
+  services: 'Services',
+  whatWeDo: 'Was wir tun',
+  familyPlanning: 'Familienplanung',
+  pregnancy: 'Schwangerschaft',
+  generalGynecology: 'Allgemeine Gynäkologie',
+  incontinence: 'Inkontinenz- und Senkungsbeschwerden',
+  precaution: 'Vorsorge',
+  girlsConsultation: 'Mädchensprechstunde',
+  menopause: 'Menopause',
+  hormones: 'Hormone',
+  breastDisease: 'Brusterkrankung',
 };

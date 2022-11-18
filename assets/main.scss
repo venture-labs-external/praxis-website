@@ -8,7 +8,9 @@
       font-size: 3rem !important;
     }
   }
-  h2.text-h2 {
+  h2.text-h2,
+  h3.text-h2,
+  div.text-h2 {
     @media #{$md-and-up} {
       font-size: 1.5rem !important;
       line-height: 1.2 !important;
@@ -44,6 +46,15 @@
     @media #{$md-and-up} {
       font-size: 1.125rem !important;
       font-weight: 400 !important;
+    }
+  }
+  p.body-2,
+  span.body-2,
+  div.body-2 {
+    @media #{$md-and-up} {
+      font-size: 1rem !important;
+      font-weight: 400 !important;
+      line-height: 1.4 !important;
     }
   }
   p.subtitle-1,
