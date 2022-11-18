@@ -45,7 +45,7 @@ export default {
 <style lang="scss" scoped>
 .contact {
   @media #{$md-and-up} {
-    padding-top: 5rem;
+    padding: 5rem 0;
   }
   &__map {
     border: 7px solid var(--v-white-base);
