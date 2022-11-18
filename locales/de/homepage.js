@@ -5,6 +5,12 @@ export default {
   officeHours: 'Sprechzeiten',
   mondayThursday: 'Mo. -Do.:',
   friday: 'Fr.',
+  dearPatients: 'Liebe Patientinnen,',
+  onJanuary:
+    '\nam 01.01.2023 habe ich die Praxis und das Team von Frau Margit Massing übernommen und bin nun Teil der Praxisgemeinschaft mit Frau Dr. Weydandt.\n\nIch freue mich außerdem auf die fachärztliche Unterstützung von Frau Engberg, als Verstärkung für das Team.\nGemeinsam wollen wir die vertrauensvolle Atmosphäre fortführen und würden uns freuen, Sie weiterhin in all Ihren Lebenslagen begleiten zu dürfen.',
+  kindRegards: '\nFreundliche Grüße,',
+  specialistForGynecologyAndObstetrics:
+    'Fachärztin für Frauenheilkunde und Geburtshilfe',
   mondayThursdayLong: 'Montag-Donnerstag:',
   fridayLong: 'Freitag:',
   telephone: 'Tel.:',
@@ -14,4 +20,22 @@ export default {
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
   contact: 'Kontakt',
+  drRahelKorbmacher: 'Dr. Rahel Korbmacher',
+  aboutUs: 'Über uns',
+  ourDoctors: 'Unsere Ärzte',
+  specialistInGynecologyAndObstetrics:
+    'Fachärztin für Frauenheilkunde und Geburtshilfe',
+  afterTheExtensiveTraining:
+    'Nach der umfangreichen Ausbildung in verschiedenen Kliniken in Düsseldorf und Umgebung freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir sehr am Herzen.  Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.',
+  services: 'Services',
+  whatWeDo: 'Was wir tun',
+  familyPlanning: 'Familienplanung',
+  pregnancy: 'Schwangerschaft',
+  generalGynecology: 'Allgemeine Gynäkologie',
+  incontinence: 'Inkontinenz- und Senkungsbeschwerden',
+  precaution: 'Vorsorge',
+  girlsConsultation: 'Mädchensprechstunde',
+  menopause: 'Menopause',
+  hormones: 'Hormone',
+  breastDisease: 'Brusterkrankung',
 };

@@ -19,7 +19,7 @@
         class="button text-decoration-none white--text"
       >
         <div class="button text-h5">
-          <img src="/arrow-right.svg" alt="right arrow" class="mr-4" />
+          <img src="/arrow-right-white.svg" alt="right arrow" class="mr-4" />
           {{ $t('homepage.bookAppointment') }}
         </div>
       </a>

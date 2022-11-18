@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__title">
-      <span class="subtitle-1 light-green--text">{{
+      <span class="subtitle-1 dark-green--text">{{
         $t('homepage.welcome')
       }}</span>
       <h1 class="text-h1">{{ $t('homepage.gynecologists') }}</h1>
@@ -99,6 +99,7 @@ export default {
 .header {
   @media #{$md-and-up} {
     padding-top: 5rem;
+    padding-bottom: 5rem;
     display: grid;
     grid-template:
       'title image'
