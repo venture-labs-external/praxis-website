@@ -8,7 +8,7 @@
           <img :src="cardData.photo" class="expanding-card__image" />
           <div class="text-left ml-md-6">
             <h3 class="text-h2 mt-6 mb-1">{{ cardData.name }}</h3>
-            <span class="body-2 light-green--text">
+            <span class="body-2 dark-green--text">
               {{ cardData.title }}
             </span>
           </div>
