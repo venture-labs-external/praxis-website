@@ -13,4 +13,5 @@ export default {
   privacy: 'Datenschutzbestimmungen',
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
+  contact: 'Kontakt',
 };

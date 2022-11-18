@@ -5,6 +5,13 @@
       <h3 class="text-h3">{{ cardInfo.title }}:</h3>
     </div>
     <div class="card__content mx-6 my-4"><slot /></div>
+    <div v-if="optionalCardInfo" class="mt-7">
+      <div class="card__title d-flex mx-6 pb-4">
+        <img :src="optionalCardInfo.icon" alt="right arrow" class="mr-4" />
+        <h3 class="text-h3">{{ optionalCardInfo.title }}:</h3>
+      </div>
+      <div class="card__content mx-6 my-4"><slot name="optionalBox" /></div>
+    </div>
     <div class="card__button white--text dark-green pa-5">
       <a
         :href="cardInfo.link"
@@ -25,6 +32,10 @@ export default {
   name: 'CardWithButton',
   props: {
     cardInfo: {
+      type: Object,
+      default: () => {},
+    },
+    optionalCardInfo: {
       type: Object,
       default: () => {},
     },

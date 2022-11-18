@@ -22,19 +22,35 @@
       <div v-show="$vuetify.breakpoint.mdAndUp" class="image__border"></div>
     </div>
     <div class="header__card">
-      <CardWithButton :cardInfo="cardInfo" class="mt-md-8">
-        <slot>
+      <CardWithButton
+        :cardInfo="cardInfo"
+        :optionalCardInfo="optionalCardInfo"
+        class="mt-md-8"
+      >
+        <template v-slot>
           <div class="table">
             <v-row
               v-for="(time, index) in cardInfo.workingTime"
               :key="index"
-              class="table__row"
+              class="table__row pr-12"
             >
               <v-col class="text-h4">{{ time.day }}</v-col>
-              <v-col class="body-1">{{ time.hours }}</v-col>
+              <v-col class="body-1 text-right">{{ time.hours }}</v-col>
             </v-row>
           </div>
-        </slot>
+        </template>
+        <template v-slot:optionalBox>
+          <div class="table">
+            <v-row
+              v-for="(contact, index) in optionalCardInfo.contact"
+              :key="index"
+              class="table__row pr-12"
+            >
+              <v-col class="text-h4">{{ contact.name }}</v-col>
+              <v-col class="body-1 text-right">{{ contact.number }}</v-col>
+            </v-row>
+          </div>
+        </template>
       </CardWithButton>
     </div>
   </header>
@@ -42,13 +58,40 @@
 
 <script>
 import CardWithButton from '~/components/CardWithButton';
-import cardInfo from '~/mixins/headerData.js';
 export default {
   name: 'Header',
   components: {
     CardWithButton,
   },
-  mixins: [cardInfo],
+  computed: {
+    cardInfo() {
+      return {
+        title: this.$t('homepage.officeHours'),
+        icon: '/clock.svg',
+        workingTime: [
+          {
+            day: this.$t('homepage.mondayThursday'),
+            hours: '08:00 - 13:00 \n 14:00 - 19:00',
+          },
+          { day: this.$t('homepage.friday'), hours: '08:00 - 13:00' },
+        ],
+        link: '/',
+      };
+    },
+    optionalCardInfo() {
+      return {
+        title: this.$t('homepage.contact'),
+        icon: '/phone.svg',
+        contact: [
+          {
+            name: this.$t('homepage.telephone'),
+            number: '0211-285009',
+          },
+          { name: this.$t('homepage.email'), number: 'info@loremipsum.de' },
+        ],
+      };
+    },
+  },
 };
 </script>
 
@@ -101,7 +144,7 @@ export default {
   }
   &__row {
     display: grid;
-    grid-template-columns: 30% auto;
+    grid-template-columns: 35% auto;
   }
 }
 </style>

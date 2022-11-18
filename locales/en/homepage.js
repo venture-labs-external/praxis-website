@@ -11,4 +11,5 @@ export default {
   email: 'Email:',
   imprint: 'Impressum',
   privacy: 'Datenschutzbestimmungen',
+  contact: 'Kontakt',
 };
