@@ -4,6 +4,7 @@
     <v-container>
       <nuxt />
     </v-container>
+    <Footer />
   </v-app>
 </template>
 
@@ -12,6 +13,7 @@ export default {
   name: 'DefaultLayout',
   components: {
     Navigation: () => import('~/components/Navigation.vue'),
+    Footer: () => import('~/components/Footer.vue'),
   },
 };
 </script>
