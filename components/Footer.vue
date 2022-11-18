@@ -22,7 +22,7 @@
           <div>{{ time.day }} {{ time.hours }}</div>
         </div>
       </div>
-      <img src="/phone.svg" alt="phone" class="my-4" />
+      <img src="/phone-white.svg" alt="phone" class="my-4" />
       <div>{{ $t('homepage.telephone') }} {{ contactData.phone }}</div>
       <div>{{ $t('homepage.email') }} {{ contactData.mail }}</div>
     </div>
