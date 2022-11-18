@@ -12,4 +12,10 @@ export default {
   specialistForGynecologyAndObstetrics:
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
   drRahelKorbmacher: 'Dr. Rahel Korbmacher',
+  mondayThursdayLong: 'Montag-Donnerstag:',
+  fridayLong: 'Freitag:',
+  telephone: 'Tel.:',
+  email: 'Email:',
+  imprint: 'Impressum',
+  privacy: 'Datenschutzbestimmungen',
 };
