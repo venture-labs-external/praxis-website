@@ -36,5 +36,6 @@ export default {
   telephone: 'Tel.:',
   email: 'Email:',
   imprint: 'Impressum',
-  privacy: 'Datenschutzbestimmungen',
+  privacy: 'Datenschutz',
+  privacyPolicy: 'Datenschutzbestimmungen',
 };

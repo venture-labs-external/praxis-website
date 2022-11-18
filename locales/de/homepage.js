@@ -11,15 +11,9 @@ export default {
   kindRegards: '\nFreundliche Grüße,',
   specialistForGynecologyAndObstetrics:
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
-  mondayThursdayLong: 'Montag-Donnerstag:',
-  fridayLong: 'Freitag:',
-  telephone: 'Tel.:',
-  email: 'Email:',
-  imprint: 'Impressum',
-  privacy: 'Datenschutzbestimmungen',
+  drRahelKorbmacher: 'Dr. Rahel Korbmacher',
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
-  drRahelKorbmacher: 'Dr. Rahel Korbmacher',
   aboutUs: 'Über uns',
   ourDoctors: 'Unsere Ärzte',
   specialistInGynecologyAndObstetrics:
@@ -37,4 +31,11 @@ export default {
   menopause: 'Menopause',
   hormones: 'Hormone',
   breastDisease: 'Brusterkrankung',
+  mondayThursdayLong: 'Montag-Donnerstag:',
+  fridayLong: 'Freitag:',
+  telephone: 'Tel.:',
+  email: 'Email:',
+  imprint: 'Impressum',
+  privacy: 'Datenschutz',
+  privacyPolicy: 'Datenschutzbestimmungen',
 };
