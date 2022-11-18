@@ -11,4 +11,5 @@ export default {
   kindRegards: '\nFreundliche Grüße,',
   specialistForGynecologyAndObstetrics:
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
+  drRahelKorbmacher: 'Dr. Rahel Korbmacher',
 };

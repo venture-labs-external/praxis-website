@@ -5,7 +5,7 @@ export default {
         header: this.$t('homepage.dearPatients'),
         description: this.$t('homepage.onJanuary'),
         footer: this.$t('homepage.kindRegards'),
-        name: 'Dr. Rahel Korbmacher',
+        name: this.$t('homepage.drRahelKorbmacher'),
         title: this.$t('homepage.specialistForGynecologyAndObstetrics'),
       };
     },

@@ -13,4 +13,5 @@ export default {
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
+  drRahelKorbmacher: 'Dr. Rahel Korbmacher',
 };
