@@ -56,6 +56,7 @@ export default {
 .header {
   @media #{$md-and-up} {
     padding-top: 5rem;
+    padding-bottom: 5rem;
     display: grid;
     grid-template:
       'title image'
