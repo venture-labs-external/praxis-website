@@ -1,5 +1,5 @@
 <template>
-  <div class="news">
+  <div id="news" class="news">
     <div class="mt-4 mt-md-0">
       <img
         class="news__image"

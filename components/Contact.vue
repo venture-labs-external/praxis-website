@@ -1,5 +1,5 @@
 <template>
-  <div class="contact">
+  <div id="contact" class="contact">
     <div class="contact__title">
       <span class="subtitle-1 dark-green--text">{{
         $t('homepage.location')

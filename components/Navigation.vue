@@ -16,12 +16,12 @@
       <div v-show="$vuetify.breakpoint.mdAndUp">
         <ul class="nav__list list d-flex justify-space-between">
           <li v-for="item in navList" :key="item.name">
-            <a
-              :href="item.link"
+            <nuxt-link
+              :to="{ path: item.path, hash: item.hash }"
               class="list__item font-weight-bold mr-6 mr-lg-14"
             >
               {{ item.name }}
-            </a>
+            </nuxt-link>
           </li>
         </ul>
       </div>
@@ -54,11 +54,17 @@
           <div class="d-flex flex-column align-center">
             <ul class="list--mobile pa-0">
               <li v-for="item in menuList" :key="item.name" class="mb-6">
-                <a :href="item.link" class="text-decoration-none">
-                  <span class="list__item--mobile text-h2 white--text">
+                <nuxt-link
+                  :to="{ path: item.path, hash: item.hash }"
+                  class="text-decoration-none"
+                >
+                  <span
+                    class="list__item--mobile text-h2 white--text"
+                    @click="showMenu = false"
+                  >
                     {{ item.name }}
                   </span>
-                </a>
+                </nuxt-link>
               </li>
             </ul>
             <div class="button text-h2 my-8">
@@ -99,19 +105,18 @@ export default {
     return {
       opacity: 1,
       showMenu: false,
-      // TODO: change links in navigation
       navList: [
-        { name: 'Jüngste Nachrichten', link: '#' },
-        { name: 'Über uns', link: '#' },
-        { name: 'Services', link: '#' },
-        { name: 'Kontakt', link: '#' },
+        { name: this.$t('homepage.news'), path: '/', hash: '#news' },
+        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
+        { name: this.$t('homepage.services'), path: '/', hash: '#services' },
+        { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
       ],
       menuList: [
-        { name: 'Home', link: '#' },
-        { name: 'Jüngste Nachrichten', link: '#' },
-        { name: 'Über uns', link: '#' },
-        { name: 'Services', link: '#' },
-        { name: 'Kontakt', link: '#' },
+        { name: this.$t('homepage.home'), path: '/', hash: '#' },
+        { name: this.$t('homepage.news'), path: '/', hash: '#news' },
+        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
+        { name: this.$t('homepage.services'), path: '/', hash: '#services' },
+        { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
       ],
     };
   },

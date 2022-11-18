@@ -1,5 +1,5 @@
 <template>
-  <div class="services mx-auto">
+  <div id="services" class="services mx-auto">
     <div class="about-us__title mb-6">
       <span class="subtitle-1 dark-green--text">
         {{ $t('homepage.services') }}
