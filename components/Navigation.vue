@@ -30,7 +30,7 @@
         depressed
         class="nav__button white--text font-weight-bold"
       >
-        <img src="/arrow-right.svg" alt="right arrow" class="mr-4" />
+        <img src="/arrow-right-white.svg" alt="right arrow" class="mr-4" />
         Termin buchen
       </v-btn>
       <div v-show="$vuetify.breakpoint.smAndDown">
@@ -58,7 +58,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .nav {
-  border-bottom: 1px solid var(--v-light-green-base);
+  border-bottom: 1px solid var(--v-dark-green-base);
   &__logo {
     width: 10.5rem;
     font-family: 'Roboto Serif';
