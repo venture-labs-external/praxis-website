@@ -46,8 +46,8 @@
               :key="index"
               class="table__row pr-12"
             >
-              <v-col class="text-h4">{{ contact.name }}</v-col>
-              <v-col class="body-1 text-right">{{ contact.number }}</v-col>
+              <v-col class="text-h4">{{ contact.type }}</v-col>
+              <v-col class="body-1 text-right">{{ contact.details }}</v-col>
             </v-row>
           </div>
         </template>
@@ -84,10 +84,10 @@ export default {
         icon: '/phone.svg',
         contact: [
           {
-            name: this.$t('homepage.telephone'),
-            number: '0211-285009',
+            type: this.$t('homepage.telephone'),
+            details: '0211-285009',
           },
-          { name: this.$t('homepage.email'), number: 'info@loremipsum.de' },
+          { type: this.$t('homepage.email'), details: 'info@loremipsum.de' },
         ],
       };
     },
