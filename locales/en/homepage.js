@@ -5,4 +5,10 @@ export default {
   officeHours: 'Sprechzeiten:',
   mondayThursday: 'Mo. -Do.:',
   friday: 'Fr.',
+  mondayThursdayLong: 'Montag-Donnerstag:',
+  fridayLong: 'Freitag:',
+  telephone: 'Tel.:',
+  email: 'Email:',
+  imprint: 'Impressum',
+  privacy: 'Datenschutzbestimmungen',
 };
