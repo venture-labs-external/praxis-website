@@ -47,10 +47,27 @@
 </template>
 
 <script>
-import contactData from '~/mixins/footerData.js';
+import { CONTACT_DATA } from '~/constants';
 export default {
   name: 'Footer',
-  mixins: [contactData],
+  computed: {
+    contactData() {
+      return {
+        address: CONTACT_DATA.address,
+        doctors:
+          'Praxisgemeinschaft Gerresheim\nPraxis für Frauenheilkunde\n Dr. med. R. Korbmacher\n\nPraxis für Frauenheilkunde\nDr. med. H. Weydandt',
+        workingTime: [
+          {
+            day: this.$t('homepage.mondayThursdayLong'),
+            hours: '08:00 - 13:00 | 14:00 - 19:00',
+          },
+          { day: this.$t('homepage.fridayLong'), hours: '08:00 - 13:00' },
+        ],
+        phone: CONTACT_DATA.phone,
+        mail: CONTACT_DATA.email,
+      };
+    },
+  },
 };
 </script>
 

@@ -18,6 +18,7 @@
 
 <script>
 import ExpandingCard from '~/components/ExpandingCard';
+import { NAMES } from '~/constants';
 export default {
   name: 'AboutUs',
   components: {
@@ -28,14 +29,14 @@ export default {
     doctors() {
       return [
         {
-          name: 'Dr. med. Heike Weydandtr',
+          name: NAMES.drHeikeWeydandtr,
           photo: 'dr-weydandtr.png',
           title: this.$t('homepage.specialistInGynecologyAndObstetrics'),
           description: this.$t('homepage.afterTheExtensiveTraining'),
           qualifications: ['qualifikation', 'qualifikation'],
         },
         {
-          name: 'Dr. med. R. Korbmacher',
+          name: NAMES.drRahelKorbmacher,
           photo: 'dr-korbmacher.png',
           title: this.$t('homepage.specialistInGynecologyAndObstetrics'),
           description: this.$t('homepage.afterTheExtensiveTraining'),
@@ -49,7 +50,7 @@ export default {
           ],
         },
         {
-          name: 'Christine Engberg',
+          name: NAMES.ChristineEngberg,
           photo: 'dr-engberg.png',
           title: this.$t('homepage.specialistInGynecologyAndObstetrics'),
           description: this.$t('homepage.afterTheExtensiveTraining'),
