@@ -40,7 +40,7 @@
       </div>
       <div class="d-flex mt-6 mt-md-4">
         <a href="/" class="white--text">{{ $t('homepage.imprint') }} </a>
-        <a href="/" class="white--text"> {{ $t('homepage.privacy') }}</a>
+        <a href="/" class="white--text"> {{ $t('homepage.privacyPolicy') }}</a>
       </div>
     </div>
   </footer>
