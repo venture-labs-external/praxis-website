@@ -8,8 +8,9 @@
         {{ $t('homepage.whatWeDo') }}
       </h2>
     </div>
-    <div class="services__cards">
+    <div class="services__cards slider">
       <FlipCard
+        class="slider__slide"
         v-for="(service, index) in services"
         :key="index"
         :cardInfo="service"
@@ -94,11 +95,27 @@ export default {
   padding-top: 5rem;
   max-width: 58.75rem;
   &__cards {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
     @media #{$md-and-up} {
+      overflow: unset;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(3, 1fr);
       gap: 1.5rem;
+    }
+  }
+  .slider {
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    &__slide {
+      flex: 0 0 auto;
     }
   }
 }
