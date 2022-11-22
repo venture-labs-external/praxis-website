@@ -6,20 +6,21 @@
       }}</span>
       <h1 class="text-h1">{{ $t('homepage.gynecologists') }}</h1>
     </div>
-    <div class="image__wrapper py-6">
-      <img
-        class="header__image image"
-        src="doctors-office/doctors-office.png"
-        srcset="
-          /doctors-office/doctors-office_w_330.webp   330w,
-          /doctors-office/doctors-office_w_687.webp   687w,
-          /doctors-office/doctors-office_w_927.webp   927w,
-          /doctors-office/doctors-office_w_1137.webp 1137w,
-          /doctors-office/doctors-office_w_1310.webp 1310w
-        "
-        alt="Doctor's office"
-      />
-      <div v-show="$vuetify.breakpoint.mdAndUp" class="image__border"></div>
+    <div class="header__image py-6 py-md-0">
+      <div class="image__wrapper">
+        <img
+          class="image"
+          src="doctors-office/doctors-office.png"
+          srcset="
+            /doctors-office/doctors-office_w_330.webp   330w,
+            /doctors-office/doctors-office_w_687.webp   687w,
+            /doctors-office/doctors-office_w_927.webp   927w,
+            /doctors-office/doctors-office_w_1137.webp 1137w,
+            /doctors-office/doctors-office_w_1310.webp 1310w
+          "
+          alt="Doctor's office"
+        />
+      </div>
     </div>
     <div class="header__card">
       <CardWithButton
@@ -102,9 +103,11 @@ export default {
     padding-bottom: 5rem;
     display: grid;
     grid-template:
-      'title image'
-      'card image';
+      'title  image '
+      'card image  ';
+    grid-template-columns: 40% auto;
     column-gap: 3rem;
+    align-items: end;
   }
   &__title {
     grid-area: title;
@@ -112,29 +115,35 @@ export default {
   &__card {
     grid-area: card;
   }
+  &__image {
+    grid-area: image;
+  }
 }
 .image {
   width: 100%;
   height: auto;
   @media #{$md-and-up} {
-    position: absolute;
-    width: 41rem;
-    height: 27.8rem;
+    position: relative;
+    width: 100%;
+    height: auto;
     z-index: 2;
   }
-  &__border {
-    position: absolute;
-    border: 3px solid var(--v-dark-green-base);
-    width: 41rem;
-    height: 27.8rem;
-    border-radius: 6px;
-    inset: -1.5rem 3rem;
-  }
   &__wrapper {
-    grid-area: image;
     @media #{$md-and-up} {
       position: relative;
-      width: 45rem;
+      width: 100%;
+    }
+    &::after {
+      @media #{$md-and-up} {
+        content: '';
+        position: absolute;
+        left: 10%;
+        bottom: 15%;
+        width: 100%;
+        height: 100%;
+        border: 3px solid var(--v-dark-green-base);
+        border-radius: 6px;
+      }
     }
   }
 }
