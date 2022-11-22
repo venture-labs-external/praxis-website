@@ -1,5 +1,5 @@
 <template>
-  <div class="news pt-10 pt-md-0">
+  <div class="news mx-auto pt-10 pt-md-0">
     <div class="mt-4 mt-md-0">
       <img
         class="news__image"
@@ -40,6 +40,7 @@ export default {
 
 <style lang="scss" scoped>
 .news {
+  max-width: 73rem;
   display: flex;
   flex-direction: column-reverse;
   @media #{$md-and-up} {

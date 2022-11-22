@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header mx-auto">
     <div class="header__title">
       <span class="subtitle-1 dark-green--text">{{
         $t('homepage.welcome')
@@ -98,6 +98,7 @@ export default {
 
 <style lang="scss" scoped>
 .header {
+  max-width: 73rem;
   @media #{$md-and-up} {
     padding-top: 5rem;
     padding-bottom: 5rem;
