@@ -137,8 +137,8 @@ export default {
       @media #{$md-and-up} {
         content: '';
         position: absolute;
-        left: 10%;
-        bottom: 15%;
+        left: 5%;
+        bottom: 8%;
         width: 100%;
         height: 100%;
         border: 3px solid var(--v-dark-green-base);
