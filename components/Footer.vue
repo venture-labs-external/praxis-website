@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="footer dark-green white--text d-flex flex-column flex-md-row justify-md-space-between align-center py-8 px-md-10"
+    class="footer dark-green white--text d-flex flex-column flex-md-row justify-md-space-between align-md-end py-8 px-md-10"
   >
     <div
       class="d-flex flex-column align-center align-md-start text-center text-md-left"
@@ -10,21 +10,25 @@
       <div>{{ contactData.doctors }}</div>
     </div>
     <div
-      class="d-flex flex-column align-center align-md-start text-center text-md-left"
+      class="footer__column d-flex flex-column align-center align-md-start justify-md-space-between text-center text-md-left"
     >
-      <img
-        src="/clock-white.svg"
-        alt="clock"
-        class="white--text my-4 my-md-0 mb-md-4"
-      />
       <div>
-        <div v-for="(time, index) in contactData.workingTime" :key="index">
-          <div>{{ time.day }} {{ time.hours }}</div>
+        <img
+          src="/clock-white.svg"
+          alt="clock"
+          class="white--text my-4 my-md-0 mb-md-4"
+        />
+        <div>
+          <div v-for="(time, index) in contactData.workingTime" :key="index">
+            <div>{{ time.day }} {{ time.hours }}</div>
+          </div>
         </div>
       </div>
-      <img src="/phone-white.svg" alt="phone" class="my-4" />
-      <div>{{ $t('homepage.telephone') }} {{ contactData.phone }}</div>
-      <div>{{ $t('homepage.email') }} {{ contactData.mail }}</div>
+      <div>
+        <img src="/phone-white.svg" alt="phone" class="my-4" />
+        <div>{{ $t('homepage.telephone') }} {{ contactData.phone }}</div>
+        <div>{{ $t('homepage.email') }} {{ contactData.mail }}</div>
+      </div>
     </div>
     <div class="d-md-flex flex-md-column align-md-end align-self-sm-end">
       <div v-show="$vuetify.breakpoint.mdAndUp" class="footer__logo">
@@ -38,9 +42,14 @@
           </span>
         </a>
       </div>
-      <div class="d-flex mt-6 mt-md-4">
-        <a href="/" class="white--text">{{ $t('homepage.imprint') }} </a>
-        <a href="/" class="white--text"> {{ $t('homepage.privacyPolicy') }}</a>
+      <div class="d-flex justify-center align-end mt-6 mt-md-4">
+        <a href="/" class="white--text font-weight-regular"
+          >{{ $t('homepage.imprint') }}
+        </a>
+        <a class="white--text mx-1">|</a>
+        <a href="/" class="white--text font-weight-regular">
+          {{ $t('homepage.privacyPolicy') }}</a
+        >
       </div>
     </div>
   </footer>
@@ -83,6 +92,9 @@ export default {
     font-family: 'Roboto Serif';
     font-size: 1.25rem;
     line-height: 1.2;
+  }
+  &__column {
+    height: 100%;
   }
 }
 </style>

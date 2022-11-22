@@ -2,8 +2,8 @@
   <div>
     <Header />
     <News :news="news" />
-    <AboutUs />
     <Services />
+    <AboutUs />
     <Contact />
   </div>
 </template>

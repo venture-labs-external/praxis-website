@@ -1,5 +1,5 @@
 <template>
-  <div class="contact py-10">
+  <div class="contact mx-auto py-10">
     <div class="contact__title">
       <span class="subtitle-1 dark-green--text">{{
         $t('homepage.location')
@@ -53,6 +53,7 @@ export default {
 
 <style lang="scss" scoped>
 .contact {
+  max-width: 73rem;
   @media #{$md-and-up} {
     padding: 5rem 0;
   }
