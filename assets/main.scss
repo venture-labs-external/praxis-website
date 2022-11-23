@@ -22,7 +22,6 @@
   div.text-h3  {
     @media #{$md-and-up} {
       font-size: 1.25rem !important;
-      font-weight: 700 !important;
       line-height: 1.2 !important;
     }
   }
@@ -31,7 +30,6 @@
   div.text-h4 {
     @media #{$md-and-up} {
       font-size: 1.125rem !important;
-      font-weight: 700 !important;
     }
   }
   h5.text-h5,
@@ -46,7 +44,6 @@
   div.body-1 {
     @media #{$md-and-up} {
       font-size: 1.125rem !important;
-      font-weight: 400 !important;
     }
   }
   p.body-2,
