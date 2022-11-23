@@ -11,7 +11,7 @@ export default {
     trailingSlash: false,
   },
   head: {
-    titleTemplate: 'titleTemplate',
+    titleTemplate: 'Frauenärztinnen Gerresheim',
     title: process.env.npm_package_name || 'Title',
     meta: [
       { charset: 'utf-8' },
@@ -22,7 +22,7 @@ export default {
         content: process.env.npm_package_description || '',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/praxis.ico' }],
   },
   hooks: {},
   loading: { color: '#fff' },
