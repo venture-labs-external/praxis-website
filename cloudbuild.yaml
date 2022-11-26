@@ -52,11 +52,6 @@ steps:
         Author: $(git log --format='%an <%ae>' -n 1 HEAD)" && \
         git push origin candidate
 
-availableSecrets:
-  secretManager:
-    - versionName: projects/823625160285/secrets/onehive-dms-security-token/versions/latest
-      env: ONE_HIVE_DMS_SECURITY_TOKEN
-
 
 # [END cloudbuild-trigger-cd]
 timeout: 2000s
