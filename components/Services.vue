@@ -50,13 +50,13 @@ export default {
         },
         {
           iconName: '/drop.svg',
-          title: this.$t('homepage.incontinence'),
+          title: this.$t('homepage.endometriosis'),
           description:
             'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
         },
         {
           iconName: '/check-verified.svg',
-          title: this.$t('homepage.precaution'),
+          title: this.$t('homepage.cancerPrevention'),
           description:
             'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
         },

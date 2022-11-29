@@ -6,6 +6,6 @@ export const CONTACT_DATA = {
 
 export const NAMES = {
   drRahelKorbmacher: 'Dr. Rahel Korbmacher',
-  drHeikeWeydandtr: 'Dr. med. Heike Weydandtr',
+  drHeikeWeydandt: 'Dr. med. Heike Weydandt',
   ChristineEngberg: 'Christine Engberg',
 };

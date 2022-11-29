@@ -29,7 +29,7 @@ export default {
     doctors() {
       return [
         {
-          name: NAMES.drHeikeWeydandtr,
+          name: NAMES.drHeikeWeydandt,
           photo: 'dr-weydandtr.png',
           title: this.$t('homepage.specialistInGynecologyAndObstetrics'),
           description: this.$t('homepage.afterTheExtensiveTraining'),
