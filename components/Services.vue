@@ -68,13 +68,13 @@ export default {
         },
         {
           iconName: '/activity-heart.svg',
-          title: this.$t('homepage.menopause'),
+          title: this.$t('homepage.menopauseAndHormones'),
           description:
             'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
         },
         {
           iconName: '/microscope.svg',
-          title: this.$t('homepage.hormones'),
+          title: this.$t('homepage.gynecologicalOncology'),
           description:
             'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
         },
