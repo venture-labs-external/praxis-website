@@ -23,14 +23,15 @@
         <div v-show="show">
           <v-card-text class="body-1 pa-0 pt-8">
             <p>{{ cardData.description }}</p>
-            <ol>
+            <!-- missing content -->
+            <!-- <ol>
               <li
                 v-for="(qualification, index) in cardData.qualifications"
                 :key="index"
               >
                 {{ qualification }}
               </li>
-            </ol>
+            </ol> -->
           </v-card-text>
         </div>
       </v-expand-transition>
