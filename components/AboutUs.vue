@@ -32,14 +32,18 @@ export default {
           name: NAMES.drHeikeWeydandt,
           photo: 'dr-weydandtr.png',
           title: this.$t('homepage.specialistInGynecologyAndObstetrics'),
-          description: this.$t('homepage.afterTheExtensiveTraining'),
+          description: this.$t(
+            'homepage.duringMyMoreThan20YearsOfCollaboration',
+          ),
           qualifications: ['qualifikation', 'qualifikation'],
         },
         {
           name: NAMES.drRahelKorbmacher,
           photo: 'dr-korbmacher.png',
           title: this.$t('homepage.specialistInGynecologyAndObstetrics'),
-          description: this.$t('homepage.afterTheExtensiveTraining'),
+          description: this.$t(
+            'homepage.afterTheExtensiveTrainingInVariousClinics',
+          ),
           qualifications: [
             'qualifikation',
             'qualifikation',
@@ -53,7 +57,9 @@ export default {
           name: NAMES.ChristineEngberg,
           photo: 'dr-engberg.png',
           title: this.$t('homepage.specialistInGynecologyAndObstetrics'),
-          description: this.$t('homepage.afterTheExtensiveTraining'),
+          description: this.$t(
+            'homepage.IAmLookingForwardToSupportingThePracticeTeam',
+          ),
           qualifications: ['qualifikation', 'qualifikation'],
         },
       ];

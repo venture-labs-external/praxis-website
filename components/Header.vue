@@ -10,13 +10,13 @@
       <div class="image__wrapper">
         <img
           class="image"
-          src="doctors-office/doctors-office.png"
+          src="header-image/header-image.png"
           srcset="
-            /doctors-office/doctors-office_w_330.webp   330w,
-            /doctors-office/doctors-office_w_687.webp   687w,
-            /doctors-office/doctors-office_w_927.webp   927w,
-            /doctors-office/doctors-office_w_1137.webp 1137w,
-            /doctors-office/doctors-office_w_1310.webp 1310w
+            /header-image/header-image_w_330.webp   330w,
+            /header-image/header-image_w_877.webp   877w,
+            /header-image/header-image_w_972.webp   972w,
+            /header-image/header-image_w_1185.webp 1185w,
+            /header-image/header-image_w_1310.webp 1310w
           "
           alt="Doctor's office"
         />
@@ -72,7 +72,7 @@ export default {
         workingTime: [
           {
             day: this.$t('homepage.mondayThursday'),
-            hours: '08:00 - 13:00 \n 14:00 - 19:00',
+            hours: '08:00 - 19:00',
           },
           { day: this.$t('homepage.friday'), hours: '08:00 - 13:00' },
         ],

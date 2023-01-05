@@ -33,56 +33,51 @@ export default {
         {
           iconName: '/baby.svg',
           title: this.$t('homepage.familyPlanning'),
-          description:
-            'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
+          description: this.$t('homepage.ifYouWishToHaveChildren'),
         },
         {
           iconName: '/hearts.svg',
           title: this.$t('homepage.pregnancy'),
-          description:
-            'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
+          description: this.$t('homepage.ifYouAreAlreadyPregnant'),
         },
         {
           iconName: '/medical-cross.svg',
           title: this.$t('homepage.generalGynecology'),
-          description:
-            'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
+          description: this.$t('homepage.wouldYouLikeToUseContraception'),
         },
         {
           iconName: '/drop.svg',
           title: this.$t('homepage.endometriosis'),
-          description:
-            'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
+          description: this.$t(
+            'homepage.endometriosisIsOneOfTheMostCommonGynaecologicalDiseases',
+          ),
         },
         {
           iconName: '/check-verified.svg',
           title: this.$t('homepage.cancerPrevention'),
-          description:
-            'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
+          description: this.$t(
+            'homepage.weAreHappyToBeAtYourDisposalForRegularCheckUps',
+          ),
         },
         {
           iconName: '/heart-hand.svg',
           title: this.$t('homepage.girlsConsultation'),
-          description:
-            'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
+          description: this.$t('homepage.teenagersOftenHaveManyQuestions'),
         },
         {
           iconName: '/activity-heart.svg',
           title: this.$t('homepage.menopauseAndHormones'),
-          description:
-            'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
+          description: this.$t('homepage.hotFlushesAndSleepDisorders'),
         },
         {
           iconName: '/microscope.svg',
           title: this.$t('homepage.gynecologicalOncology'),
-          description:
-            'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
+          description: this.$t('homepage.ofCourseWeDoNotLeaveOurPatientsAlone'),
         },
         {
           iconName: '/stethoscope.svg',
-          title: this.$t('homepage.breastDisease'),
-          description:
-            'Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan neque odio vel a, lectus.Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu accumsan Ut est faucibus metus scelerisque. Malesuada rutrum eu.',
+          title: this.$t('homepage.emergencyConsultation'),
+          description: this.$t('homepage.suddenlyIll'),
         },
       ];
     },
