@@ -18,19 +18,24 @@
         </div>
       </div>
       <div class="flip-card--back">
-        <div v-show="show">
-          <div class="d-flex flex-row-reverse" @click="show = !show">
-            <v-btn icon>
-              <img src="/cross.svg" />
-            </v-btn>
+        <div
+          v-show="show"
+          class="flip-card__wrapper d-flex flex-column justify-space-between"
+        >
+          <div>
+            <div class="d-flex flex-row-reverse" @click="show = !show">
+              <v-btn icon>
+                <img src="/cross.svg" />
+              </v-btn>
+            </div>
+            <div class="text-left mx-6" @click="show = !show">
+              <h5 class="text-h5 mb-4">{{ cardInfo.title }}</h5>
+              <p class="subtitle-2">
+                {{ cardInfo.description }}
+              </p>
+            </div>
           </div>
-          <div class="text-left mx-6" @click="show = !show">
-            <h5 class="text-h5 mb-4">{{ cardInfo.title }}</h5>
-            <p class="subtitle-2">
-              {{ cardInfo.description }}
-            </p>
-          </div>
-          <div class="flip-card__button d-flex pa-5">
+          <div class="flip-card__button d-flex pa-4">
             <a
               :href="cardInfo.link"
               target="_blank"
@@ -65,9 +70,13 @@ export default {
 <style lang="scss" scoped>
 .flip-card {
   background-color: transparent;
-  width: 300px;
-  height: 330px;
+  width: 18.75rem;
+  height: 31.25rem;
   perspective: 1000px;
+  &__wrapper {
+    width: 18.75rem;
+    height: 31.25rem;
+  }
   &--inner {
     position: relative;
     width: 100%;
@@ -86,7 +95,7 @@ export default {
     backface-visibility: hidden;
   }
   &--front {
-    padding: 5.6rem 0;
+    padding: 9.844rem 0;
   }
   &--back {
     transform: rotateY(180deg);
@@ -100,6 +109,7 @@ export default {
   }
   &__button {
     border-top: 4px solid var(--v-mint-blue-base);
+    height: 3.5rem;
   }
 }
 </style>
