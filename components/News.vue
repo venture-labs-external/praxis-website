@@ -6,9 +6,9 @@
         src="team/team.png"
         srcset="
           /team/team_w_330.webp   330w,
-          /team/team_w_678.webp   678w,
-          /team/team_w_921.webp   921w,
-          /team/team_w_1133.webp 1133w,
+          /team/team_w_714.webp   714w,
+          /team/team_w_984.webp   984w,
+          /team/team_w_1166.webp 1166w,
           /team/team_w_1310.webp 1310w
         "
         alt="Doctor's photo"
