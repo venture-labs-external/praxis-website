@@ -22,7 +22,8 @@ export default {
       {
         hid: 'title',
         name: 'title',
-        content: 'Frauenärztinnen Gerresheim',
+        content:
+          'Frauenärztinnen Gerresheim - Dr.med. Heike Weydandt und Dr.med. Rahel Korbmacher',
       },
       {
         hid: 'og:image',
@@ -32,27 +33,32 @@ export default {
       {
         hid: 'og:title',
         name: 'og:title',
-        content: 'Frauenärztinnen Gerresheim',
+        content:
+          'Frauenärztinnen Gerresheim - Dr.med. Heike Weydandt und Dr.med. Rahel Korbmacher',
       },
       {
         hid: 'apple-mobile-web-app-title',
         name: 'apple-mobile-web-app-title',
-        content: 'Frauenärztinnen Gerresheim',
+        content:
+          'Frauenärztinnen Gerresheim - Dr.med. Heike Weydandt und Dr.med. Rahel Korbmacher',
       },
       {
         hid: 'og:site_name',
         name: 'og:site_name',
-        content: 'Frauenärztinnen Gerresheim',
+        content:
+          'Frauenärztinnen Gerresheim - Dr.med. Heike Weydandt und Dr.med. Rahel Korbmacher',
       },
       {
         hid: 'description',
         name: 'description',
-        content: 'Frauenärztinnen Gerresheim',
+        content:
+          'Herzlich Willkommen! Wir freuen uns auf ihren Besuch in unserer Praxis.',
       },
       {
         hid: 'og:description',
         name: 'og:description',
-        content: 'Frauenärztinnen Gerresheim',
+        content:
+          'Herzlich Willkommen! Wir freuen uns auf ihren Besuch in unserer Praxis.',
       },
       {
         hid: 'og:favicon',
