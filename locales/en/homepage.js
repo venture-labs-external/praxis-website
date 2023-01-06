@@ -7,11 +7,11 @@ export default {
   friday: 'Fr.',
   dearPatients: 'Liebe Patientinnen,',
   onJanuary:
-    '\nam 01.01.2023 habe ich die Praxis und das Team von Frau Margit Massing übernommen und bin nun Teil der Praxisgemeinschaft mit Frau Dr. Weydandt.\n\nIch freue mich außerdem auf die fachärztliche Unterstützung von Frau Engberg, als Verstärkung für das Team.\nGemeinsam wollen wir die vertrauensvolle Atmosphäre fortführen und würden uns freuen, Sie weiterhin in all Ihren Lebenslagen begleiten zu dürfen. Frau Dr. Weydandt wird selbstverständlich wie gewohnt weiter für die Patientinnen da sein.',
+    '\nam 01.01.2023 habe ich die Praxis und das Team von Frau Margit Massing übernommen und bin nun Teil der Praxisgemeinschaft mit Frau Dr. med. Weydandt.  Ich freue mich außerdem auf die fachärztliche Unterstützung durch Frau Engberg, als Verstärkung für das Team. Gemeinsam wollen wir die vertrauensvolle Atmosphäre fortführen und würden uns freuen, Sie weiterhin in Ihren unterschiedlichsten Lebenslagen begleiten zu dürfen. Frau Dr. med. Weydandt wird selbstverständlich wie gewohnt weiter für die Patientinnen da sein.',
   kindRegards: '\nFreundliche Grüße,',
   specialistForGynecologyAndObstetrics:
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
-  drRahelKorbmacher: 'Dr. Rahel Korbmacher',
+  drRahelKorbmacher: 'Dr. med. Rahel Korbmacher',
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
   ourDoctors: 'Unsere Ärzte',
@@ -22,7 +22,7 @@ export default {
   duringMyMoreThan20YearsOfCollaboration:
     '„Während meiner mehr als 20jährigen Zusammenarbeit mit Frau Massing hat sich unsere Praxis zu einem etablierten Ankerpunkt frauenärztlicher Kompetenz in Gerresheim entwickelt. Ich freue, mich auf Grundlage dieser langjährigen Expertise, jetzt gemeinsam mit Frau Dr. Rahel Korbmacher und dem bewährtem Team unserer bestqualifizierten und engagierten Mitarbeiterinnen für Sie, unsere Patientinnen, unsere individuelle und persönliche Behandlung fortzuführen.“',
   afterTheExtensiveTrainingInVariousClinics:
-    '„Nach der umfangreichen Ausbildung in verschiedenen Kliniken in Düsseldorf und Umgebung freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir sehr am Herzen.  Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.“',
+    '„Nach der umfangreichen Ausbildung in den Kliniken Marien Hospital Düsseldorf und Städtische Kliniken Mönchengladbach freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir am Herzen. Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.“',
   IAmLookingForwardToSupportingThePracticeTeam:
     '„ Ich freue mich darauf ab Januar das Praxis-Team zu unterstützen. Nach meiner klinischen Tätigkeit, bin ich nun gespannt auf die neue Aufgabe in der Praxis und hier die Patientinnen zu beraten und begleiten.“',
   whatWeDo: 'Was wir tun',
@@ -46,13 +46,13 @@ export default {
     'Teenager haben oft viele Fragen, die Sie Ihren Eltern nicht stellen möchten. Hier helfen wir gerne weiter. Der erste Besuch beim Frauenarzt ist häufig sehr aufregend. Deshalb versuchen wir stets in einer vertrauensvollen Atmosphäre die Scheu vor intimen Fragen zu nehmen und dabei besonders auf individuelle Bedürfnisse einzugehen.',
   menopauseAndHormones: 'Menopause / Hormone',
   hotFlushesAndSleepDisorders:
-    'Hitzewallungen und Schlafstörungen?  Damit Sie sich wieder wohl in Ihrer Haut fühlen, helfen wir Ihnen über die Zeit der Menopause hinweg. Die moderne Medizin bietet so viele Ansätze dem zu begegnen. Bitte sprechen Sie uns an und wir informieren gerne über alle Möglichkeiten diesen Beschwerden zu begegnen und individuelle Therapie zu beginnen. Wir bieten Ihnen eine individualisierte Hormonsprechstunde für jedes Alter an. Eine Knochendichtemessung führen wir in unserer Praxis ergänzend durch.',
+    'Hitzewallungen und Schlafstörungen? Damit Sie sich wieder wohl in Ihrer Haut fühlen, helfen wir Ihnen über die Zeit der Menopause hinweg. Die moderne Medizin bietet so viele Ansätze dem zu begegnen. Bitte sprechen Sie uns an und wir informieren gerne über alle Möglichkeiten diesen Beschwerden zu begegnen und eine Therapie zu beginnen. Wir bieten Ihnen eine individualisierte Hormonsprechstunde für jedes Alter an. Eine Knochendichtemessung führen wir in unserer Praxis auf Wunsch ergänzend durch.',
   gynecologicalOncology: 'Gynäkologische Onkologie / Nachsorge',
   ofCourseWeDoNotLeaveOurPatientsAlone:
     'Natürlich lassen wir unsere Patientinnen auch mit schwierigen Diagnosen nicht allein. Eine regelmäßige und sorgfältige Nachsorge, entsprechend den aktuellsten Leitlinien hat hier für uns höchste Priorität.',
   emergencyConsultation: 'Notfallsprechstunde',
   suddenlyIll:
-    'Plötzlich krank. Wir sind für Sie da! Gerne dürfen Sie bei akuten Beschwerden in unserer täglich stattfinde Notfallsprechstunde kommen.',
+    'Plötzlich krank? Wir sind für Sie da! Gerne dürfen Sie bei akuten Beschwerden in unserer täglich stattfindende Notfallsprechstunde kommen.',
   breastDisease: 'Brusterkrankung',
   mondayThursdayLong: 'Montag-Donnerstag:',
   fridayLong: 'Freitag:',
