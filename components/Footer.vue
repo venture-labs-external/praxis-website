@@ -30,7 +30,7 @@
         <div>{{ $t('homepage.email') }} {{ contactData.mail }}</div>
       </div>
     </div>
-    <div class="d-md-flex flex-md-column align-md-end align-self-sm-end">
+    <div class="d-md-flex flex-md-column align-center align-self-sm-end">
       <div v-show="$vuetify.breakpoint.mdAndUp" class="footer__logo">
         <a
           href="/"
@@ -42,14 +42,14 @@
           </span>
         </a>
       </div>
-      <div class="d-flex justify-center align-end mt-6 mt-md-4">
+      <div class="d-flex justify-center align-center mt-6 mt-md-4">
         <a href="/" class="white--text font-weight-regular"
           >{{ $t('homepage.imprint') }}
         </a>
-        <a class="white--text mx-1">|</a>
+        <!-- <a class="white--text mx-1">|</a>
         <a href="/" class="white--text font-weight-regular">
           {{ $t('homepage.privacyPolicy') }}</a
-        >
+        > -->
       </div>
     </div>
   </footer>
