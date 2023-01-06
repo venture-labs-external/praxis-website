@@ -3,13 +3,13 @@
     <div class="mt-4 mt-md-0">
       <img
         class="news__image"
-        src="team/team.png"
+        src="news-image/news-image.png"
         srcset="
-          /team/team_w_330.webp   330w,
-          /team/team_w_714.webp   714w,
-          /team/team_w_984.webp   984w,
-          /team/team_w_1166.webp 1166w,
-          /team/team_w_1310.webp 1310w
+          /news-image/news-image_w_330.webp   330w,
+          /news-image/news-image_w_705.webp   705w,
+          /news-image/news-image_w_975.webp   975w,
+          /news-image/news-image_w_1156.webp 1156w,
+          /news-image/news-image_w_1310.webp 1310w
         "
         alt="Doctor's photo"
       />

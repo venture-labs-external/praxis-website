@@ -13,9 +13,9 @@
           src="header-image/header-image.png"
           srcset="
             /header-image/header-image_w_330.webp   330w,
-            /header-image/header-image_w_877.webp   877w,
-            /header-image/header-image_w_972.webp   972w,
-            /header-image/header-image_w_1185.webp 1185w,
+            /header-image/header-image_w_714.webp   714w,
+            /header-image/header-image_w_984.webp   984w,
+            /header-image/header-image_w_1166.webp 1166w,
             /header-image/header-image_w_1310.webp 1310w
           "
           alt="Doctor's office"
