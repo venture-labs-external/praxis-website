@@ -25,15 +25,35 @@
           </li>
         </ul>
       </div>
-      <v-btn
-        v-show="$vuetify.breakpoint.mdAndUp"
-        color="dark-green"
-        depressed
-        class="nav__button white--text font-weight-bold"
-      >
-        <img src="/arrow-right-white.svg" alt="right arrow" class="mr-4" />
-        Termin buchen
-      </v-btn>
+      <v-dialog v-model="dialog" persistent max-width="320">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            v-show="$vuetify.breakpoint.mdAndUp"
+            color="dark-green"
+            depressed
+            v-bind="attrs"
+            v-on="on"
+            class="nav__button white--text font-weight-bold"
+          >
+            <img src="/arrow-right-white.svg" alt="right arrow" class="mr-4" />
+            {{ $t('homepage.bookAppointment') }}
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title class="text-h5"
+            >{{ $t('homepage.unfortunatelyAnOnlineAppointment') }}
+          </v-card-title>
+          <v-card-text>
+            {{ $t('homepage.weAreWorking') }}
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="dark-green darken-1" text @click="dialog = false">
+              OK
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <div v-show="$vuetify.breakpoint.smAndDown">
         <img src="/menu-list.svg" alt="menu" @click="showMenu = true" />
       </div>
@@ -67,21 +87,44 @@
                 </nuxt-link>
               </li>
             </ul>
-            <div class="button text-h2 my-8">
+            <!-- <div class="button text-h2 my-8">
               <img
                 src="/arrow-right-white.svg"
                 alt="right arrow"
                 class="mr-4"
               />
               {{ $t('homepage.bookAppointment') }}
-            </div>
+            </div> -->
           </div>
-          <div class="mt-16 d-flex justify-center">
-            <a href="/" class="white--text mr-6"
-              >{{ $t('homepage.imprint') }}
-            </a>
-            <a href="/" class="white--text"> {{ $t('homepage.privacy') }}</a>
-          </div>
+          <!-- TODO: fix imprint dialog on mobile  -->
+          <!-- <v-dialog v-model="dialogImprint" width="700px">
+            <template v-slot:activator="{ on, attrs }">
+              <div class="d-flex justify-center mt-16">
+                <a href="/" class="white--text mr-6" v-bind="attrs" v-on="on"
+                  >{{ $t('homepage.imprint') }}
+                </a>
+              </div>
+            </template>
+            <v-card>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <div class="d-flex flex-row-reverse">
+                  <v-btn icon @click="dialogImprint = false">
+                    <img src="/cross.svg" />
+                  </v-btn>
+                </div>
+              </v-card-actions>
+              <v-card-title>
+                <span class="text-h5">{{ $t('imprint.imprint') }}</span>
+              </v-card-title>
+              <v-card-text class="footer__imprint">
+                {{ $t('imprint.information') }}
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog> -->
         </div>
         <div class="menu__logo mx-auto">
           <a
@@ -103,19 +146,21 @@ export default {
   name: 'Navigation',
   data() {
     return {
+      dialog: false,
+      dialogImprint: false,
       opacity: 1,
       showMenu: false,
       navList: [
         { name: this.$t('homepage.news'), path: '/', hash: '#news' },
-        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
         { name: this.$t('homepage.services'), path: '/', hash: '#services' },
+        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
         { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
       ],
       menuList: [
         { name: this.$t('homepage.home'), path: '/', hash: '#' },
         { name: this.$t('homepage.news'), path: '/', hash: '#news' },
-        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
         { name: this.$t('homepage.services'), path: '/', hash: '#services' },
+        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
         { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
       ],
     };
