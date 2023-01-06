@@ -7,7 +7,7 @@ steps:
       - 'eu.gcr.io/$PROJECT_ID/praxis-website-nuxtapp:$SHORT_SHA'
       - '.'
       - '--build-arg'
-      - 'BASE_URL=https://praxis-website.venturelabs.team'
+      - 'BASE_URL=https://www.frauenaerztinnen-gerresheim.de'
 
   # timeout: 1800s
   # - name: 'gcr.io/cloud-builders/gsutil'
