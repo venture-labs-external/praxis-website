@@ -90,7 +90,7 @@ export default {
           },
           {
             type: this.$t('homepage.email'),
-            details: 'info@frauenaerztinnen-gerresheim.de',
+            details: 'termin@frauenaerztinnen-gerresheim.de',
           },
         ],
       };
