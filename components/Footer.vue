@@ -42,15 +42,38 @@
           </span>
         </a>
       </div>
-      <div class="d-flex justify-center align-center mt-6 mt-md-4">
-        <a href="/" class="white--text font-weight-regular"
-          >{{ $t('homepage.imprint') }}
-        </a>
-        <!-- <a class="white--text mx-1">|</a>
+      <v-dialog v-model="dialog" width="700px">
+        <template v-slot:activator="{ on, attrs }">
+          <div class="d-flex justify-center align-center mt-6 mt-md-4">
+            <a class="white--text font-weight-regular" v-bind="attrs" v-on="on"
+              >{{ $t('homepage.imprint') }}
+            </a>
+            <!-- <a class="white--text mx-1">|</a>
         <a href="/" class="white--text font-weight-regular">
           {{ $t('homepage.privacyPolicy') }}</a
         > -->
-      </div>
+          </div>
+        </template>
+        <v-card>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <div class="d-flex flex-row-reverse">
+              <v-btn icon @click="dialog = false">
+                <img src="/cross.svg" />
+              </v-btn>
+            </div>
+          </v-card-actions>
+          <v-card-title>
+            <span class="text-h5">{{ $t('imprint.imprint') }}</span>
+          </v-card-title>
+          <v-card-text class="footer__imprint">
+            {{ $t('imprint.information') }}
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
   </footer>
 </template>
@@ -59,6 +82,11 @@
 import { CONTACT_DATA } from '~/constants';
 export default {
   name: 'Footer',
+  data() {
+    return {
+      dialog: false,
+    };
+  },
   computed: {
     contactData() {
       return {
@@ -95,6 +123,12 @@ export default {
   }
   &__column {
     height: 100%;
+  }
+  &__imprint {
+    white-space: pre-line;
+    &:first-line {
+      line-height: 0;
+    }
   }
 }
 </style>

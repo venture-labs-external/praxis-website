@@ -54,7 +54,6 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
       <div v-show="$vuetify.breakpoint.smAndDown">
         <img src="/menu-list.svg" alt="menu" @click="showMenu = true" />
       </div>
@@ -129,15 +128,15 @@ export default {
       showMenu: false,
       navList: [
         { name: this.$t('homepage.news'), path: '/', hash: '#news' },
-        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
         { name: this.$t('homepage.services'), path: '/', hash: '#services' },
+        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
         { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
       ],
       menuList: [
         { name: this.$t('homepage.home'), path: '/', hash: '#' },
         { name: this.$t('homepage.news'), path: '/', hash: '#news' },
-        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
         { name: this.$t('homepage.services'), path: '/', hash: '#services' },
+        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
         { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
       ],
     };
