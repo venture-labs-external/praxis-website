@@ -1,4 +1,4 @@
-FROM node:14.4.0-alpine3.11
+FROM node:14.17-alpine3.11
 
 # create destination directory
 RUN mkdir -p /usr/src/nuxt-app
@@ -10,11 +10,11 @@ RUN apk add git python make g++
 
 # copy the app, note .dockerignore
 COPY . /usr/src/nuxt-app/
-RUN npm install
+RUN yarn install
 
 # build necessary, even if no static files are needed,
 # since it builds the server as well
-RUN npm run build
+RUN yarn build
 
 # expose 5000 on container
 EXPOSE 80

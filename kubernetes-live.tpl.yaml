@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: praxis-website-nuxtapp-deployment
+  labels:
+    app: praxis-website-nuxtapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: praxis-website-nuxtapp
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: praxis-website-nuxtapp
+    spec:
+      containers:
+        - name: praxis-website-nuxtapp
+          image: eu.gcr.io/GOOGLE_CLOUD_PROJECT/praxis-website-nuxtapp:COMMIT_SHA
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: praxis-website-nuxtapp-service
+spec:
+  type: NodePort
+  ports:
+    - name: httppraxissiteapp
+      port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 30005
+  selector:
+    app: praxis-website-nuxtapp
