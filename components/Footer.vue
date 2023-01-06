@@ -45,7 +45,10 @@
       <v-dialog v-model="dialog" width="700px">
         <template v-slot:activator="{ on, attrs }">
           <div class="d-flex justify-center align-center mt-6 mt-md-4">
-            <a class="white--text font-weight-regular" v-bind="attrs" v-on="on"
+            <a
+              class="white--text font-weight-regular text-decoration-underline"
+              v-bind="attrs"
+              v-on="on"
               >{{ $t('homepage.imprint') }}
             </a>
             <!-- <a class="white--text mx-1">|</a>
