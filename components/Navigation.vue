@@ -25,15 +25,36 @@
           </li>
         </ul>
       </div>
-      <v-btn
-        v-show="$vuetify.breakpoint.mdAndUp"
-        color="dark-green"
-        depressed
-        class="nav__button white--text font-weight-bold"
-      >
-        <img src="/arrow-right-white.svg" alt="right arrow" class="mr-4" />
-        Termin buchen
-      </v-btn>
+      <v-dialog v-model="dialog" persistent max-width="320">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            v-show="$vuetify.breakpoint.mdAndUp"
+            color="dark-green"
+            depressed
+            v-bind="attrs"
+            v-on="on"
+            class="nav__button white--text font-weight-bold"
+          >
+            <img src="/arrow-right-white.svg" alt="right arrow" class="mr-4" />
+            {{ $t('homepage.bookAppointment') }}
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title class="text-h5"
+            >{{ $t('homepage.unfortunatelyAnOnlineAppointment') }}
+          </v-card-title>
+          <v-card-text>
+            {{ $t('homepage.weAreWorking') }}
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="dark-green darken-1" text @click="dialog = false">
+              OK
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <div v-show="$vuetify.breakpoint.smAndDown">
         <img src="/menu-list.svg" alt="menu" @click="showMenu = true" />
       </div>
@@ -67,20 +88,20 @@
                 </nuxt-link>
               </li>
             </ul>
-            <div class="button text-h2 my-8">
+            <!-- <div class="button text-h2 my-8">
               <img
                 src="/arrow-right-white.svg"
                 alt="right arrow"
                 class="mr-4"
               />
               {{ $t('homepage.bookAppointment') }}
-            </div>
+            </div> -->
           </div>
           <div class="mt-16 d-flex justify-center">
             <a href="/" class="white--text mr-6"
               >{{ $t('homepage.imprint') }}
             </a>
-            <a href="/" class="white--text"> {{ $t('homepage.privacy') }}</a>
+            <!-- <a href="/" class="white--text"> {{ $t('homepage.privacy') }}</a> -->
           </div>
         </div>
         <div class="menu__logo mx-auto">
@@ -103,6 +124,7 @@ export default {
   name: 'Navigation',
   data() {
     return {
+      dialog: false,
       opacity: 1,
       showMenu: false,
       navList: [

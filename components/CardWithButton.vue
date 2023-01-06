@@ -12,18 +12,40 @@
       </div>
       <div class="card__content mx-6 my-4"><slot name="optionalBox" /></div>
     </div>
-    <div class="card__button white--text dark-green pa-5">
-      <a
-        :href="cardInfo.link"
-        target="_blank"
-        class="button text-decoration-none white--text"
-      >
-        <div class="button text-h5">
-          <img src="/arrow-right-white.svg" alt="right arrow" class="mr-4" />
-          {{ $t('homepage.bookAppointment') }}
+    <v-dialog v-model="dialog" persistent max-width="320">
+      <template v-slot:activator="{ on, attrs }">
+        <div class="card__button white--text dark-green pa-5">
+          <a
+            class="button text-decoration-none white--text"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <div class="button text-h5">
+              <img
+                src="/arrow-right-white.svg"
+                alt="right arrow"
+                class="mr-4"
+              />
+              {{ $t('homepage.bookAppointment') }}
+            </div>
+          </a>
         </div>
-      </a>
-    </div>
+      </template>
+      <v-card>
+        <v-card-title class="text-h5"
+          >{{ $t('homepage.unfortunatelyAnOnlineAppointment') }}
+        </v-card-title>
+        <v-card-text>
+          {{ $t('homepage.weAreWorking') }}
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="dark-green darken-1" text @click="dialog = false">
+            OK
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -39,6 +61,11 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+  data() {
+    return {
+      dialog: false,
+    };
   },
 };
 </script>

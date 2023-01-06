@@ -66,4 +66,8 @@ export default {
   services: 'Services',
   contact: 'Kontakt',
   home: 'Home',
+  unfortunatelyAnOnlineAppointment:
+    'Leider ist eine online Terminbuchung aktuell noch nicht möglich.',
+  weAreWorking:
+    'Wir arbeiten aber daran, diesen Service so schnell wie möglich anbieten zu können!',
 };
