@@ -88,7 +88,10 @@ export default {
             type: this.$t('homepage.telephone'),
             details: '0211-285009',
           },
-          { type: this.$t('homepage.email'), details: 'info@loremipsum.de' },
+          {
+            type: this.$t('homepage.email'),
+            details: 'info@frauenaerztinnen-gerresheim.de',
+          },
         ],
       };
     },

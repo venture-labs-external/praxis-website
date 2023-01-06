@@ -16,10 +16,57 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'author', name: 'author', content: 'Venture Labs' },
+      { hid: 'og:url', name: 'og:url', content: '' },
+      { hid: 'og:image', property: 'og:image', content: '/featured-image.jpg' },
+      {
+        hid: 'title',
+        name: 'title',
+        content:
+          'Frauenärztinnen Gerresheim - Dr.med. Heike Weydandt und Dr.med. Rahel Korbmacher',
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: 'featured-image.jpg',
+      },
+      {
+        hid: 'og:title',
+        name: 'og:title',
+        content:
+          'Frauenärztinnen Gerresheim - Dr.med. Heike Weydandt und Dr.med. Rahel Korbmacher',
+      },
+      {
+        hid: 'apple-mobile-web-app-title',
+        name: 'apple-mobile-web-app-title',
+        content:
+          'Frauenärztinnen Gerresheim - Dr.med. Heike Weydandt und Dr.med. Rahel Korbmacher',
+      },
+      {
+        hid: 'og:site_name',
+        name: 'og:site_name',
+        content:
+          'Frauenärztinnen Gerresheim - Dr.med. Heike Weydandt und Dr.med. Rahel Korbmacher',
+      },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || '',
+        content:
+          'Herzlich Willkommen! Wir freuen uns auf ihren Besuch in unserer Praxis.',
+      },
+      {
+        hid: 'og:description',
+        name: 'og:description',
+        content:
+          'Herzlich Willkommen! Wir freuen uns auf ihren Besuch in unserer Praxis.',
+      },
+      {
+        hid: 'og:favicon',
+        rel: 'icon',
+        type: 'image/x-icon',
+        name: 'og:favicon',
+        content: '/favicon.ico',
+        href: '/favicon.ico',
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/praxis.ico' }],

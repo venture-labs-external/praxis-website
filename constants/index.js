@@ -1,7 +1,7 @@
 export const CONTACT_DATA = {
   address: 'Neunzigstraße 1, 40625 Düsseldorf',
   phone: '0211-285009',
-  email: 'info@loremipsum.de',
+  email: 'info@frauenaerztinnen-gerresheim.de',
 };
 
 export const NAMES = {
