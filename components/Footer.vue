@@ -67,10 +67,32 @@
             </div>
           </v-card-actions>
           <v-card-title>
-            <span class="text-h5">{{ $t('imprint.imprint') }}</span>
+            <span class="text-h2">{{ $t('imprint.imprint') }}</span>
           </v-card-title>
           <v-card-text class="footer__imprint">
-            {{ $t('imprint.information') }}
+            <p
+              v-for="element in impressumData"
+              :key="element.label"
+              :class="{
+                'subtitle-1': element.type === 'title',
+                'body-2': element.type === 'content',
+              }"
+              v-html="$t(element.label)"
+            />
+            <p
+              class="subtitle-1"
+              v-html="$t('imprint.conceptDesignProgramming.title')"
+            />
+            <div class="d-flex justify-start" style="height: 100%">
+              <div class="d-flex justify-start flex-column">
+                <img src="/venture-labs.svg" width="100px" height="45px" />
+                <img src="/lab-icons.svg" width="100px" height="15px" />
+              </div>
+              <p
+                class="body-2 ml-10 mt-2"
+                v-html="$t('imprint.conceptDesignProgramming.content')"
+              />
+            </div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -88,6 +110,24 @@ export default {
   data() {
     return {
       dialog: false,
+      impressumData: [
+        { label: 'imprint.generalInfo.title', type: 'title' },
+        { label: 'imprint.generalInfo.content', type: 'content' },
+        { label: 'imprint.jobInfo.title', type: 'title' },
+        { label: 'imprint.jobInfo.content', type: 'content' },
+        { label: 'imprint.competenceInfo.title', type: 'title' },
+        { label: 'imprint.competenceInfo.content', type: 'content' },
+        { label: 'imprint.doctorsInfo.title', type: 'title' },
+        { label: 'imprint.doctorsInfo.content', type: 'content' },
+        { label: 'imprint.professionalRegulations.title', type: 'title' },
+        { label: 'imprint.professionalRegulations.content', type: 'content' },
+        { label: 'imprint.legalTitle.title', type: 'title' },
+        { label: 'imprint.legalTitle.content', type: 'content' },
+        { label: 'imprint.liabilityNotice.title', type: 'title' },
+        { label: 'imprint.liabilityNotice.content', type: 'content' },
+        { label: 'imprint.content.title', type: 'title' },
+        { label: 'imprint.content.content', type: 'content' },
+      ],
     };
   },
   computed: {
@@ -129,6 +169,7 @@ export default {
   }
   &__imprint {
     white-space: pre-line;
+    margin-top: 30px;
     &:first-line {
       line-height: 0;
     }

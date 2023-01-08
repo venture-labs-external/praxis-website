@@ -31,12 +31,11 @@
 </template>
 
 <script>
-import CardWithButton from '~/components/CardWithButton';
 import { CONTACT_DATA } from '~/constants';
 export default {
   name: 'Header',
   components: {
-    CardWithButton,
+    CardWithButton: () => import('~/components/CardWithButton'),
   },
   computed: {
     cardInfo() {

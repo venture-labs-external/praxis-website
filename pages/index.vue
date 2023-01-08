@@ -9,19 +9,14 @@
 </template>
 
 <script>
-import AboutUs from '~/components/AboutUs';
-import Contact from '~/components/Contact';
-import Header from '~/components/Header';
-import News from '~/components/News';
-import Services from '~/components/Services';
 import news from '~/mixins/newsData.js';
 export default {
   components: {
-    Header,
-    News,
-    AboutUs,
-    Services,
-    Contact,
+    Header: () => import('~/components/AboutUs'),
+    News: () => import('~/components/News'),
+    AboutUs: () => import('~/components/AboutUs'),
+    Services: () => import('~/components/Services'),
+    Contact: () => import('~/components/Contact'),
   },
   mixins: [news],
 };

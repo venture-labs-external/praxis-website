@@ -12,14 +12,19 @@
       </div>
       <div class="card__content mx-6 my-4"><slot name="optionalBox" /></div>
     </div>
-    <v-dialog v-model="dialog" persistent max-width="320">
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="320"
+      @click:outside="dialog = false"
+    >
       <template v-slot:activator="{ on, attrs }">
-        <div class="card__button white--text dark-green pa-5">
-          <a
-            class="button text-decoration-none white--text"
-            v-bind="attrs"
-            v-on="on"
-          >
+        <div
+          class="card__button white--text dark-green pa-5"
+          v-bind="attrs"
+          v-on="on"
+        >
+          <a class="button text-decoration-none white--text">
             <div class="button text-h5">
               <img
                 src="/arrow-right-white.svg"

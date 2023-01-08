@@ -25,7 +25,12 @@
           </li>
         </ul>
       </div>
-      <v-dialog v-model="dialog" persistent max-width="320">
+      <v-dialog
+        v-model="dialog"
+        persistent
+        max-width="320"
+        @click:outside="dialog = false"
+      >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             v-show="$vuetify.breakpoint.mdAndUp"
@@ -97,7 +102,7 @@
             </div> -->
           </div>
           <!-- TODO: fix imprint dialog on mobile  -->
-          <!-- <v-dialog v-model="dialogImprint" width="700px">
+          <!-- <v-dialog v-model="dialogImprint" width="700px" @click:outside="dialog = false">
             <template v-slot:activator="{ on, attrs }">
               <div class="d-flex justify-center mt-16">
                 <a href="/" class="white--text mr-6" v-bind="attrs" v-on="on"
