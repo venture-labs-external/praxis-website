@@ -12,7 +12,7 @@
 import news from '~/mixins/newsData.js';
 export default {
   components: {
-    Header: () => import('~/components/AboutUs'),
+    Header: () => import('~/components/Header'),
     News: () => import('~/components/News'),
     AboutUs: () => import('~/components/AboutUs'),
     Services: () => import('~/components/Services'),
