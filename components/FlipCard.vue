@@ -35,18 +35,44 @@
               </p>
             </div>
           </div>
-          <div class="flip-card__button d-flex pa-4">
-            <a
-              :href="cardInfo.link"
-              target="_blank"
-              class="button text-decoration-none"
-            >
-              <div class="text-h5">
-                <img src="/arrow-right.svg" alt="right arrow" class="mr-4" />
-                {{ $t('homepage.bookAppointment') }}
+          <v-dialog v-model="dialog" persistent max-width="320">
+            <template v-slot:activator="{ on, attrs }">
+              <div
+                v-bind="attrs"
+                v-on="on"
+                class="flip-card__button d-flex pa-4"
+              >
+                <a
+                  :href="cardInfo.link"
+                  target="_blank"
+                  class="button text-decoration-none"
+                >
+                  <div class="text-h5">
+                    <img
+                      src="/arrow-right.svg"
+                      alt="right arrow"
+                      class="mr-4"
+                    />
+                    {{ $t('homepage.bookAppointment') }}
+                  </div>
+                </a>
               </div>
-            </a>
-          </div>
+            </template>
+            <v-card>
+              <v-card-title class="text-h5"
+                >{{ $t('homepage.unfortunatelyAnOnlineAppointment') }}
+              </v-card-title>
+              <v-card-text>
+                {{ $t('homepage.weAreWorking') }}
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="dark-green darken-1" text @click="dialog = false">
+                  OK
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
       </div>
     </div>
@@ -57,12 +83,14 @@ export default {
   name: 'FlipCard',
   props: {
     cardInfo: {
+      dialog: false,
       type: Object,
       default: () => {},
     },
   },
   data: () => ({
     show: false,
+    dialog: false,
   }),
 };
 </script>
