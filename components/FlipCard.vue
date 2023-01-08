@@ -21,8 +21,9 @@
         <div
           v-show="show"
           class="flip-card__wrapper d-flex flex-column justify-space-between"
+          @click="show = !show"
         >
-          <div>
+          <div @click="show = !show">
             <div class="d-flex flex-row-reverse" @click="show = !show">
               <v-btn icon>
                 <img src="/cross.svg" />
@@ -35,7 +36,12 @@
               </p>
             </div>
           </div>
-          <v-dialog v-model="dialog" persistent max-width="320">
+          <v-dialog
+            v-model="dialog"
+            persistent
+            max-width="320"
+            @click:outside="dialog = false"
+          >
             <template v-slot:activator="{ on, attrs }">
               <div
                 v-bind="attrs"

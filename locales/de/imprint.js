@@ -22,12 +22,12 @@ export default {
   competenceInfo: {
     title: 'Zuständige Kammer',
     content:
-      'Ärztekammer Nordrhein (<a href="https://www.aekno.de" rel=”nofollow”>www.aekno.de</a>)',
+      'Ärztekammer Nordrhein (<a href="https://www.aekno.de" rel=”nofollow” target="_blank">www.aekno.de</a>)',
   },
   doctorsInfo: {
     title: 'Zuständige kassenärztliche Vereinigung',
     content:
-      'Kassenärztliche Vereinigung Nordrhein (<a href="https://www.kvno.de" rel=”nofollow”>www.kvno.de</a>)',
+      'Kassenärztliche Vereinigung Nordrhein (<a href="https://www.kvno.de" rel=”nofollow” target="_blank">www.kvno.de</a>)',
   },
   professionalRegulations: {
     title: 'Berufsrechtliche Regelungen',
@@ -62,6 +62,6 @@ export default {
     content:
       'Venture Labs GmbH' +
       '\n' +
-      '<a href="https://www.venturelabs.team">venturelabs.team</a>',
+      '<a href="https://www.venturelabs.team" target="_blank">venturelabs.team</a>',
   },
 };
