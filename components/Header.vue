@@ -18,6 +18,7 @@
             /header-image/header-image_w_1166.webp 1166w,
             /header-image/header-image_w_1310.webp 1310w
           "
+          loading="lazy"
           alt="Doctor's office"
         />
       </div>
@@ -58,11 +59,10 @@
 </template>
 
 <script>
-import CardWithButton from '~/components/CardWithButton';
 export default {
   name: 'Header',
   components: {
-    CardWithButton,
+    CardWithButton: () => import('~/components/CardWithButton'),
   },
   computed: {
     cardInfo() {

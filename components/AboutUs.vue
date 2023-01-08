@@ -17,12 +17,11 @@
 </template>
 
 <script>
-import ExpandingCard from '~/components/ExpandingCard';
 import { NAMES } from '~/constants';
 export default {
   name: 'AboutUs',
   components: {
-    ExpandingCard,
+    ExpandingCard: () => import('~/components/ExpandingCard'),
   },
   computed: {
     // TODO: add missing content

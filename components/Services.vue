@@ -20,11 +20,10 @@
 </template>
 
 <script>
-import FlipCard from '~/components/FlipCard';
 export default {
   name: 'Services',
   components: {
-    FlipCard,
+    FlipCard: () => import('~/components/FlipCard'),
   },
   computed: {
     // TODO: add missing content

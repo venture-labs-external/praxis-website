@@ -11,6 +11,7 @@
           /news-image/news-image_w_1156.webp 1156w,
           /news-image/news-image_w_1310.webp 1310w
         "
+        loading="lazy"
         alt="Doctor's photo"
       />
     </div>
