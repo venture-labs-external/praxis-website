@@ -37,7 +37,7 @@
               class="table__row pr-12"
             >
               <v-col class="text-h4">{{ time.day }}</v-col>
-              <v-col class="body-1 text-right">{{ time.hours }}</v-col>
+              <v-col class="body-1 text-right" v-html="time.hours"></v-col>
             </v-row>
           </div>
         </template>
