@@ -37,7 +37,7 @@
               class="table__row pr-12"
             >
               <v-col class="text-h4">{{ time.day }}</v-col>
-              <v-col class="body-1 text-right">{{ time.hours }}</v-col>
+              <v-col class="body-1 text-right" v-html="time.hours"></v-col>
             </v-row>
           </div>
         </template>
@@ -72,7 +72,7 @@ export default {
         workingTime: [
           {
             day: this.$t('homepage.mondayThursday'),
-            hours: '08:00 - 19:00',
+            hours: '08:00 - 13:00<br>14:00 - 19:00',
           },
           { day: this.$t('homepage.friday'), hours: '08:00 - 13:00' },
         ],

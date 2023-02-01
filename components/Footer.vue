@@ -139,7 +139,7 @@ export default {
         workingTime: [
           {
             day: this.$t('homepage.mondayThursdayLong'),
-            hours: '08:00 - 19:00',
+            hours: '08:00 - 13:00 | 14:00 - 19:00',
           },
           { day: this.$t('homepage.fridayLong'), hours: '08:00 - 13:00' },
         ],

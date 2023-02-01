@@ -7,7 +7,7 @@ export default {
   friday: 'Fr.',
   dearPatients: 'Liebe Patientinnen,',
   onJanuary:
-    '\nam 01.01.2023 habe ich die Praxis und das Team von Frau Margit Massing übernommen und bin nun Teil der Praxisgemeinschaft mit Frau Dr. med. Weydandt.  Ich freue mich außerdem auf die fachärztliche Unterstützung durch Frau Engberg, als Verstärkung für das Team. Gemeinsam wollen wir die vertrauensvolle Atmosphäre fortführen und würden uns freuen, Sie weiterhin in Ihren unterschiedlichsten Lebenslagen begleiten zu dürfen. Frau Dr. med. Weydandt wird selbstverständlich wie gewohnt weiter für die Patientinnen da sein.',
+    '\nam 01.01.2023 habe ich die Frauenarztpraxis und das Team von Frau Margit Massing übernommen und bin nun Teil der Praxisgemeinschaft mit Frau Dr. med. Weydandt.  Ich freue mich außerdem auf die fachärztliche Unterstützung durch Frau Engberg, als Verstärkung für das Team. Gemeinsam wollen wir die vertrauensvolle Atmosphäre fortführen und würden uns freuen, Sie weiterhin in Ihren unterschiedlichsten Lebenslagen begleiten zu dürfen. Frau Dr. med. Weydandt wird selbstverständlich wie gewohnt weiter für die Patientinnen da sein.',
   kindRegards: '\nFreundliche Grüße,',
   specialistForGynecologyAndObstetrics:
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
@@ -28,7 +28,7 @@ export default {
   whatWeDo: 'Was wir tun',
   familyPlanning: 'Familienplanung / Kinderwunsch',
   ifYouWishToHaveChildren:
-    'Bei Kinderwunsch beraten wir Sie gerne und begleiten Sie auf dem Weg Ihrer Familienplanung. Sollte weiterführende Diagnostik, wie zum Beispiel eine Hormonbestimmung oder ein Zyklusmonitoring sinnvoll sein, können wir diese Maßnahmen in unserer Praxis durchführen.',
+    'Bei Kinderwunsch beraten wir Sie gerne und begleiten Sie auf dem Weg Ihrer Familienplanung. Sollte weiterführende Diagnostik, wie zum Beispiel eine Hormonbestimmung oder ein Zyklusmonitoring sinnvoll sein, können wir diese Maßnahmen in unserer Frauenarzt Praxis durchführen.',
   pregnancy: 'Schwangerschaft',
   ifYouAreAlreadyPregnant:
     'Wenn Sie bereits schwanger sind und ein Kind erwarten, begleiten wir Sie bei jedem Schritt Ihrer Schwangerschaft. Wir möchten Sie dabei unterstützen, die Zeit Ihrer Schwangerschaft so angenehm wie möglich zu erleben. Alle notwendigen Untersuchungen, die im Rahmen der Mutterschaftsrichtlinien durchgeführt werden sollten, sind Teil unseres Leistungsspektrums. Darüber hinaus beraten wir Sie gerne bezüglich weiterführender Diagnostik, sowie über individuelle Gesundheitsleistungen (IGEL), die im Rahmen der Schwangerschaftsvorsorge sinnvoll sein können.',
