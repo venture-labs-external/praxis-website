@@ -25,40 +25,22 @@
           </li>
         </ul>
       </div>
-      <v-dialog
-        v-model="dialog"
-        persistent
-        max-width="320"
-        @click:outside="dialog = false"
+      <v-btn
+        v-show="$vuetify.breakpoint.mdAndUp"
+        color="dark-green"
+        depressed
+        class="nav__button white--text font-weight-bold"
       >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            v-show="$vuetify.breakpoint.mdAndUp"
-            color="dark-green"
-            depressed
-            v-bind="attrs"
-            v-on="on"
-            class="nav__button white--text font-weight-bold"
-          >
-            <img src="/arrow-right-white.svg" alt="right arrow" class="mr-4" />
-            {{ $t('homepage.bookAppointment') }}
-          </v-btn>
-        </template>
-        <v-card>
-          <v-card-title class="text-h5"
-            >{{ $t('homepage.unfortunatelyAnOnlineAppointment') }}
-          </v-card-title>
-          <v-card-text>
-            {{ $t('homepage.weAreWorking') }}
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="dark-green darken-1" text @click="dialog = false">
-              OK
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+        <a
+          class="button text-decoration-none white--text"
+          href="https://www.doctolib.de/praxisgemeinschaft/duesseldorf/frauenaerztinnen-gerresheim?utm_campaign=website-button&amp;utm_source=frauenaerztinnen-gerresheim-website-button&amp;utm_medium=referral&amp;utm_content=option-8&amp;utm_term=frauenaerztinnen-gerresheim"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <img src="/arrow-right-white.svg" alt="right arrow" class="mr-4" />
+          {{ $t('homepage.bookAppointment') }}
+        </a>
+      </v-btn>
       <div v-show="$vuetify.breakpoint.smAndDown">
         <img src="/menu-list.svg" alt="menu" @click="showMenu = true" />
       </div>
@@ -92,44 +74,79 @@
                 </nuxt-link>
               </li>
             </ul>
-            <!-- <div class="button text-h2 my-8">
-              <img
-                src="/arrow-right-white.svg"
-                alt="right arrow"
-                class="mr-4"
-              />
-              {{ $t('homepage.bookAppointment') }}
-            </div> -->
+            <div class="button text-h2 my-8">
+              <a
+                class="button text-decoration-none white--text"
+                href="https://www.doctolib.de/praxisgemeinschaft/duesseldorf/frauenaerztinnen-gerresheim?utm_campaign=website-button&amp;utm_source=frauenaerztinnen-gerresheim-website-button&amp;utm_medium=referral&amp;utm_content=option-8&amp;utm_term=frauenaerztinnen-gerresheim"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <img
+                  src="/arrow-right-white.svg"
+                  alt="right arrow"
+                  class="mr-4"
+                />
+                {{ $t('homepage.bookAppointment') }}
+              </a>
+            </div>
           </div>
-          <!-- TODO: fix imprint dialog on mobile  -->
-          <!-- <v-dialog v-model="dialogImprint" width="700px" @click:outside="dialog = false">
+          <v-dialog v-model="dialog" width="700px">
             <template v-slot:activator="{ on, attrs }">
-              <div class="d-flex justify-center mt-16">
-                <a href="/" class="white--text mr-6" v-bind="attrs" v-on="on"
+              <div class="d-flex justify-center align-center mt-6 mt-md-4">
+                <a
+                  class="white--text font-weight-regular text-decoration-underline"
+                  v-bind="attrs"
+                  v-on="on"
                   >{{ $t('homepage.imprint') }}
                 </a>
+                <!-- <a class="white--text mx-1">|</a>
+        <a href="/" class="white--text font-weight-regular">
+          {{ $t('homepage.privacyPolicy') }}</a
+        > -->
               </div>
             </template>
             <v-card>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <div class="d-flex flex-row-reverse">
-                  <v-btn icon @click="dialogImprint = false">
+                  <v-btn icon @click="dialog = false">
                     <img src="/cross.svg" />
                   </v-btn>
                 </div>
               </v-card-actions>
               <v-card-title>
-                <span class="text-h5">{{ $t('imprint.imprint') }}</span>
+                <span class="text-h2">{{ $t('imprint.imprint') }}</span>
               </v-card-title>
-              <v-card-text class="footer__imprint">
-                {{ $t('imprint.information') }}
+              <v-card-text class="nav__imprint">
+                <p
+                  v-for="element in impressumData"
+                  :key="element.label"
+                  :class="{
+                    'subtitle-1': element.type === 'title',
+                    'body-2': element.type === 'content',
+                  }"
+                  v-html="$t(element.label)"
+                />
+                <p
+                  class="subtitle-1"
+                  v-html="$t('imprint.conceptDesignProgramming.title')"
+                />
+                <div class="d-flex justify-start" style="height: 100%">
+                  <div class="d-flex justify-start flex-column">
+                    <img src="/venture-labs.svg" width="100px" height="45px" />
+                    <img src="/lab-icons.svg" width="100px" height="15px" />
+                  </div>
+                  <p
+                    class="body-2 ml-10 mt-2"
+                    v-html="$t('imprint.conceptDesignProgramming.content')"
+                  />
+                </div>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
-          </v-dialog> -->
+          </v-dialog>
         </div>
         <div class="menu__logo mx-auto">
           <a
@@ -168,6 +185,24 @@ export default {
         { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
         { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
       ],
+      impressumData: [
+        { label: 'imprint.generalInfo.title', type: 'title' },
+        { label: 'imprint.generalInfo.content', type: 'content' },
+        { label: 'imprint.jobInfo.title', type: 'title' },
+        { label: 'imprint.jobInfo.content', type: 'content' },
+        { label: 'imprint.competenceInfo.title', type: 'title' },
+        { label: 'imprint.competenceInfo.content', type: 'content' },
+        { label: 'imprint.doctorsInfo.title', type: 'title' },
+        { label: 'imprint.doctorsInfo.content', type: 'content' },
+        { label: 'imprint.professionalRegulations.title', type: 'title' },
+        { label: 'imprint.professionalRegulations.content', type: 'content' },
+        { label: 'imprint.legalTitle.title', type: 'title' },
+        { label: 'imprint.legalTitle.content', type: 'content' },
+        { label: 'imprint.liabilityNotice.title', type: 'title' },
+        { label: 'imprint.liabilityNotice.content', type: 'content' },
+        { label: 'imprint.content.title', type: 'title' },
+        { label: 'imprint.content.content', type: 'content' },
+      ],
     };
   },
 };
@@ -187,6 +222,13 @@ export default {
   &__menu {
     width: 100vw;
     height: 100vh;
+  }
+  &__imprint {
+    white-space: pre-line;
+    margin-top: 30px;
+    &:first-line {
+      line-height: 0;
+    }
   }
 }
 .list {

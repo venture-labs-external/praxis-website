@@ -12,45 +12,19 @@
       </div>
       <div class="card__content mx-6 my-4"><slot name="optionalBox" /></div>
     </div>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="320"
-      @click:outside="dialog = false"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <div
-          class="card__button white--text dark-green pa-5"
-          v-bind="attrs"
-          v-on="on"
-        >
-          <a class="button text-decoration-none white--text">
-            <div class="button text-h5">
-              <img
-                src="/arrow-right-white.svg"
-                alt="right arrow"
-                class="mr-4"
-              />
-              {{ $t('homepage.bookAppointment') }}
-            </div>
-          </a>
+    <div class="card__button white--text dark-green pa-5">
+      <a
+        class="button text-decoration-none white--text"
+        href="https://www.doctolib.de/praxisgemeinschaft/duesseldorf/frauenaerztinnen-gerresheim?utm_campaign=website-button&amp;utm_source=frauenaerztinnen-gerresheim-website-button&amp;utm_medium=referral&amp;utm_content=option-8&amp;utm_term=frauenaerztinnen-gerresheim"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div class="button text-h5">
+          <img src="/arrow-right-white.svg" alt="right arrow" class="mr-4" />
+          {{ $t('homepage.bookAppointment') }}
         </div>
-      </template>
-      <v-card>
-        <v-card-title class="text-h5"
-          >{{ $t('homepage.unfortunatelyAnOnlineAppointment') }}
-        </v-card-title>
-        <v-card-text>
-          {{ $t('homepage.weAreWorking') }}
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="dark-green darken-1" text @click="dialog = false">
-            OK
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -86,6 +60,7 @@ export default {
   }
 }
 .button {
+  cursor: pointer;
   width: 100%;
   height: 100%;
 }
