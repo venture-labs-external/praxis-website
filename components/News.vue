@@ -36,7 +36,7 @@ export default {
         header: this.$t('homepage.newsTitle'),
         description: this.$t('homepage.newsDescription'),
         footer: this.$t('homepage.kindRegards'),
-        name: this.$t('homepage.drRahelKorbmacher'),
+        name: this.$t('homepage.doctors'),
         title: this.$t('homepage.specialistForGynecologyAndObstetrics'),
       },
     };
