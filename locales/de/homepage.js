@@ -18,13 +18,13 @@ export default {
   whereYouCanFindUs: 'Wo Sie uns finden',
   ourDoctors: 'Behandelnde Ärztinnen',
   specialistInGynecologyAndObstetrics:
-    'Fachärztin für Frauenheilkunde und Geburtshilfe',
+    'Fachärztin für Frauenheilkunde & ...',
   afterTheExtensiveTraining:
     'Nach der umfangreichen Ausbildung in verschiedenen Kliniken in Düsseldorf und Umgebung freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir sehr am Herzen.  Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.',
   duringMyMoreThan20YearsOfCollaboration:
-    '„Während meiner mehr als 20jährigen Zusammenarbeit mit Frau Massing hat sich unsere Praxis zu einem etablierten Ankerpunkt frauenärztlicher Kompetenz in Gerresheim entwickelt. Ich freue, mich auf Grundlage dieser langjährigen Expertise, jetzt gemeinsam mit Frau Dr. Rahel Korbmacher und dem bewährtem Team unserer bestqualifizierten und engagierten Mitarbeiterinnen für Sie, unsere Patientinnen, unsere individuelle und persönliche Behandlung fortzuführen.“',
+    '„Während meiner mehr als 20jährigen Tätigkeit im Herzen von  Gerresheim hat sich meine Praxis zu einem etablierten Ankerpunkt frauenärztlicher Kompetenz entwickelt. Ich freue mich, auf Grundlage dieser langjährigen Expertise und mit einem Team bestqualifizierter und engagierter Mitarbeiterinnen für Sie, unsere Patientinnen, da zu sein.“',
   afterTheExtensiveTrainingInVariousClinics:
-    '„Nach der umfangreichen Ausbildung in den Kliniken Marien Hospital Düsseldorf und Städtische Kliniken Mönchengladbach freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir am Herzen. Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.“',
+    '„Nach der umfangreichen Ausbildung in verschiedenen Kliniken in Düsseldorf und Umgebung freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir sehr am Herzen.  Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.“',
   IAmLookingForwardToSupportingThePracticeTeam:
     '„ Ich freue mich darauf ab Januar das Praxis-Team zu unterstützen. Nach meiner klinischen Tätigkeit, bin ich nun gespannt auf die neue Aufgabe in der Praxis und hier die Patientinnen zu beraten und begleiten.“',
   whatWeDo: 'Was wir tun',
