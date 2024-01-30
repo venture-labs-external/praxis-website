@@ -28,11 +28,15 @@
         <img src="/phone-white.svg" alt="phone" class="my-4" />
         <div>
           <span>{{ $t('homepage.telephone') }}</span>
-          <a :href="`tel:${contactData.phone}`" class="white--text">{{ contactData.phone }}</a>
+          <a :href="`tel:${contactData.phone}`" class="white--text">
+            {{ contactData.phone }}
+          </a>
         </div>
         <div>
           <span>{{ $t('homepage.email') }}</span>
-          <a :href="`mailto:${contactData.mail}`" class="white--text">{{ contactData.mail }}</a>
+          <a :href="`mailto:${contactData.mail}`" class="white--text">
+            {{ contactData.mail }}
+          </a>
         </div>
       </div>
     </div>

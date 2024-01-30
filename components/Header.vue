@@ -59,7 +59,9 @@
               <template v-else>
                 <v-col class="text-h4">{{ contact.type }}</v-col>
                 <v-col class="body-1 text-right">
-                  <a :href="`mailto:${contact.details}`">{{ contact.details }}</a>
+                  <a :href="`mailto:${contact.details}`">
+                    {{ contact.details }}
+                  </a>
                 </v-col>
               </template>
             </v-row>
