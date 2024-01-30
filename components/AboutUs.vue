@@ -86,18 +86,19 @@ export default {
     justify-items: center;
     height: 100% !important;
     &-title {
+      justify-self: start;
       & span {
         font-family: 'Roboto Serif' !important;
-        font-size: 1.5rem;
-        font-weight: 700;
+        font-size: 1.5rem !important;
+        font-weight: 700 !important;
         line-height: 1;
       }
       & p {
         color: var(--v-dark-green-base);
         font-family: Roboto;
-        font-size: 16px;
+        font-size: 16px !important;
         font-style: normal;
-        font-weight: 500;
+        font-weight: 500 !important;
         line-height: 1.4;
         margin-bottom: 0 !important;
       }

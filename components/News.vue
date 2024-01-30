@@ -21,6 +21,7 @@
         <p class="body-1 ma-0">{{ news.description }}</p>
         <div class="body-1">{{ news.footer }}</div>
         <div class="body-1">{{ news.name }}</div>
+        <div class="body-1">{{ news.title }}</div>
       </div>
     </div>
   </div>

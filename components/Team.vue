@@ -31,7 +31,7 @@ export default {
       team: [
         {
           id: 1,
-          name: 'Kathrin Hahnefeld',
+          name: 'Britta Kirrwald',
           title: 'MFA',
           photo: 'placeholder1.png',
         },

@@ -9,21 +9,20 @@ export default {
   newsTitle:
     'Herzlich willkommen in unserer Frauenarztpraxis in Düsseldorf Gerresheim!',
   newsDescription:
-    '\nUnter der fachärztlichen Leitung von Dr. Rahel Korbmacher und Dr. Weydandt begleiten wir Sie kompetent und einfühlsam in allen Lebenslagen. Unsere Praxis bietet umfassende frauenärztliche Betreuung, von Familienplanung über Schwangerschaftsbetreuung bis hin zur allgemeinen Gynäkologie.\n\n Unser Team, bestehend aus sechs engagierten Medizinischen Fachangestellten, sorgt dafür, dass Sie sich bei uns gut aufgehoben fühlen. Wir freuen uns darauf, Sie in unserer Praxis begrüßen zu dürfen und Sie in Ihrer individuellen Gesundheitsreise zu begleiten.',
-  kindRegards: '\nHerzliche Grüße,',
+    'Unter der fachärztlichen Leitung von Dr. Rahel Korbmacher und Dr. Weydandt begleiten wir Sie kompetent und einfühlsam in allen Lebenslagen. Unsere Praxis bietet umfassende frauenärztliche Betreuung, von Familienplanung über Schwangerschaftsbetreuung bis hin zur allgemeinen Gynäkologie. Unser Team, bestehend aus sechs engagierten Medizinischen Fachangestellten, sorgt dafür, dass Sie sich bei uns gut aufgehoben fühlen. Wir freuen uns darauf, Sie in unserer Praxis begrüßen zu dürfen und Sie in Ihrer individuellen Gesundheitsreise zu begleiten.',
+  kindRegards: '\nFreundliche Grüße,',
   specialistForGynecologyAndObstetrics:
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
-  drRahelKorbmacher:
-    'Dr. Rahel Korbmacher und Dr. Heike Weydandt - Fachärztinnen für Frauenheilkunde und Geburtshilfe',
+  drRahelKorbmacher: 'Dr. med. Rahel Korbmacher',
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
   ourDoctors: 'Behandelnde Ärztinnen',
   specialistInGynecologyAndObstetrics:
-    'Fachärztin für Frauenheilkunde und Geburtshilfe',
+    'Fachärztin für Frauenheilkunde & ...',
   afterTheExtensiveTraining:
     'Nach der umfangreichen Ausbildung in verschiedenen Kliniken in Düsseldorf und Umgebung freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir sehr am Herzen.  Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.',
   duringMyMoreThan20YearsOfCollaboration:
-    '„Während meiner mehr als 20jährigen Zusammenarbeit mit Frau Massing hat sich unsere Praxis zu einem etablierten Ankerpunkt frauenärztlicher Kompetenz in Gerresheim entwickelt. Ich freue, mich auf Grundlage dieser langjährigen Expertise, jetzt gemeinsam mit Frau Dr. Rahel Korbmacher und dem bewährtem Team unserer bestqualifizierten und engagierten Mitarbeiterinnen für Sie, unsere Patientinnen, unsere individuelle und persönliche Behandlung fortzuführen.“',
+    '„Während meiner mehr als 20jährigen Tätigkeit im Herzen von  Gerresheim hat sich meine Praxis zu einem etablierten Ankerpunkt frauenärztlicher Kompetenz entwickelt. Ich freue mich, auf Grundlage dieser langjährigen Expertise und mit einem Team bestqualifizierter und engagierter Mitarbeiterinnen für Sie, unsere Patientinnen, da zu sein.“',
   afterTheExtensiveTrainingInVariousClinics:
     '„Nach der umfangreichen Ausbildung in den Kliniken Marien Hospital Düsseldorf und Städtische Kliniken Mönchengladbach freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir am Herzen. Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.“',
   IAmLookingForwardToSupportingThePracticeTeam:
