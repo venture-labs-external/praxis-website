@@ -173,9 +173,8 @@ export default {
       opacity: 1,
       showMenu: false,
       navList: [
-        { name: this.$t('homepage.news'), path: '/', hash: '#news' },
-        { name: this.$t('homepage.services'), path: '/', hash: '#services' },
         { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
+        { name: this.$t('homepage.services'), path: '/', hash: '#services' },
         { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
       ],
       menuList: [
