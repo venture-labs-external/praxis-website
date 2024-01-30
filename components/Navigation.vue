@@ -173,8 +173,8 @@ export default {
       opacity: 1,
       showMenu: false,
       navList: [
-        { name: this.$t('homepage.services'), path: '/', hash: '#services' },
         { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
+        { name: this.$t('homepage.services'), path: '/', hash: '#services' },
         { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
       ],
       menuList: [
@@ -211,7 +211,7 @@ export default {
   border-bottom: 1px solid var(--v-dark-green-base);
   &__logo {
     width: 10.5rem;
-    font-family: 'Roboto Serif', sans-serif;
+    font-family: 'Roboto Serif';
     font-size: 1.25rem;
     line-height: 1.2;
   }

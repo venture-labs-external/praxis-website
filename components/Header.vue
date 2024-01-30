@@ -4,7 +4,9 @@
       <span class="subtitle-1 dark-green--text">
         {{ $t('homepage.welcome') }}
       </span>
-      <h1 class="text-h1">{{ $t('homepage.gynecologists') }}</h1>
+      <h1 class="text-h1">
+        {{ $t('homepage.gynecologists') }}
+      </h1>
     </div>
     <div class="header__image py-6 py-md-0">
       <div class="image__wrapper">
@@ -119,6 +121,9 @@ export default {
   }
   &__title {
     grid-area: title;
+    & h1 {
+      font-size: 48px !important;
+    }
   }
   &__card {
     grid-area: card;

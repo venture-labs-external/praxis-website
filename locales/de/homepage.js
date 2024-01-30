@@ -1,6 +1,6 @@
 export default {
   welcome: 'Willkommen',
-  gynecologists: 'Frauenärztinnen Gerresheim',
+  gynecologists: 'Frauenärztinnen \nGerresheim',
   bookAppointment: 'Termin buchen',
   officeHours: 'Sprechzeiten',
   mondayWednesday: 'Mo. - Mi.',
