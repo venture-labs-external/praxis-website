@@ -138,10 +138,14 @@ export default {
           'Praxisgemeinschaft Gerresheim\nPraxis für Frauenheilkunde\n Dr. med. R. Korbmacher\n\nPraxis für Frauenheilkunde\nDr. med. H. Weydandt',
         workingTime: [
           {
-            day: this.$t('homepage.mondayThursdayLong'),
-            hours: '08:00 - 13:00 | 14:00 - 19:00',
+            day: this.$t('homepage.mondayWednesday'),
+            hours: '08:00 - 13:00  |  14:00 - 19:00',
           },
-          { day: this.$t('homepage.fridayLong'), hours: '08:00 - 13:00' },
+          {
+            day: this.$t('homepage.thursday'),
+            hours: '08:00 - 13:00  |  14:00 - 17:00',
+          },
+          { day: this.$t('homepage.friday'), hours: '08:00 - 13:00' },
         ],
         phone: CONTACT_DATA.phone,
         mail: CONTACT_DATA.email,
@@ -160,7 +164,7 @@ export default {
   }
   &__logo {
     width: 10.5rem;
-    font-family: 'Roboto Serif';
+    font-family: 'Roboto Serif', sans-serif;
     font-size: 1.25rem;
     line-height: 1.2;
   }

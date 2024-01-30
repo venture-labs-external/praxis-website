@@ -92,7 +92,7 @@ export default {
     }
     &-title {
       & span {
-        font-family: Roboto;
+        font-family: 'Roboto', sans-serif;
         font-size: 20px;
         font-style: normal;
         font-weight: 700;
@@ -100,7 +100,7 @@ export default {
       }
       & p {
         color: var(--v-dark-green-base);
-        font-family: Roboto;
+        font-family: 'Roboto', sans-serif;
         font-size: 16px;
         font-style: normal;
         font-weight: 500;
