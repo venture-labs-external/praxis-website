@@ -61,15 +61,6 @@ export default {
             'qualifikation',
           ],
         },
-        {
-          name: NAMES.ChristineEngberg,
-          photo: 'dr-engberg.png',
-          title: this.$t('homepage.specialistInGynecologyAndObstetrics'),
-          description: this.$t(
-            'homepage.IAmLookingForwardToSupportingThePracticeTeam',
-          ),
-          qualifications: ['qualifikation', 'qualifikation'],
-        },
       ];
     },
   },
