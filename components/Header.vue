@@ -50,8 +50,18 @@
               :key="index"
               class="table__row pr-12"
             >
-              <v-col class="text-h4">{{ contact.type }}</v-col>
-              <v-col class="body-1 text-right">{{ contact.details }}</v-col>
+              <template v-if="contact.contactType === 'phone'">
+                <v-col class="text-h4">{{ contact.type }}</v-col>
+                <v-col class="body-1 text-right">
+                  <a :href="`tel:${contact.details}`">{{ contact.details }}</a>
+                </v-col>
+              </template>
+              <template v-else>
+                <v-col class="text-h4">{{ contact.type }}</v-col>
+                <v-col class="body-1 text-right">
+                  <a :href="`mailto:${contact.details}`">{{ contact.details }}</a>
+                </v-col>
+              </template>
             </v-row>
           </div>
         </template>
@@ -91,10 +101,12 @@ export default {
         icon: '/phone.svg',
         contact: [
           {
+            contactType: 'phone',
             type: this.$t('homepage.telephone'),
             details: '0211-285009',
           },
           {
+            contactType: 'email',
             type: this.$t('homepage.email'),
             details: 'termin@frauenaerztinnen-gerresheim.de',
           },
