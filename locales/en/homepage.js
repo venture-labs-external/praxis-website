@@ -3,18 +3,21 @@ export default {
   gynecologists: 'Frauenärztinnen Gerresheim',
   bookAppointment: 'Termin buchen',
   officeHours: 'Sprechzeiten',
-  mondayThursday: 'Mo. -Do.:',
+  mondayWednesday: 'Mo. - Mi.',
+  thursday: 'Do.',
   friday: 'Fr.',
-  dearPatients: 'Liebe Patientinnen,',
-  onJanuary:
-    '\nam 01.01.2023 habe ich die Frauenarztpraxis und das Team von Frau Margit Massing übernommen und bin nun Teil der Praxisgemeinschaft mit Frau Dr. med. Weydandt.  Ich freue mich außerdem auf die fachärztliche Unterstützung durch Frau Engberg, als Verstärkung für das Team. Gemeinsam wollen wir die vertrauensvolle Atmosphäre fortführen und würden uns freuen, Sie weiterhin in Ihren unterschiedlichsten Lebenslagen begleiten zu dürfen. Frau Dr. med. Weydandt wird selbstverständlich wie gewohnt weiter für die Patientinnen da sein.',
-  kindRegards: '\nFreundliche Grüße,',
+  newsTitle:
+    'Herzlich willkommen in unserer Frauenarztpraxis in Düsseldorf Gerresheim!',
+  newsDescription:
+    '\nUnter der fachärztlichen Leitung von Dr. Rahel Korbmacher und Dr. Weydandt begleiten wir Sie kompetent und einfühlsam in allen Lebenslagen. Unsere Praxis bietet umfassende frauenärztliche Betreuung, von Familienplanung über Schwangerschaftsbetreuung bis hin zur allgemeinen Gynäkologie.\n\n Unser Team, bestehend aus sechs engagierten Medizinischen Fachangestellten, sorgt dafür, dass Sie sich bei uns gut aufgehoben fühlen. Wir freuen uns darauf, Sie in unserer Praxis begrüßen zu dürfen und Sie in Ihrer individuellen Gesundheitsreise zu begleiten.',
+  kindRegards: '\nHerzliche Grüße,',
   specialistForGynecologyAndObstetrics:
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
-  drRahelKorbmacher: 'Dr. med. Rahel Korbmacher',
+  drRahelKorbmacher:
+    'Dr. Rahel Korbmacher und Dr. Heike Weydandt - Fachärztinnen für Frauenheilkunde und Geburtshilfe',
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
-  ourDoctors: 'Unsere Ärzte',
+  ourDoctors: 'Behandelnde Ärztinnen',
   specialistInGynecologyAndObstetrics:
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
   afterTheExtensiveTraining:
@@ -70,4 +73,5 @@ export default {
     'Leider ist eine online Terminbuchung aktuell noch nicht möglich.',
   weAreWorking:
     'Wir arbeiten aber daran, diesen Service so schnell wie möglich anbieten zu können!',
+  team: 'Das Praxisteam',
 };

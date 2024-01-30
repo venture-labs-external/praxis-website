@@ -17,11 +17,10 @@
     </div>
     <div class="news__content d-flex align-center">
       <div>
-        <h4 class="h4-text">{{ news.header }}</h4>
+        <h4 class="news__title">{{ news.header }}</h4>
         <p class="body-1 ma-0">{{ news.description }}</p>
         <div class="body-1">{{ news.footer }}</div>
-        <div class="text-h4">{{ news.name }}</div>
-        <div class="body-1">{{ news.title }}</div>
+        <div class="body-1">{{ news.name }}</div>
       </div>
     </div>
   </div>
@@ -30,11 +29,16 @@
 <script>
 export default {
   name: 'News',
-  props: {
-    news: {
-      type: Object,
-      default: () => {},
-    },
+  data() {
+    return {
+      news: {
+        header: this.$t('homepage.newsTitle'),
+        description: this.$t('homepage.newsDescription'),
+        footer: this.$t('homepage.kindRegards'),
+        name: this.$t('homepage.drRahelKorbmacher'),
+        title: this.$t('homepage.specialistForGynecologyAndObstetrics'),
+      },
+    };
   },
 };
 </script>
@@ -48,6 +52,9 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 3rem;
+  }
+  &__title {
+    font-size: 1.125rem;
   }
   &__image {
     width: 100%;

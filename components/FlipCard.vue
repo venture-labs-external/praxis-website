@@ -7,12 +7,12 @@
       <div class="flip-card--front" @click="show = !show">
         <div v-show="!show">
           <div class="flip-card__icon mint-blue mx-auto">
-            <img :src="cardInfo.iconName" class="pa-5" />
+            <img :src="cardInfo.iconName" class="pa-5" alt="" />
           </div>
           <h5 class="text-h5 text-center mt-6 mx-10">{{ cardInfo.title }}</h5>
           <div>
             <v-btn icon class="mx-auto">
-              <img src="/arrow-right.svg" />
+              <img src="/arrow-right.svg" alt="" />
             </v-btn>
           </div>
         </div>
@@ -77,6 +77,9 @@ export default {
   width: 18.75rem;
   height: 31.25rem;
   perspective: 1000px;
+  @media #{$md-and-up} {
+    width: 100%;
+  }
   &__wrapper {
     width: 18.75rem;
     height: 31.25rem;

@@ -1,9 +1,9 @@
 <template>
   <header class="header mx-auto">
     <div class="header__title">
-      <span class="subtitle-1 dark-green--text">{{
-        $t('homepage.welcome')
-      }}</span>
+      <span class="subtitle-1 dark-green--text">
+        {{ $t('homepage.welcome') }}
+      </span>
       <h1 class="text-h1">{{ $t('homepage.gynecologists') }}</h1>
     </div>
     <div class="header__image py-6 py-md-0">
@@ -71,8 +71,12 @@ export default {
         icon: '/clock.svg',
         workingTime: [
           {
-            day: this.$t('homepage.mondayThursday'),
+            day: this.$t('homepage.mondayWednesday'),
             hours: '08:00 - 13:00<br>14:00 - 19:00',
+          },
+          {
+            day: this.$t('homepage.thursday'),
+            hours: '08:00 - 13:00<br>14:00 - 17:00',
           },
           { day: this.$t('homepage.friday'), hours: '08:00 - 13:00' },
         ],
