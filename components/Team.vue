@@ -33,31 +33,31 @@ export default {
           id: 1,
           name: 'Britta Kirrwald',
           title: 'MFA',
-          photo: 'placeholder1.jpeg',
+          photo: 'placeholder1.png',
         },
         {
           id: 2,
           name: 'Petra Quick-Zimmer',
           title: 'MFA',
-          photo: 'placeholder2.jpeg',
+          photo: 'placeholder2.png',
         },
         {
           id: 3,
           name: 'Nicole Kühn',
           title: 'MFA',
-          photo: 'placeholder3.jpeg',
+          photo: 'placeholder3.png',
         },
         {
           id: 4,
           name: 'Vera Weichhardt',
           title: 'MFA',
-          photo: 'placeholder4.jpeg',
+          photo: 'placeholder4.png',
         },
         {
           id: 5,
           name: 'Silvia Link',
           title: 'MFA',
-          photo: 'placeholder5.jpeg',
+          photo: 'placeholder5.png',
         },
       ],
     };
@@ -73,14 +73,15 @@ export default {
   }
   &__members {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 200px));
+    grid-template-columns: repeat(auto-fill, minmax(160px, 217px));
     justify-content: center;
     gap: 1.5rem !important;
   }
   &__member {
     &-image {
       img {
-        width: 100%;
+        width: 217px;
+        max-height: 234.51px;
         object-fit: cover;
       }
     }
