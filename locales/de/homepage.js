@@ -17,7 +17,8 @@ export default {
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
   ourDoctors: 'Behandelnde Ärztinnen',
-  specialistInGynecologyAndObstetrics: 'Fachärztin für Frauenheilkunde & ...',
+  specialistInGynecologyAndObstetrics:
+    'Fachärztin für Frauenheilkunde & ...',
   afterTheExtensiveTraining:
     'Nach der umfangreichen Ausbildung in verschiedenen Kliniken in Düsseldorf und Umgebung freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir sehr am Herzen.  Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.',
   duringMyMoreThan20YearsOfCollaboration:
