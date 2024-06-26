@@ -13,7 +13,7 @@ export default {
   kindRegards: '\nFreundliche Grüße,',
   specialistForGynecologyAndObstetrics:
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
-  drRahelKorbmacher: 'Dr. med. Rahel Korbmacher',
+  doctors: 'Dr. Rahel Korbmacher und Dr. Heike Weydandt -',
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
   ourDoctors: 'Behandelnde Ärztinnen',
