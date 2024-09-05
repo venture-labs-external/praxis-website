@@ -9,7 +9,7 @@ export default {
   newsTitle:
     'Herzlich willkommen in unserer Frauenarztpraxis in Düsseldorf Gerresheim!',
   newsDescription:
-    'Unter der fachärztlichen Leitung von Dr. Rahel Korbmacher und Dr. Weydandt begleiten wir Sie kompetent und einfühlsam in allen Lebenslagen. Unsere Praxis bietet umfassende frauenärztliche Betreuung, von Familienplanung über Schwangerschaftsbetreuung bis hin zur allgemeinen Gynäkologie. Unser Team, bestehend aus sechs engagierten Medizinischen Fachangestellten, sorgt dafür, dass Sie sich bei uns gut aufgehoben fühlen. Wir freuen uns darauf, Sie in unserer Praxis begrüßen zu dürfen und Sie in Ihrer individuellen Gesundheitsreise zu begleiten.',
+    'Unter der fachärztlichen Leitung von Dr. Rahel Korbmacher und Dr. Heike Weydandt begleiten wir Sie kompetent und einfühlsam in allen Lebenslagen. Unsere Praxis bietet umfassende frauenärztliche Betreuung, von Familienplanung über Schwangerschaftsbetreuung bis hin zur allgemeinen Gynäkologie. Unser Team, bestehend aus sechs engagierten Medizinischen Fachangestellten, sorgt dafür, dass Sie sich bei uns gut aufgehoben fühlen. Wir freuen uns darauf, Sie in unserer Praxis begrüßen zu dürfen und Sie in Ihrer individuellen Gesundheitsreise zu begleiten.',
   kindRegards: '\nFreundliche Grüße,',
   specialistForGynecologyAndObstetrics:
     'Fachärztin für Frauenheilkunde und Geburtshilfe',
@@ -17,8 +17,7 @@ export default {
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
   ourDoctors: 'Behandelnde Ärztinnen',
-  specialistInGynecologyAndObstetrics:
-    'Fachärztin für Frauenheilkunde & ...',
+  specialistInGynecologyAndObstetrics: 'Fachärztin für Frauenheilkunde & ...',
   afterTheExtensiveTraining:
     'Nach der umfangreichen Ausbildung in verschiedenen Kliniken in Düsseldorf und Umgebung freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir sehr am Herzen.  Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.',
   duringMyMoreThan20YearsOfCollaboration:
