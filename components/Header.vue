@@ -90,7 +90,7 @@ export default {
           },
           {
             day: this.$t('homepage.thursday'),
-            hours: '08:00 - 13:00<br>14:00 - 17:00',
+            hours: '08:00 - 13:00<br>14:00 - 18:00',
           },
           { day: this.$t('homepage.friday'), hours: '08:00 - 13:00' },
         ],
