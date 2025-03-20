@@ -208,7 +208,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .nav {
-  border-bottom: 1px solid var(--v-dark-green-base);
+  border-bottom: 2px solid var(--v-light-green-base);
   &__logo {
     width: 10.5rem;
     font-family: 'Roboto Serif';

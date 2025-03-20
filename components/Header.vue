@@ -26,95 +26,22 @@
       </div>
     </div>
     <div class="header__card">
-      <CardWithButton
-        :cardInfo="cardInfo"
-        :optionalCardInfo="optionalCardInfo"
-        class="mt-md-8"
-      >
-        <template v-slot>
-          <div class="table">
-            <v-row
-              v-for="(time, index) in cardInfo.workingTime"
-              :key="index"
-              class="table__row pr-12"
-            >
-              <v-col class="text-h4">{{ time.day }}</v-col>
-              <v-col class="body-1 text-right" v-html="time.hours"></v-col>
-            </v-row>
-          </div>
-        </template>
-        <template v-slot:optionalBox>
-          <div class="table">
-            <v-row
-              v-for="(contact, index) in optionalCardInfo.contact"
-              :key="index"
-              class="table__row pr-12"
-            >
-              <template v-if="contact.contactType === 'phone'">
-                <v-col class="text-h4">{{ contact.type }}</v-col>
-                <v-col class="body-1 text-right">
-                  <a :href="`tel:${contact.details}`">{{ contact.details }}</a>
-                </v-col>
-              </template>
-              <template v-else>
-                <v-col class="text-h4">{{ contact.type }}</v-col>
-                <v-col class="body-1 text-right">
-                  <a :href="`mailto:${contact.details}`">
-                    {{ contact.details }}
-                  </a>
-                </v-col>
-              </template>
-            </v-row>
-          </div>
-        </template>
-      </CardWithButton>
+      <CardWithButton :cardInfo="workingTime" class="mt-md-8" />
     </div>
   </header>
 </template>
 
 <script>
+import { WORKING_TIME } from '~/constants';
 export default {
   name: 'Header',
   components: {
     CardWithButton: () => import('~/components/CardWithButton'),
   },
-  computed: {
-    cardInfo() {
-      return {
-        title: this.$t('homepage.officeHours'),
-        icon: '/clock.svg',
-        workingTime: [
-          {
-            day: this.$t('homepage.mondayWednesday'),
-            hours: '08:00 - 13:00<br>14:00 - 19:00',
-          },
-          {
-            day: this.$t('homepage.thursday'),
-            hours: '08:00 - 13:00<br>14:00 - 18:00',
-          },
-          { day: this.$t('homepage.friday'), hours: '08:00 - 13:00' },
-        ],
-        link: '/',
-      };
-    },
-    optionalCardInfo() {
-      return {
-        title: this.$t('homepage.contact'),
-        icon: '/phone.svg',
-        contact: [
-          {
-            contactType: 'phone',
-            type: this.$t('homepage.telephone'),
-            details: '0211-285009',
-          },
-          {
-            contactType: 'email',
-            type: this.$t('homepage.email'),
-            details: 'termin@frauenaerztinnen-gerresheim.de',
-          },
-        ],
-      };
-    },
+  data() {
+    return {
+      workingTime: WORKING_TIME,
+    };
   },
 };
 </script>
@@ -122,8 +49,9 @@ export default {
 <style lang="scss" scoped>
 .header {
   max-width: 73rem;
+
   @media #{$md-and-up} {
-    padding-top: 5rem;
+    padding-top: 1.5rem;
     padding-bottom: 5rem;
     display: grid;
     grid-template:
@@ -133,33 +61,41 @@ export default {
     column-gap: 3rem;
     align-items: end;
   }
+
   &__title {
     grid-area: title;
+
     & h1 {
       font-size: 48px !important;
     }
   }
+
   &__card {
     grid-area: card;
   }
+
   &__image {
     grid-area: image;
   }
 }
+
 .image {
   width: 100%;
   height: auto;
+
   @media #{$md-and-up} {
     position: relative;
     width: 100%;
     height: auto;
     z-index: 2;
   }
+
   &__wrapper {
     @media #{$md-and-up} {
       position: relative;
       width: 100%;
     }
+
     &::after {
       @media #{$md-and-up} {
         content: '';
@@ -174,11 +110,14 @@ export default {
     }
   }
 }
+
 .table {
   white-space: pre-line;
+
   &:first-line {
     line-height: 0;
   }
+
   &__row {
     display: grid;
     grid-template-columns: 35% auto;

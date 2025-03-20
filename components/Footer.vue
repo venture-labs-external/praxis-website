@@ -6,41 +6,55 @@
       class="d-flex flex-column align-center align-md-start text-center text-md-left"
     >
       <img src="/map-pin-white.svg" alt="map pin" class="white--text mb-4" />
-      <div>{{ contactData.address }}</div>
+      <a
+        :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+          contactData.address,
+        )}`"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="white--text"
+        >{{ contactData.address }}</a
+      >
       <div>{{ contactData.doctors }}</div>
     </div>
     <div
-      class="footer__column d-flex flex-column align-center align-md-start justify-md-space-between text-center text-md-left"
+      class="footer__column d-flex flex-column align-center align-md-start text-center text-md-left"
+      v-for="item in workingTime"
+      :key="item.title"
     >
-      <div>
-        <img
-          src="/clock-white.svg"
-          alt="clock"
-          class="white--text my-4 my-md-0 mb-md-4"
-        />
-        <div>
-          <div v-for="(time, index) in contactData.workingTime" :key="index">
-            <div>{{ time.day }} {{ time.hours }}</div>
-          </div>
+      <component :is="item.icon" class="white--text my-4 my-md-0 mb-md-4" />
+      <div class="white--text">
+        <span class="white--text">{{ item.title }}</span>
+        <div
+          v-for="(time, index) in item.workingTime"
+          :key="index"
+          class="footer__item"
+        >
+          <span class="no-wrap">{{ time.day }}:</span>
+          <span class="no-wrap">{{ time.hours }}</span>
         </div>
-      </div>
-      <div>
-        <img src="/phone-white.svg" alt="phone" class="my-4" />
-        <div>
-          <span>{{ $t('homepage.telephone') }}</span>
-          <a :href="`tel:${contactData.phone}`" class="white--text">{{
-            contactData.phone
-          }}</a>
-        </div>
-        <div>
-          <span>{{ $t('homepage.email') }}</span>
-          <a :href="`mailto:${contactData.mail}`" class="white--text">{{
-            contactData.mail
-          }}</a>
+        <div
+          v-for="(contact, index) in item.contact"
+          :key="index"
+          class="footer__item"
+        >
+          <span class="white--text no-wrap">{{ contact.type }}:</span>
+          <a
+            v-if="['phone', 'fax'].includes(contact.contactType)"
+            :href="`tel:${contact.details}`"
+            class="white--text no-wrap"
+            >{{ contact.details }}</a
+          >
+          <a
+            v-if="contact.contactType === 'email'"
+            :href="`mailto:${contact.details}`"
+            class="white--text"
+            >{{ contact.details }}</a
+          >
         </div>
       </div>
     </div>
-    <div class="d-md-flex flex-md-column align-center align-self-sm-end">
+    <div class="d-md-flex flex-md-column align-center align-self-center">
       <div v-show="$vuetify.breakpoint.mdAndUp" class="footer__logo">
         <a
           href="/"
@@ -54,7 +68,7 @@
       </div>
       <v-dialog v-model="dialog" width="700px">
         <template v-slot:activator="{ on, attrs }">
-          <div class="d-flex justify-center align-center mt-6 mt-md-4">
+          <div class="mt-6 mt-md-4">
             <a
               class="white--text font-weight-regular text-decoration-underline"
               v-bind="attrs"
@@ -114,9 +128,17 @@
 </template>
 
 <script>
-import { CONTACT_DATA } from '~/constants';
+import { CONTACT_DATA, WORKING_TIME } from '~/constants';
+
+import Clock from './icons/Clock.vue';
+import Phone from './icons/PhoneIcon.vue';
+
 export default {
   name: 'Footer',
+  components: {
+    Clock,
+    Phone,
+  },
   data() {
     return {
       dialog: false,
@@ -138,6 +160,7 @@ export default {
         { label: 'imprint.content.title', type: 'title' },
         { label: 'imprint.content.content', type: 'content' },
       ],
+      workingTime: WORKING_TIME,
     };
   },
   computed: {
@@ -167,8 +190,10 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
+  font-weight: 700;
   border-radius: 6px 6px 0 0;
   white-space: pre-line;
+  gap: 1.5rem;
   &:first-line {
     line-height: 0;
   }
@@ -176,10 +201,16 @@ export default {
     width: 10.5rem;
     font-family: 'Roboto Serif', sans-serif;
     font-size: 1.25rem;
+    font-weight: 700;
     line-height: 1.2;
   }
   &__column {
     height: 100%;
+  }
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
   }
   &__imprint {
     white-space: pre-line;
@@ -187,6 +218,11 @@ export default {
     &:first-line {
       line-height: 0;
     }
+  }
+  svg {
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
   }
 }
 </style>

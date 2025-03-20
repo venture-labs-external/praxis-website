@@ -19,7 +19,7 @@
   }
   h3.text-h3,
   p.text-h3,
-  div.text-h3  {
+  div.text-h3 {
     @media #{$md-and-up} {
       font-size: 1.25rem !important;
       line-height: 1.2 !important;
@@ -64,5 +64,10 @@
 }
 
 .box-shadow {
-  box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.08), -4px -4px 24px 0px rgba(21, 128, 235, 0.05);
+  box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.08),
+    -4px -4px 24px 0px rgba(21, 128, 235, 0.05);
+}
+
+.no-wrap {
+  text-wrap: nowrap;
 }

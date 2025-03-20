@@ -17,8 +17,7 @@ export default {
   location: 'Standort',
   whereYouCanFindUs: 'Wo Sie uns finden',
   ourDoctors: 'Behandelnde Ärztinnen',
-  specialistInGynecologyAndObstetrics:
-    'Fachärztin für Frauenheilkunde & ...',
+  specialistInGynecologyAndObstetrics: 'Fachärztin für Frauenheilkunde & ...',
   afterTheExtensiveTraining:
     'Nach der umfangreichen Ausbildung in verschiedenen Kliniken in Düsseldorf und Umgebung freue ich mich nun auf die neue Aufgabe in der Praxis. Die Beratung und Begleitung der Patientinnen über viele Jahre und über die verschiedenen Lebensphasen liegt mir sehr am Herzen.  Jede Patientin mit ihren individuellen Bedürfnissen wahrzunehmen ist mir sehr wichtig und ich freue mich darauf jeder einzelnen mit meiner Erfahrung beratend beiseite zu stehen.',
   duringMyMoreThan20YearsOfCollaboration:
@@ -59,6 +58,7 @@ export default {
   mondayThursdayLong: 'Montag-Donnerstag:',
   fridayLong: 'Freitag:',
   telephone: 'Tel.:',
+  fax: 'Fax:',
   email: 'Email:',
   imprint: 'Impressum',
   privacy: 'Datenschutz',
@@ -73,4 +73,12 @@ export default {
   weAreWorking:
     'Wir arbeiten aber daran, diesen Service so schnell wie möglich anbieten zu können!',
   team: 'Das Praxisteam',
+  maternityLeave1: 'Liebe Patientinnen,',
+  maternityLeave2: 'vom ',
+  maternityLeave3: '26. Mai bis zum 30. Juni',
+  maternityLeave4: ' befindet sich ',
+  maternityLeave5: 'Frau Dr. med. Rahel Korbmacher im Mutterschutz.',
+  maternityLeave6:
+    'Für Notfälle und nicht aufschiebbare Termine übernimmt Frau Dr. med. Heike Weydandt die Vertretung. Bitte informieren Sie sich vorab über eventuell ',
+  maternityLeave7: 'geänderte Öffnungszeiten.',
 };
