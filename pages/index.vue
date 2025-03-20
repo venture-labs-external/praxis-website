@@ -44,6 +44,11 @@ export default {
 .info {
   display: grid;
   grid-template-columns: max-content 1fr;
+  @media #{$xs-only} {
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 1fr;
+    justify-items: center;
+  }
   align-items: center;
   gap: 1rem;
   padding: 1rem;
