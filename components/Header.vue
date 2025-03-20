@@ -49,6 +49,7 @@ export default {
 <style lang="scss" scoped>
 .header {
   max-width: 73rem;
+  padding-top: 0.5rem;
 
   @media #{$md-and-up} {
     padding-top: 1.5rem;
