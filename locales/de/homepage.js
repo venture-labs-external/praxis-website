@@ -58,6 +58,7 @@ export default {
   mondayThursdayLong: 'Montag-Donnerstag:',
   fridayLong: 'Freitag:',
   telephone: 'Tel.:',
+  fax: 'Fax:',
   email: 'Email:',
   imprint: 'Impressum',
   privacy: 'Datenschutz',
@@ -72,4 +73,12 @@ export default {
   weAreWorking:
     'Wir arbeiten aber daran, diesen Service so schnell wie möglich anbieten zu können!',
   team: 'Das Praxisteam',
+  maternityLeave1: 'Liebe Patientinnen,',
+  maternityLeave2: 'vom ',
+  maternityLeave3: '26. Mai bis zum 30. Juni',
+  maternityLeave4: ' befindet sich ',
+  maternityLeave5: 'Frau Dr. med. Rahel Korbmacher im Mutterschutz.',
+  maternityLeave6:
+    'Für Notfälle und nicht aufschiebbare Termine übernimmt Frau Dr. med. Heike Weydandt die Vertretung. Bitte informieren Sie sich vorab über eventuell ',
+  maternityLeave7: 'geänderte Öffnungszeiten.',
 };

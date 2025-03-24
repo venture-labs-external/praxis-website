@@ -19,13 +19,7 @@
       ></iframe>
     </div>
     <div class="contact__card">
-      <CardWithButton :cardInfo="cardInfo" class="mt-md-8">
-        <slot>
-          <div class="text-h4">
-            {{ cardInfo.address }}
-          </div>
-        </slot>
-      </CardWithButton>
+      <CardWithButton :cardInfo="cardInfo" class="mt-md-8" />
     </div>
   </div>
 </template>
@@ -39,12 +33,14 @@ export default {
   },
   computed: {
     cardInfo() {
-      return {
-        title: this.$t('homepage.location'),
-        icon: '/map-pin.svg',
-        address: CONTACT_DATA.address,
-        link: '/',
-      };
+      return [
+        {
+          title: this.$t('homepage.location'),
+          icon: 'map-pin',
+          info: CONTACT_DATA.address,
+          link: '/',
+        },
+      ];
     },
   },
 };

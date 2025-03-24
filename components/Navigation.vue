@@ -15,13 +15,13 @@
       </a>
       <div v-show="$vuetify.breakpoint.mdAndUp">
         <ul class="nav__list list d-flex justify-space-between">
-          <li v-for="item in navList" :key="item.name">
-            <nuxt-link
-              :to="{ path: item.path, hash: item.hash }"
-              class="list__item font-weight-bold mr-6 mr-lg-14"
-            >
-              {{ item.name }}
-            </nuxt-link>
+          <li
+            v-for="item in navList"
+            :key="item.name"
+            class="list__item font-weight-bold mr-6 mr-lg-14"
+            @click="scrollTo(item.hash)"
+          >
+            {{ item.name }}
           </li>
         </ul>
       </div>
@@ -60,18 +60,17 @@
           </div>
           <div class="d-flex flex-column align-center">
             <ul class="list--mobile pa-0">
-              <li v-for="item in menuList" :key="item.name" class="mb-6">
-                <nuxt-link
-                  :to="{ path: item.path, hash: item.hash }"
-                  class="text-decoration-none"
+              <li
+                v-for="item in menuList"
+                :key="item.name"
+                class="mb-6 text-decoration-none"
+              >
+                <span
+                  class="list__item--mobile text-h2 white--text"
+                  @click="scrollTo(item.hash)"
                 >
-                  <span
-                    class="list__item--mobile text-h2 white--text"
-                    @click="showMenu = false"
-                  >
-                    {{ item.name }}
-                  </span>
-                </nuxt-link>
+                  {{ item.name }}
+                </span>
               </li>
             </ul>
             <div class="button text-h2 my-8">
@@ -172,19 +171,25 @@ export default {
       dialogImprint: false,
       opacity: 1,
       showMenu: false,
-      navList: [
+    };
+  },
+  computed: {
+    navList() {
+      return [
         { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
         { name: this.$t('homepage.services'), path: '/', hash: '#services' },
         { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
-      ],
-      menuList: [
+      ];
+    },
+    menuList() {
+      return [
         { name: this.$t('homepage.home'), path: '/', hash: '#' },
         { name: this.$t('homepage.news'), path: '/', hash: '#news' },
         { name: this.$t('homepage.services'), path: '/', hash: '#services' },
-        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
-        { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
-      ],
-      impressumData: [
+      ];
+    },
+    impressumData() {
+      return [
         { label: 'imprint.generalInfo.title', type: 'title' },
         { label: 'imprint.generalInfo.content', type: 'content' },
         { label: 'imprint.jobInfo.title', type: 'title' },
@@ -201,14 +206,26 @@ export default {
         { label: 'imprint.liabilityNotice.content', type: 'content' },
         { label: 'imprint.content.title', type: 'title' },
         { label: 'imprint.content.content', type: 'content' },
-      ],
-    };
+      ];
+    },
+  },
+  methods: {
+    scrollTo(hash) {
+      if (this.showMenu) {
+        this.showMenu = false;
+      }
+      this.$vuetify.goTo(hash, {
+        duration: 500,
+        offset: 0,
+        easing: 'linear',
+      });
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
 .nav {
-  border-bottom: 1px solid var(--v-dark-green-base);
+  border-bottom: 2px solid var(--v-light-green-base);
   &__logo {
     width: 10.5rem;
     font-family: 'Roboto Serif';

@@ -33,7 +33,6 @@ export default {
   name: 'AboutUs',
   components: {},
   computed: {
-    // TODO: add missing content
     doctors() {
       return [
         {
@@ -79,6 +78,7 @@ export default {
   }
   &__card {
     display: grid;
+    grid-template-rows: max-content max-content 1fr;
     gap: 1.5rem;
     padding: 2rem;
     background-color: var(--v-white-base);
@@ -107,9 +107,9 @@ export default {
       width: 100%;
       height: 100%;
       & img {
-        border-radius: 8px;
+        border-radius: 6px;
         width: 100%;
-        height: 100%;
+        aspect-ratio: 3 / 2;
         object-fit: cover;
         object-position: center;
       }
