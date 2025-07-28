@@ -1,4 +1,7 @@
-# Vue + Nuxt + Vuetify template
+# Praxis website
+
+[Live Version](https://www.frauenaerztinnen-gerresheim.de)
+[Dev Version 👨🏻‍💻](https://praxis-website.venturelabs.team/)
 
 ## Build Setup
 
