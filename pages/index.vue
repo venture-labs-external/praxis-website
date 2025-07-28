@@ -4,14 +4,7 @@
       <BabyIcon />
       <div>
         <p>{{ $t('homepage.maternityLeave1') }}</p>
-        <p>
-          {{ $t('homepage.maternityLeave2') }}
-          <strong>{{ $t('homepage.maternityLeave3') }}</strong>
-          {{ $t('homepage.maternityLeave4') }}
-          <strong>{{ $t('homepage.maternityLeave5') }}</strong>
-          {{ $t('homepage.maternityLeave6') }}
-          <strong>{{ $t('homepage.maternityLeave7') }}</strong>
-        </p>
+        <p v-html="$t('homepage.maternityLeave2')"></p>
       </div>
     </section>
     <Header />
