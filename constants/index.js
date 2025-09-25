@@ -1,7 +1,6 @@
 export const CONTACT_DATA = {
   address: 'Neunzigstraße 1, 40625 Düsseldorf',
   phone: '0211-285009',
-  email: 'termin@frauenaerztinnen-gerresheim.de',
 };
 
 export const NAMES = {
@@ -56,11 +55,6 @@ export const WORKING_TIME = [
         contactType: 'fax',
         type: 'Fax',
         details: '0211 - 29 26 761',
-      },
-      {
-        contactType: 'email',
-        type: 'E-Mail',
-        details: 'termin@frauenaerztinnen-gerresheim.de',
       },
     ],
   },

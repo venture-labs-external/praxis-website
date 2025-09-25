@@ -45,12 +45,6 @@
             class="white--text no-wrap"
             >{{ contact.details }}</a
           >
-          <a
-            v-if="contact.contactType === 'email'"
-            :href="`mailto:${contact.details}`"
-            class="white--text"
-            >{{ contact.details }}</a
-          >
         </div>
       </div>
     </div>
@@ -181,7 +175,6 @@ export default {
           { day: this.$t('homepage.friday'), hours: '08:00 - 13:00' },
         ],
         phone: CONTACT_DATA.phone,
-        mail: CONTACT_DATA.email,
       };
     },
   },
