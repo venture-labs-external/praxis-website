@@ -12,7 +12,6 @@ export default {
       '<br/> 40625 Düsseldorf ' +
       '\n' +
       '<br/> Tel.: 0211-285009 ' +
-      '<br/> Mail: info@frauenaerztinnen-gerresheim.de' +
       '<br/> Internet: <a href="https://www.frauenaerztinnen-gerresheim.de"> frauenaerztinnen-gerresheim.de</a> ',
   },
   jobInfo: {
