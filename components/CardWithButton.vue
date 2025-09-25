@@ -31,12 +31,6 @@
             >
               {{ contact.details }}
             </a>
-            <a
-              v-if="contact.contactType === 'email'"
-              :href="`mailto:${contact.details}`"
-            >
-              {{ contact.details }}
-            </a>
           </dd>
         </dl>
         <div v-if="card.info" class="text-h4 pt-4 pb-2">
