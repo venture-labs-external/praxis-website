@@ -73,7 +73,4 @@ export default {
   weAreWorking:
     'Wir arbeiten aber daran, diesen Service so schnell wie möglich anbieten zu können!',
   team: 'Das Praxisteam',
-  maternityLeave1: 'Liebe Patientinnen,',
-  maternityLeave2:
-    'Frau Dr. med. Rahel Korbmacher ist seit dem <strong>01.Juli</strong> zurück aus dem Mutterschutz. Vereinzelt können die <strong>Öffnungszeiten</strong> jedoch noch von den gewohnten Sprechstundenzeiten abweichen. Donnerstag Nachmittag bleibt die Praxis leider zunächst geschlossen.',
 };
