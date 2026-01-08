@@ -1,12 +1,5 @@
 <template>
   <main>
-    <section class="info">
-      <BabyIcon />
-      <div>
-        <p>{{ $t('homepage.maternityLeave1') }}</p>
-        <p v-html="$t('homepage.maternityLeave2')"></p>
-      </div>
-    </section>
     <Header />
     <News />
     <Services />
@@ -18,12 +11,10 @@
 
 <script>
 import Header from '~/components/Header.vue';
-import BabyIcon from '~/components/icons/BabyIcon.vue';
 
 export default {
   components: {
     Header,
-    BabyIcon,
     News: () => import('~/components/News'),
     AboutUs: () => import('~/components/AboutUs'),
     Services: () => import('~/components/Services'),
