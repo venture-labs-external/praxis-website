@@ -1,5 +1,5 @@
 <template>
-  <div id="about-us" class="about-us mx-auto">
+  <div v-reveal id="about-us" class="about-us mx-auto">
     <div class="about-us__title mb-6">
       <span class="subtitle-1 dark-green--text">
         {{ $t('homepage.aboutUs') }}

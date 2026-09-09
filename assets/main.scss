@@ -71,3 +71,29 @@
 .no-wrap {
   text-wrap: nowrap;
 }
+
+// Section entrance animation. Only the `v-reveal` directive adds these classes,
+// and only client-side — the pre-rendered markup carries neither, so a section
+// is never hidden when JavaScript does not run.
+.reveal--pending {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+}
+
+.reveal--pending.reveal--in {
+  opacity: 1;
+  // `none`, not `translateY(0)`: a lasting transform would make the section a
+  // containing block for fixed-position descendants.
+  transform: none;
+}
+
+// Second guard, for the setting being flipped after the classes were added.
+@media (prefers-reduced-motion: reduce) {
+  .reveal--pending,
+  .reveal--pending.reveal--in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
