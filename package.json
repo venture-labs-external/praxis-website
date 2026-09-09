@@ -10,7 +10,7 @@
     "start": "nuxt start",
     "analyze": "nuxt build --analyze",
     "generate": "nuxt generate",
-    "test": "node --test test/*.js",
+    "test": "node --test test/reveal.test.js test/dist.test.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:prod": "NODE_ENV='production' eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --fix . --ext .js,.vue",
