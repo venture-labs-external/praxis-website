@@ -99,7 +99,7 @@ export default {
   hooks: {},
   loading: { color: '#fff' },
   css: ['~/assets/main.scss'],
-  plugins: ['~/plugins/vue-fragment'],
+  plugins: ['~/plugins/vue-fragment', '~/plugins/reveal'],
   buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/vuetify'],
   modules: ['@nuxtjs/axios', '@nuxtjs/pwa', 'nuxt-i18n'],
   i18n: {
