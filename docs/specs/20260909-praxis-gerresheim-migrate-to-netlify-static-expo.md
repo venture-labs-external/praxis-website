@@ -183,6 +183,38 @@ Explicitly **not** touched: `dockerfile`, `cloudbuild.yaml`, `cloudbuild-live.ya
 16. `.nvmrc` is the only Node pin changed: `dockerfile`, `cloudbuild.yaml`, `cloudbuild-live.yaml`, `kubernetes.tpl.yaml` and `kubernetes-live.tpl.yaml` are byte-identical to `dev`.
 17. The PR description states which Node lever was used and why (`.nvmrc` bump + `NODE_VERSION` + the OpenSSL flag), as the answer to the requester's "say which, and why".
 
+## Review answers
+
+Amendments recorded in the review round, after the artifact was measured. The approved
+criteria above stand as the plan of record; where the built output disproves their
+*literal wording*, the reworded form below is what the close-out ticks. The property
+each criterion protects is unchanged in every case.
+
+- **Criterion 6 — reworded.** "`dist/index.html` contains no `reveal--pending`" is
+  literally false: the string occurs 4× inside the inlined `<style>`, which is exactly
+  what is wanted — the rules ship, the classes are not applied. Read as: *no element in
+  `dist/index.html` carries `reveal--pending`* (no `class` attribute contains it), plus
+  the unchanged inline-`opacity:0`/`visibility:hidden` and JavaScript-disabled halves.
+  `test/dist.test.js` criterion 6.1 asserts the class-attribute form.
+- **Criterion 7 — reworded.** "the CSS emitted into `dist/_nuxt/`" has nothing to read:
+  `build.extractCSS` is false, so `dist/_nuxt/` contains no `.css` file at all and the
+  stylesheet is inlined into `dist/index.html`. Read as: *the CSS shipped with `dist/`*.
+  `test/dist.test.js` concatenates the inlined `<style>` and any `dist/_nuxt/*.css`, so
+  the assertion keeps working if `extractCSS` is ever turned on.
+- **Criterion 13 — restated.** The lint half is unchanged. The test half is
+  `npm test` — that is, `node --test test/reveal.test.js test/dist.test.js` — exits 0.
+  The literal `node --test test/` in the criterion does not work: measured exit 1,
+  `Cannot find module …\test`, on Node 24. `test/*.js` is no better, because
+  `node --test` only learned glob patterns in Node 21 while this task pins Node 20, so
+  it would depend on a POSIX shell expanding the glob and fails under cmd.exe.
+- **Criteria 5 and 6 (human half) are the Tester's, and no automated test covers them.**
+  Recorded because the first Tester round reported "Browser measurement: not run" and
+  reassigned both to gate 3, where "What to click" carried no console/network item and
+  no JavaScript-disabled item — so a runtime console error (the `@nuxtjs/pwa` service
+  worker, a Vuetify warning) could ship unseen on the client's own site, and the no-JS
+  guarantee this whole design rests on would be verified only indirectly. They are now
+  items 6 and 7 of "What to click" and must be evidenced before close-out.
+
 ## Test plan
 
 No tests exist in this repo today (`package.json` has `"test": "jest"` but no jest config, no test
@@ -190,7 +222,7 @@ directory, no Vue test harness). This task introduces `test/` with two files run
 runner — no new dependency, no config file:
 
 ```
-node --test test/          # or: npm test  (after the script is repointed)
+npm test                   # node --test test/reveal.test.js test/dist.test.js
 ```
 
 Prerequisite for `test/dist.test.js`: a completed
@@ -198,9 +230,10 @@ Prerequisite for `test/dist.test.js`: a completed
 message naming that command rather than skipping silently.
 
 The Tester runs, in order: `yarn install --frozen-lockfile`; `yarn lint`;
-`NODE_OPTIONS=--openssl-legacy-provider yarn generate`; `node --test test/`; then serves the output
+`NODE_OPTIONS=--openssl-legacy-provider yarn generate`; `npm test`; then serves the output
 (`npx serve dist`) and checks the browser console and the network panel for criteria 5 and 6
-(including one load with JavaScript disabled), and compares the served page section by section
+(including one load with JavaScript disabled — "What to click" items 6 and 7, both requiring a
+screenshot; they are not covered by any automated test), and compares the served page section by section
 against `https://www.frauenaerztinnen-gerresheim.de`. The Netlify half (criteria 14, 15) is verified
 from the site settings read-back and the deploy log supplied by the front desk, plus a fetch of the
 deploy-preview URL.
@@ -238,13 +271,20 @@ deploy-preview URL.
 3. The Google Maps embed loads and pans; the nav items still jump to About us / Services / Contact and the mobile menu still opens and closes.
 4. First load: no flash of unstyled content, no layout shift as sections reveal, and the page feels acceptable on a phone connection.
 5. With the OS "Reduce Motion" setting on, the sections are simply there — no fade, no movement.
+6. **Criterion 5, Tester, evidence required.** On `npx serve dist`, load `/` and read the
+   browser console and the network panel: no errors (including none from the `@nuxtjs/pwa`
+   service worker), and no request to `http://localhost:3000` — filter the network panel for
+   `localhost`. Screenshot both panels into the close-out.
+7. **Criterion 6 human half, Tester, evidence required.** Load `/` once with JavaScript
+   disabled: all six sections — Header, News, Services, AboutUs, Team, Contact — are visible
+   and readable, with the navigation and footer present. Screenshot into the close-out.
 
 ## Verification and evidence
 
 - **Criteria 1, 13** — paste the tail of `NODE_OPTIONS=--openssl-legacy-provider yarn generate`
-  showing exit 0 and the generated route, plus `yarn lint` and `node --test test/` summaries
+  showing exit 0 and the generated route, plus `yarn lint` and `npm test` summaries
   (`# pass`, `# fail 0`) into the close-out.
-- **Criteria 2, 3, 4, 6, 7, 20** — `node --test test/` output for `test/dist.test.js`; the close-out
+- **Criteria 2, 3, 4, 6, 7, 20** — `npm test` output for `test/dist.test.js`; the close-out
   names the `dist/index.html` size and the number of image paths checked.
 - **Criteria 8–11** — `node --test test/reveal.test.js` output.
 - **Criterion 5** — screenshot of the browser console and network tab on `npx serve dist`, empty of
