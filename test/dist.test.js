@@ -141,7 +141,7 @@ test('Criterion 3: Every src and srcset path exists in dist/', (_t) => {
     `${missing.length} image paths missing in dist/: ${missing.join('; ')}`,
   );
   assert(imageCount > 0, 'No image paths found in HTML');
-  console.log(`  ✓ ${imageCount} image paths checked and present`);
+  console.info(`  ✓ ${imageCount} image paths checked and present`);
 });
 
 // ============================================================================
@@ -426,7 +426,7 @@ test('Criterion 20: no localhost:3000 is requested at runtime', (_t) => {
       occurrences.map((o) => `${o.file}: ${o.context}`).join('\n  '),
   );
 
-  console.log(
+  console.info(
     `  ℹ  ${occurrences.length} dead ${LOCALHOST_URL} constants, none requested: ` +
       occurrences.map((o) => o.file).join(', '),
   );
@@ -438,6 +438,6 @@ test('Criterion 20: no localhost:3000 is requested at runtime', (_t) => {
 
 test('Summary: Generated dist/ is valid', (_t) => {
   const stats = fs.statSync(INDEX_HTML);
-  console.log(`  ✓ dist/index.html is ${stats.size} bytes`);
+  console.info(`  ✓ dist/index.html is ${stats.size} bytes`);
   assert(stats.size > 100000, 'dist/index.html is suspiciously small');
 });
