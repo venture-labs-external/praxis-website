@@ -59,6 +59,13 @@ function createRevealDirective(getWindow) {
         return;
       }
 
+      // An element inserted twice without an intervening `unbind` (a `v-if`
+      // toggle, `keep-alive`) would otherwise leak the first observer until GC.
+      const previous = observers.get(el);
+      if (previous) {
+        previous.disconnect();
+      }
+
       el.classList.add(REVEAL_PENDING_CLASS);
 
       const observer = new win.IntersectionObserver(function (entries) {

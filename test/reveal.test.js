@@ -279,16 +279,16 @@ test('Criterion 10.4: Non-intersecting entry changes nothing', (_t) => {
 // Criterion 11: unbind
 // ============================================================================
 
-test('Criterion 11.1: unbind disconnects the observer', (_t) => {
+test('Criterion 11.1: unbind disconnects the observer and forgets it', (_t) => {
   const el = fakEl();
-  let disconnectCalled = false;
+  let disconnectCount = 0;
 
   const win = {
     IntersectionObserver: function () {
       this.observe = () => {};
       this.unobserve = () => {};
       this.disconnect = () => {
-        disconnectCalled = true;
+        disconnectCount++;
       };
     },
     matchMedia(_q) {
@@ -298,18 +298,56 @@ test('Criterion 11.1: unbind disconnects the observer', (_t) => {
 
   const directive = createRevealDirective(() => win);
   directive.inserted(el);
-  directive.unbind(el);
 
-  assert.strictEqual(disconnectCalled, true);
+  directive.unbind(el);
+  assert.strictEqual(disconnectCount, 1, 'unbind did not disconnect');
+
+  // The second unbind proves the observer was forgotten, not merely
+  // disconnected: a still-registered observer would be disconnected twice.
+  directive.unbind(el);
+  assert.strictEqual(
+    disconnectCount,
+    1,
+    'unbind kept the observer registered after disconnecting it',
+  );
 });
 
-test('Criterion 11.2: unbind handles missing observer gracefully', (_t) => {
+test('Criterion 11.2: unbind on a never-inserted element does not throw', (_t) => {
   const el = fakEl();
   const directive = createRevealDirective(() => ({}));
 
-  // Should not throw
-  directive.unbind(el);
-  assert.ok(true);
+  assert.doesNotThrow(() => directive.unbind(el));
+});
+
+test('Criterion 11.3: re-inserting an element disconnects the previous observer', (_t) => {
+  const el = fakEl();
+  let observerCount = 0;
+  const disconnected = [];
+
+  const win = {
+    IntersectionObserver: function () {
+      const id = ++observerCount;
+      this.observe = () => {};
+      this.unobserve = () => {};
+      this.disconnect = () => {
+        disconnected.push(id);
+      };
+    },
+    matchMedia(_q) {
+      return { matches: false };
+    },
+  };
+
+  const directive = createRevealDirective(() => win);
+  directive.inserted(el);
+  directive.inserted(el);
+
+  assert.strictEqual(observerCount, 2, 'expected a second observer');
+  assert.deepStrictEqual(
+    disconnected,
+    [1],
+    'the observer of the first insertion was leaked',
+  );
 });
 
 // ============================================================================
