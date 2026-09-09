@@ -1,5 +1,5 @@
 <template>
-  <section id="team" class="team mx-auto">
+  <section v-reveal id="team" class="team mx-auto">
     <h2 class="text-h1">
       {{ $t('homepage.team') }}
     </h2>

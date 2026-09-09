@@ -1,5 +1,5 @@
 <template>
-  <div class="contact mx-auto py-10" id="contact">
+  <div v-reveal class="contact mx-auto py-10" id="contact">
     <div class="contact__title">
       <span class="subtitle-1 dark-green--text">{{
         $t('homepage.location')

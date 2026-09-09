@@ -1,5 +1,5 @@
 <template>
-  <div class="news mx-auto pt-10 pt-md-0" id="news">
+  <div v-reveal class="news mx-auto pt-10 pt-md-0" id="news">
     <div class="mt-4 mt-md-0">
       <img
         class="news__image"
