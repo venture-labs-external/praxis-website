@@ -93,3 +93,5 @@ sw.*
 package-lock.json
 
 .DS_Store
+# Dev Manager task specs are not versioned (cluster decision 2026-10-02)
+/docs/specs/
