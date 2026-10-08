@@ -3,7 +3,7 @@
     <div class="mt-4 mt-md-0">
       <img
         class="news__image"
-        src="news-image/news-image.png"
+        src="/news-image/news-image.png"
         srcset="
           /news-image/news-image_w_330.webp   330w,
           /news-image/news-image_w_705.webp   705w,

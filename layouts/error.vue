@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app theme="dark">
     <h1 v-if="error.statusCode === 404">
       {{ pageNotFound }}
     </h1>
@@ -11,6 +11,10 @@
 </template>
 
 <script>
+// Kept for completeness only (see this spec's "Risks and open questions"):
+// `layout: 'empty'` already pointed at a layout file that doesn't exist in the
+// old build either, and this site has exactly one route, so this layout isn't
+// user-facing on a normal visit - not part of the parity check.
 export default {
   layout: 'empty',
   props: {

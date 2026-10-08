@@ -19,7 +19,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .app {
-  color: var(--v-dark-gray-base);
-  background-color: var(--v-beige-base);
+  color: rgb(var(--v-theme-dark-gray));
+  background-color: rgb(var(--v-theme-beige));
 }
 </style>

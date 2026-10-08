@@ -1,7 +1,7 @@
 <template>
   <div id="about-us" class="about-us mx-auto">
     <div class="about-us__title mb-6">
-      <span class="subtitle-1 dark-green--text">
+      <span class="subtitle-1 text-dark-green">
         {{ $t('homepage.aboutUs') }}
       </span>
       <h2 class="text-h1">
@@ -81,7 +81,7 @@ export default {
     grid-template-rows: max-content max-content 1fr;
     gap: 1.5rem;
     padding: 2rem;
-    background-color: var(--v-white-base);
+    background-color: rgb(var(--v-theme-white));
     border-radius: 6px;
     justify-items: center;
     height: 100% !important;
@@ -94,7 +94,7 @@ export default {
         line-height: 1;
       }
       & p {
-        color: var(--v-dark-green-base);
+        color: rgb(var(--v-theme-dark-green));
         font-family: Roboto;
         font-size: 16px !important;
         font-style: normal;

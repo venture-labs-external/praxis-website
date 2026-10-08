@@ -1,5 +1,5 @@
 <template>
-  <article class="card white pt-6">
+  <article class="card bg-white pt-6">
     <div class="card__content mx-6 my-4">
       <section
         v-for="(card, index) in cardInfo"
@@ -47,9 +47,9 @@
         </div>
       </section>
     </div>
-    <footer class="card__button white--text dark-green pa-5">
+    <footer class="card__button text-white bg-dark-green pa-5">
       <a
-        class="button text-decoration-none white--text"
+        class="button text-decoration-none text-white"
         href="https://www.doctolib.de/praxisgemeinschaft/duesseldorf/frauenaerztinnen-gerresheim"
         rel="noopener noreferrer"
         target="_blank"
@@ -88,7 +88,7 @@ export default {
 .card {
   border-radius: 6px;
   &__title {
-    border-bottom: 1px solid var(--v-dark-gray-base);
+    border-bottom: 1px solid rgb(var(--v-theme-dark-gray));
   }
   &__button {
     border-radius: 0 0 6px 6px;
@@ -97,7 +97,7 @@ export default {
 
 .info-section {
   &__header {
-    border-bottom: 1px solid var(--v-dark-gray-base);
+    border-bottom: 1px solid rgb(var(--v-theme-dark-gray));
   }
 }
 

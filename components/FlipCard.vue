@@ -6,7 +6,7 @@
     <div class="flip-card--inner">
       <div class="flip-card--front" @click="show = !show">
         <div v-show="!show">
-          <div class="flip-card__icon mint-blue mx-auto">
+          <div class="flip-card__icon bg-mint-blue mx-auto">
             <img :src="cardInfo.iconName" class="pa-5" alt="" />
           </div>
           <h5 class="text-h5 text-center mt-6 mx-10">{{ cardInfo.title }}</h5>
@@ -94,7 +94,7 @@ export default {
   }
   &--front,
   &--back {
-    background-color: var(--v-white-base);
+    background-color: rgb(var(--v-theme-white));
     position: absolute;
     width: 100%;
     height: 100%;
@@ -115,7 +115,7 @@ export default {
     width: 4rem;
   }
   &__button {
-    border-top: 4px solid var(--v-mint-blue-base);
+    border-top: 4px solid rgb(var(--v-theme-mint-blue));
     height: 3.5rem;
   }
 }
