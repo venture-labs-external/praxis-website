@@ -163,8 +163,8 @@
 </template>
 <script setup>
 import { computed, ref } from 'vue';
-import { useDisplay, useGoTo } from 'vuetify';
 import { useI18n } from 'vue-i18n';
+import { useDisplay, useGoTo } from 'vuetify';
 
 defineOptions({ name: 'Navigation' });
 

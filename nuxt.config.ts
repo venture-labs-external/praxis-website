@@ -30,7 +30,11 @@ export default defineNuxtConfig({
         },
         { key: 'author', name: 'author', content: 'Venture Labs' },
         { key: 'og:url', name: 'og:url', content: '' },
-        { key: 'og:image', property: 'og:image', content: '/featured-image.jpg' },
+        {
+          key: 'og:image',
+          property: 'og:image',
+          content: '/featured-image.jpg',
+        },
         { key: 'title', name: 'title', content: TITLE },
         { key: 'og:title', name: 'og:title', content: TITLE },
         {
