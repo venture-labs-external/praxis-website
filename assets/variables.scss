@@ -1,70 +1,111 @@
-// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+// Ported from Vuetify 2 (`@nuxtjs/vuetify`'s `customVariables`) to Vuetify 3.
 //
-// The variables you want to modify
-// $font-size-root: 20px;
-@import '~vuetify/src/styles/settings/_variables';
+// Vuetify 3 no longer ships a `$display-breakpoints` SCSS map (the breakpoints
+// now live in JS only, via `useDisplay()`/`display.thresholds`), so the handful
+// of breakpoint variables the component `<style>` blocks use are defined here
+// directly, pinned to Vuetify 2's own historical default thresholds (xs<600,
+// sm<960, md<1264, lg<1904, xl>=1904) so every `@media #{$md-and-up}` below
+// keeps firing at the same pixel widths as before. `nuxt.config.ts` pins
+// `vuetifyOptions.display.thresholds` to the same values for the JS side
+// (`$vuetify`/`useDisplay()`).
+//
+// This file is used two ways: as the Vite `css.preprocessorOptions.scss`
+// `additionalData` (prepended to every `.scss`/`<style lang="scss">` block in the
+// app, replacing `customVariables`'s old global injection), and as
+// `vuetify-nuxt-module`'s `moduleOptions.styles.configFile` (prepended to
+// Vuetify's own SCSS build, replacing Vuetify's default `$typography` map below
+// with the one below before Vuetify's styles compile).
+$xs-only: 'only screen and (max-width: 599px)';
+$sm-only: 'only screen and (min-width: 600px) and (max-width: 959px)';
+$sm-and-up: 'only screen and (min-width: 600px)';
+$sm-and-down: 'only screen and (max-width: 959px)';
+$md-only: 'only screen and (min-width: 960px) and (max-width: 1263px)';
+$md-and-up: 'only screen and (min-width: 960px)';
+$md-and-down: 'only screen and (max-width: 1263px)';
+$lg-only: 'only screen and (min-width: 1264px) and (max-width: 1903px)';
+$lg-and-up: 'only screen and (min-width: 1264px)';
+$lg-and-down: 'only screen and (max-width: 1903px)';
+$xl-only: 'only screen and (min-width: 1904px)';
 
 $body-font-family: 'Roboto', sans-serif;
 $heading-font-family: 'Roboto', sans-serif;
 
-$xl-only: map-get($display-breakpoints, 'xl-only');
-$lg-and-down: map-get($display-breakpoints, 'lg-and-down');
-$lg-and-up: map-get($display-breakpoints, 'lg-and-up');
-$lg-only: map-get($display-breakpoints, 'lg-only');
-$md-and-up: map-get($display-breakpoints, 'md-and-up');
-$md-only: map-get($display-breakpoints, 'md-only');
-$md-and-down: map-get($display-breakpoints, 'md-and-down');
-$sm-only: map-get($display-breakpoints, 'sm-only');
-$sm-and-up: map-get($display-breakpoints, 'sm-and-up');
-$sm-and-down: map-get($display-breakpoints, 'sm-and-down');
-$xs-only: map-get($display-breakpoints, 'xs-only');
-
-$headings: (
+// Same per-level values (size/weight/line-height/font-family) as the old
+// Vuetify 2 `$headings` map, now in Vuetify 3's `$typography` map shape
+// (`letter-spacing`/`text-transform` added, using Vuetify's own historical
+// Material-type-scale values for each level so headings/body text keep the
+// same letter-spacing as before).
+$typography: (
   'h1': (
     'size': 2rem,
     'weight': 700,
     'line-height': 1.1,
+    'letter-spacing': -0.015625em,
     'font-family': 'Roboto Serif',
+    'text-transform': none,
   ),
   'h2': (
     'size': 1.25rem,
     'weight': 700,
     'line-height': 1.1,
+    'letter-spacing': -0.0083333333em,
     'font-family': 'Roboto Serif',
+    'text-transform': none,
   ),
   'h3': (
     'size': 1.125rem,
     'weight': 700,
     'line-height': 1.4,
+    'letter-spacing': normal,
+    'font-family': $body-font-family,
+    'text-transform': none,
   ),
   'h4': (
     'size': 1rem,
     'weight': 700,
     'line-height': 1.4,
+    'letter-spacing': 0.0073529412em,
+    'font-family': $body-font-family,
+    'text-transform': none,
   ),
   'h5': (
     'size': 1rem,
     'weight': 600,
     'line-height': 1.1,
+    'letter-spacing': normal,
+    'font-family': $body-font-family,
+    'text-transform': none,
   ),
   'body-1': (
-  'size': 1rem,
+    'size': 1rem,
     'weight': 500,
     'line-height': 1.4,
+    'letter-spacing': 0.03125em,
+    'font-family': $body-font-family,
+    'text-transform': none,
   ),
   'body-2': (
     'size': 1rem,
     'weight': 500,
     'line-height': 1.4,
-    ),
+    'letter-spacing': 0.0178571429em,
+    'font-family': $body-font-family,
+    'text-transform': none,
+  ),
   'subtitle-1': (
-  'size': 1rem,
+    'size': 1rem,
     'weight': 700,
     'line-height': 1.2,
-),
-'subtitle-2': (
-  'size': 0.875rem,
+    'letter-spacing': 0.009375em,
+    'font-family': $body-font-family,
+    'text-transform': none,
+  ),
+  'subtitle-2': (
+    'size': 0.875rem,
     'weight': 500,
     'line-height': 1.5,
-)
+    'letter-spacing': 0.0071428571em,
+    'font-family': $body-font-family,
+    'text-transform': none,
+  ),
 );
