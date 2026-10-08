@@ -3,25 +3,28 @@
 [Live Version](https://www.frauenaerztinnen-gerresheim.de)
 [Dev Version 👨🏻‍💻](https://praxis-website.venturelabs.team/)
 
+Nuxt 4 / Vue 3 / Vuetify 3, built as a fully static export (one page, no
+API/CMS calls) with Node (see `.nvmrc` for the exact version) and Yarn
+(classic).
+
 ## Build Setup
 
 ```bash
 # install dependencies
-$ npm install
+yarn install
 
 # serve with hot reload at localhost:3000
-$ npm run dev
+yarn dev
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+# generate the static site into dist/
+yarn generate
+
+# preview the generated static export locally
+npx serve dist
 
 # run linting
-$ npm run lint
-$ npm run lint:fix
-
-# generate static project
-$ npm run generate
+yarn lint
+yarn lint:fix
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+For detailed explanation on how things work, check out [Nuxt docs](https://nuxt.com).
