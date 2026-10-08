@@ -68,12 +68,18 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue';
+
 export default {
   name: 'CardWithButton',
   components: {
-    Clock: () => import('./icons/Clock.vue'),
-    Phone: () => import('./icons/PhoneIcon.vue'),
-    MapPin: () => import('./icons/MapPin.vue'),
+    // Vue 3 no longer auto-wraps a bare `() => import(...)` function as an
+    // async component (Vue 2 did) - without `defineAsyncComponent`, the
+    // dynamic `<component :is="card.icon">` below ends up rendering the
+    // unresolved Promise as text instead of the icon.
+    Clock: defineAsyncComponent(() => import('./icons/Clock.vue')),
+    Phone: defineAsyncComponent(() => import('./icons/PhoneIcon.vue')),
+    MapPin: defineAsyncComponent(() => import('./icons/MapPin.vue')),
   },
   props: {
     cardInfo: {

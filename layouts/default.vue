@@ -2,7 +2,7 @@
   <v-app class="app d-flex justify-center">
     <Navigation />
     <v-container>
-      <nuxt />
+      <NuxtPage />
     </v-container>
     <Footer />
   </v-app>
