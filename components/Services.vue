@@ -1,7 +1,7 @@
 <template>
   <div id="services" class="services mx-auto">
     <div class="about-us__title mb-6">
-      <span class="subtitle-1 text-dark-green">
+      <span class="text-subtitle-1 text-dark-green">
         {{ $t('homepage.services') }}
       </span>
       <h2 class="text-h1">

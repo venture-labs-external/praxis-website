@@ -1,7 +1,7 @@
 <template>
   <div class="contact mx-auto py-10" id="contact">
     <div class="contact__title">
-      <span class="subtitle-1 text-dark-green">{{
+      <span class="text-subtitle-1 text-dark-green">{{
         $t('homepage.location')
       }}</span>
       <h2 class="text-h1">

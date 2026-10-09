@@ -16,7 +16,7 @@
           class="info-section__row pr-12"
         >
           <div class="text-h4">{{ time.day }}</div>
-          <div class="body-1 text-right">{{ time.hours }}</div>
+          <div class="text-body-1 text-right">{{ time.hours }}</div>
         </div>
         <dl
           v-for="(contact, index) in card.contact"
@@ -24,7 +24,7 @@
           class="contact-list pr-12"
         >
           <dt class="text-h4">{{ contact.type }}</dt>
-          <dd class="body-1 text-right">
+          <dd class="text-body-1 text-right">
             <a
               v-if="['phone', 'fax'].includes(contact.contactType)"
               :href="`tel:${contact.details}`"

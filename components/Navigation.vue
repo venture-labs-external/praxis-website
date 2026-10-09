@@ -120,13 +120,13 @@
                   v-for="element in impressumData"
                   :key="element.label"
                   :class="{
-                    'subtitle-1': element.type === 'title',
-                    'body-2': element.type === 'content',
+                    'text-subtitle-1': element.type === 'title',
+                    'text-body-2': element.type === 'content',
                   }"
                   v-html="$t(element.label)"
                 />
                 <p
-                  class="subtitle-1"
+                  class="text-subtitle-1"
                   v-html="$t('imprint.conceptDesignProgramming.title')"
                 />
                 <div class="d-flex justify-start" style="height: 100%">
@@ -135,7 +135,7 @@
                     <img src="/lab-icons.svg" width="100px" height="15px" />
                   </div>
                   <p
-                    class="body-2 ml-10 mt-2"
+                    class="text-body-2 ml-10 mt-2"
                     v-html="$t('imprint.conceptDesignProgramming.content')"
                   />
                 </div>

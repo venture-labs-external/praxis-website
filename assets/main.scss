@@ -2,6 +2,18 @@
 @import 'typography';
 
 .v-application {
+  // Vuetify 2 auto-derives an "anchor" theme colour from `primary` when none
+  // is set (`--v-anchor-base` here was `#0c2750`, exactly `theme.js`'s
+  // `primary`) and applies it to every plain `<a>` via `.v-application
+  // a{color:var(--v-anchor-base)}`. Vuetify 3 has no equivalent "anchor"
+  // concept at all, so every `<a>` with no explicit colour class (the
+  // Navigation/Footer wordmark links) silently fell back to the browser's
+  // default link blue - restored explicitly here, from the same `primary`
+  // colour Vuetify 2 was deriving it from.
+  a {
+    color: rgb(var(--v-theme-primary));
+  }
+
   h1.text-h1,
   h2.text-h1 {
     @media #{$md-and-up} {
@@ -40,23 +52,23 @@
       line-height: $type-h5-md-line-height !important;
     }
   }
-  p.body-1,
-  div.body-1 {
+  p.text-body-1,
+  div.text-body-1 {
     @media #{$md-and-up} {
       font-size: $type-body-1-md-size !important;
     }
   }
-  p.body-2,
-  span.body-2,
-  div.body-2 {
+  p.text-body-2,
+  span.text-body-2,
+  div.text-body-2 {
     @media #{$md-and-up} {
       font-size: $type-body-2-md-size !important;
       font-weight: $type-body-2-md-weight !important;
       line-height: $type-body-2-md-line-height !important;
     }
   }
-  p.subtitle-1,
-  span.subtitle-1 {
+  p.text-subtitle-1,
+  span.text-subtitle-1 {
     @media #{$md-and-up} {
       font-weight: $type-subtitle-1-md-weight !important;
     }

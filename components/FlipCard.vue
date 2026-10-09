@@ -31,7 +31,7 @@
             </div>
             <div class="text-left mx-6" @click="show = !show">
               <h5 class="text-h5 mb-4">{{ cardInfo.title }}</h5>
-              <p class="subtitle-2">
+              <p class="text-subtitle-2">
                 {{ cardInfo.description }}
               </p>
             </div>

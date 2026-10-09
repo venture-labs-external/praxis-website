@@ -1,7 +1,7 @@
 <template>
   <header class="header mx-auto">
     <div class="header__title">
-      <span class="subtitle-1 text-dark-green">
+      <span class="text-subtitle-1 text-dark-green">
         {{ $t('homepage.welcome') }}
       </span>
       <h1 class="text-h1">
