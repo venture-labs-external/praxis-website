@@ -72,7 +72,11 @@
           </span>
         </a>
       </div>
-      <v-dialog v-model="dialog" width="700px">
+      <v-dialog
+        v-model="dialog"
+        width="700px"
+        content-class="footer__imprint-overlay"
+      >
         <template v-slot:activator="{ props: activatorProps }">
           <div class="mt-6 mt-md-4">
             <a
@@ -213,6 +217,20 @@ const contactData = computed(() => ({
     display: flex;
     justify-content: space-between;
     gap: $space-xs;
+  }
+  // The Impressum dialog's own wrapper (`content-class` above, landing on
+  // Vuetify 3's `.v-overlay__content`) - not part of this component's own
+  // slot content, so it never gets this file's scoped `data-v-*` attribute;
+  // `:global()` is required to reach it at all. Vuetify 3's own rule caps
+  // it at `calc(100% - 48px)` (`.v-dialog > .v-overlay__content` in
+  // `vuetify.css`); `dev`'s own Vuetify 2 `.v-dialog` computed to `90%`
+  // instead (confirmed against the `dev` build: 810px of a 900px-tall
+  // viewport, not 852px) - restored here, the same relative way, so the
+  // whole dialog (and every paragraph inside it, all measured from its own
+  // top) lands at the same vertical offset as `dev`'s. `!important` to beat
+  // Vuetify's own rule (same specificity, declared first in its bundle).
+  :global(.footer__imprint-overlay) {
+    max-height: 90% !important;
   }
   // Vuetify 3's `<v-dialog>` (built on `<v-overlay>`) teleports its content
   // to a `.v-overlay-container` appended as the last child of `<body>` -

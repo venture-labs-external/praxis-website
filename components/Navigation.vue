@@ -89,7 +89,11 @@
               </a>
             </div>
           </div>
-          <v-dialog v-model="dialog" width="700px">
+          <v-dialog
+            v-model="dialog"
+            width="700px"
+            content-class="nav__imprint-overlay"
+          >
             <template v-slot:activator="{ props: activatorProps }">
               <div class="d-flex justify-center align-center mt-6 mt-md-4">
                 <a
@@ -231,6 +235,10 @@ function scrollTo(hash) {
   &__menu {
     width: 100vw;
     height: 100vh;
+  }
+  // See Footer.vue's identical `.footer__imprint-overlay` comment.
+  :global(.nav__imprint-overlay) {
+    max-height: 90% !important;
   }
   // See Footer.vue's identical `.footer__imprint-title` comment.
   &__imprint-title {
