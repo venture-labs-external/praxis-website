@@ -92,12 +92,12 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  border-radius: 6px;
+  border-radius: $radius-sm;
   &__title {
     border-bottom: 1px solid rgb(var(--v-theme-dark-gray));
   }
   &__button {
-    border-radius: 0 0 6px 6px;
+    border-radius: 0 0 $radius-sm $radius-sm;
   }
 }
 
@@ -112,9 +112,9 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: $space-2xs 0;
   &:last-child {
-    margin-bottom: 2rem;
+    margin-bottom: $space-md;
   }
 }
 

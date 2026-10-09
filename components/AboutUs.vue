@@ -68,38 +68,38 @@ export default {
 
 <style lang="scss" scoped>
 .about-us {
-  padding-top: 5rem;
+  padding-top: $space-xl;
   max-width: 58.75rem;
   &__cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    gap: $space-sm;
     width: 100%;
   }
   &__card {
     display: grid;
     grid-template-rows: max-content max-content 1fr;
-    gap: 1.5rem;
-    padding: 2rem;
+    gap: $space-sm;
+    padding: $space-md;
     background-color: rgb(var(--v-theme-white));
-    border-radius: 6px;
+    border-radius: $radius-sm;
     justify-items: center;
     height: 100% !important;
     &-title {
       justify-self: start;
       & span {
-        font-family: 'Roboto Serif' !important;
-        font-size: 1.5rem !important;
-        font-weight: 700 !important;
-        line-height: 1;
+        font-family: $type-card-title-family !important;
+        font-size: $type-card-title-size !important;
+        font-weight: $type-card-title-weight !important;
+        line-height: $type-card-title-line-height;
       }
       & p {
         color: rgb(var(--v-theme-dark-green));
-        font-family: Roboto;
-        font-size: 16px !important;
+        font-family: $type-card-subtitle-family;
+        font-size: $type-card-subtitle-size !important;
         font-style: normal;
-        font-weight: 500 !important;
-        line-height: 1.4;
+        font-weight: $type-card-subtitle-weight !important;
+        line-height: $type-card-subtitle-line-height;
         margin-bottom: 0 !important;
       }
     }
@@ -107,7 +107,7 @@ export default {
       width: 100%;
       height: 100%;
       & img {
-        border-radius: 6px;
+        border-radius: $radius-sm;
         width: 100%;
         aspect-ratio: 3 / 2;
         object-fit: cover;

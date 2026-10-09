@@ -49,17 +49,17 @@ export default {
 <style lang="scss" scoped>
 .header {
   max-width: 73rem;
-  padding-top: 0.5rem;
+  padding-top: $space-2xs;
 
   @media #{$md-and-up} {
-    padding-top: 1.5rem;
-    padding-bottom: 5rem;
+    padding-top: $space-sm;
+    padding-bottom: $space-xl;
     display: grid;
     grid-template:
       'title  image '
       'card image  ';
     grid-template-columns: 40% auto;
-    column-gap: 3rem;
+    column-gap: $space-lg;
     align-items: end;
   }
 
@@ -67,7 +67,7 @@ export default {
     grid-area: title;
 
     & h1 {
-      font-size: 48px !important;
+      font-size: $type-display-locked-size !important;
     }
   }
 
@@ -106,7 +106,7 @@ export default {
         width: 100%;
         height: 100%;
         border: 3px solid rgb(var(--v-theme-dark-green));
-        border-radius: 6px;
+        border-radius: $radius-sm;
       }
     }
   }

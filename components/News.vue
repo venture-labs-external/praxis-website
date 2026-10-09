@@ -52,10 +52,10 @@ export default {
   @media #{$md-and-up} {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
+    gap: $space-lg;
   }
   &__title {
-    font-size: 1.125rem;
+    font-size: $type-news-title-size;
   }
   &__image {
     width: 100%;

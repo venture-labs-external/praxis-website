@@ -34,25 +34,25 @@ export default {
     justify-items: center;
   }
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
+  gap: $space-xs;
+  padding: $space-xs;
   background-color: rgb(var(--v-theme-info));
   color: rgb(var(--v-theme-info-text));
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: 0;
+  border-radius: $radius-sm;
+  font-size: $type-info-size;
+  font-weight: $type-info-weight;
+  line-height: $type-info-line-height;
+  letter-spacing: $type-info-letter-spacing;
 
   @media #{$md-and-up} {
-    margin-top: 4.5rem;
+    margin-top: $space-info-margin-top;
   }
 
   & p {
     margin-bottom: 0 !important;
   }
   & svg {
-    margin: 0 1rem;
+    margin: 0 $space-xs;
   }
 }
 </style>

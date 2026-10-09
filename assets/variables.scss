@@ -42,7 +42,7 @@
       'weight': 700,
       'line-height': 1.1,
       'letter-spacing': -0.015625em,
-      'font-family': ('Roboto Serif', sans-serif),
+      'font-family': 'Roboto Serif',
       'text-transform': none,
     ),
     'h2': (
@@ -50,7 +50,7 @@
       'weight': 700,
       'line-height': 1.1,
       'letter-spacing': -0.0083333333em,
-      'font-family': ('Roboto Serif', sans-serif),
+      'font-family': 'Roboto Serif',
       'text-transform': none,
     ),
     'h3': (
@@ -132,7 +132,6 @@ $xl-only: 'only screen and (min-width: 1904px)';
 
 $body-font-family: 'Roboto', sans-serif;
 $heading-font-family: 'Roboto', sans-serif;
-$display-font-family: 'Roboto Serif', sans-serif;
 
 // ---------------------------------------------------------------------------
 // One small theme, part 2: every value a component `<style>` block used to
@@ -147,6 +146,27 @@ $display-font-family: 'Roboto Serif', sans-serif;
 // footer's top corners, the header image frame, the Doctolib button card).
 $radius-sm: 6px;
 
+// Spacing scale - every distinct margin/padding/gap literal actually found
+// in `components/*.vue` (`grep`'d once, listed smallest to largest), named
+// instead of repeated. Two one-off values that only ever appear once stay
+// named individually rather than forced into this scale (that would change
+// their value): `$space-flip-card-pad` and `$space-imprint-top` below.
+$space-2xs: 0.5rem; // CardWithButton's row padding
+$space-xs: 1rem; // Footer's icon-column gap
+$space-sm: 1.5rem; // AboutUs/Services/Team/Footer card and grid gaps
+$space-md: 2rem; // AboutUs card padding, Team's `h2` margin
+$space-lg: 3rem; // Header/Contact/News column gaps
+$space-xl: 5rem; // every section's top/bottom padding (Header, Contact, Services, Navigation's mobile menu logo)
+
+// FlipCard's front face padding - a single-use value that does not belong to
+// the scale above (it is sized to the card's own fixed height, not a margin
+// between two things).
+$space-flip-card-pad: 9.844rem;
+
+// Shared margin-top above the Impressum dialog's imprint text (Footer's
+// `.footer__imprint`, Navigation's `.nav__imprint` - byte-identical).
+$space-imprint-top: 30px;
+
 // Soft drop-shadow used on the "about us" doctor cards (`.box-shadow`).
 $shadow-soft: 4px 4px 24px 0px rgba(0, 0, 0, 0.08),
   -4px -4px 24px 0px rgba(21, 128, 235, 0.05);
@@ -156,34 +176,84 @@ $shadow-soft: 4px 4px 24px 0px rgba(0, 0, 0, 0.08),
 // follow the responsive `h1.text-h1`/`h2.text-h1` rule in `main.scss`).
 $type-display-locked-size: 48px;
 
-// Doctor/team-member name directly under a portrait photo (`AboutUs.vue`'s
-// `.about-us__card-title span`, `Team.vue`'s `.team__member-title span`) -
-// two components, two slightly different literal sizes in the pre-migration
-// source (1.5rem vs. 20px) kept as two named tokens rather than merged into
-// one (merging them would be a visual change, which this task does not make).
-$type-card-title-family: $display-font-family;
+// Doctor card name (`AboutUs.vue`'s `.about-us__card-title span`) - the
+// pre-migration literal has no fallback family, unlike the brand tokens
+// below, so it is kept as its own literal token (adding a fallback here
+// would change the computed `font-family` string).
+$type-card-title-family: 'Roboto Serif';
 $type-card-title-size: 1.5rem;
 $type-card-title-weight: 700;
 $type-card-title-line-height: 1;
 
+// Doctor card subtitle (`AboutUs.vue`'s `.about-us__card-title p`) - also its
+// own token: the pre-migration literal is the bare unquoted identifier
+// `Roboto` (no fallback), not the `'Roboto', sans-serif` list every other
+// body-text role uses.
+$type-card-subtitle-family: Roboto;
+$type-card-subtitle-size: 16px;
+$type-card-subtitle-weight: 500;
+$type-card-subtitle-line-height: 1.4;
+
+// Team-member name and subtitle (`Team.vue`'s `.team__member-title span`/`p`)
+// - both already match `$body-font-family`'s `'Roboto', sans-serif` list
+// exactly, so they reuse it; sizes/weights still differ from the doctor-card
+// role above (20px vs. 1.5rem, line-height `normal` vs. `1`), kept as found.
 $type-member-name-family: $body-font-family;
 $type-member-name-size: 20px;
 $type-member-name-weight: 700;
 $type-member-name-line-height: normal;
 
-// Doctor/team-member subtitle under the name (same two components) - the one
-// role shared byte-for-byte between both.
-$type-card-subtitle-family: $body-font-family;
-$type-card-subtitle-size: 16px;
-$type-card-subtitle-weight: 500;
-$type-card-subtitle-line-height: 1.4;
+$type-member-subtitle-family: $body-font-family;
 
-// Brand wordmark text next to the logo (`Navigation.vue`'s `.nav__logo`,
-// `Footer.vue`'s `.footer__logo`) - the footer's copy additionally sets
-// `font-weight: 700` where the nav's does not (kept as found).
-$type-brand-family: $display-font-family;
-$type-brand-size: 1.25rem;
-$type-brand-line-height: 1.2;
+// Brand wordmark text next to the logo - `Footer.vue`'s `.footer__logo` has
+// the `sans-serif` fallback and a `font-weight: 700`; `Navigation.vue`'s
+// `.nav__logo` has neither (no fallback, no weight set) - two tokens, kept as
+// found rather than unified (unifying them would be a visual change).
+$type-brand-footer-family: 'Roboto Serif', sans-serif;
+$type-brand-footer-size: 1.25rem;
+$type-brand-footer-weight: 700;
+$type-brand-footer-line-height: 1.2;
+
+$type-brand-nav-family: 'Roboto Serif';
+$type-brand-nav-size: 1.25rem;
+$type-brand-nav-line-height: 1.2;
+
+// Base font-weight of the whole `<footer>` (`Footer.vue`'s `.footer`),
+// inherited by every child that does not set its own.
+$type-footer-weight: 700;
+
+// `main.scss`'s `$md-and-up` typography overrides - Vuetify's own
+// `.text-h1`...`.text-h5`/`.body-1`/`.body-2`/`.subtitle-1` utility classes
+// get a second, larger size at the desktop breakpoint (the mobile size comes
+// from the `$typography` map configured above). Named after the role +
+// breakpoint they belong to, same literal values as the pre-migration file.
+$type-h1-md-size: 3rem;
+$type-h2-md-size: 1.5rem;
+$type-h2-md-line-height: 1.2;
+$type-h3-md-size: 1.25rem;
+$type-h3-md-line-height: 1.2;
+$type-h4-md-size: 1.125rem;
+$type-h5-md-weight: 700;
+$type-h5-md-line-height: 1.2;
+$type-body-1-md-size: 1.125rem;
+$type-body-2-md-size: 1rem;
+$type-body-2-md-weight: 400;
+$type-body-2-md-line-height: 1.4;
+$type-subtitle-1-md-weight: 700;
+
+// `pages/index.vue`'s `.info` block - unused today (no element in the
+// template carries the `info` class; pre-existing dead CSS, the same on the
+// `dev` branch - see this task's "Noticed but not touching"), tokenised
+// anyway because the literal-value check scans the file regardless.
+$type-info-size: 1rem;
+$type-info-weight: 400;
+$type-info-line-height: 1.4;
+$type-info-letter-spacing: 0;
+$space-info-margin-top: 4.5rem;
+
+// `layouts/error.vue`'s heading - the error page is not part of the parity
+// check (see that file's own comment) but still may not hold a literal.
+$type-error-heading-size: 20px;
 
 // Desktop nav link (`Navigation.vue`'s `.list__item`).
 $type-nav-link-size: 1.125rem;

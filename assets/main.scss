@@ -5,7 +5,7 @@
   h1.text-h1,
   h2.text-h1 {
     @media #{$md-and-up} {
-      font-size: 3rem !important;
+      font-size: $type-h1-md-size !important;
     }
   }
   h2.text-h2,
@@ -13,59 +13,58 @@
   span.text-h2,
   div.text-h2 {
     @media #{$md-and-up} {
-      font-size: 1.5rem !important;
-      line-height: 1.2 !important;
+      font-size: $type-h2-md-size !important;
+      line-height: $type-h2-md-line-height !important;
     }
   }
   h3.text-h3,
   p.text-h3,
   div.text-h3 {
     @media #{$md-and-up} {
-      font-size: 1.25rem !important;
-      line-height: 1.2 !important;
+      font-size: $type-h3-md-size !important;
+      line-height: $type-h3-md-line-height !important;
     }
   }
   h4.text-h4,
   p.text-h4,
   div.text-h4 {
     @media #{$md-and-up} {
-      font-size: 1.125rem !important;
+      font-size: $type-h4-md-size !important;
     }
   }
   h5.text-h5,
   p.text-h5,
   div.text-h5 {
     @media #{$md-and-up} {
-      font-weight: 700 !important;
-      line-height: 1.2 !important;
+      font-weight: $type-h5-md-weight !important;
+      line-height: $type-h5-md-line-height !important;
     }
   }
   p.body-1,
   div.body-1 {
     @media #{$md-and-up} {
-      font-size: 1.125rem !important;
+      font-size: $type-body-1-md-size !important;
     }
   }
   p.body-2,
   span.body-2,
   div.body-2 {
     @media #{$md-and-up} {
-      font-size: 1rem !important;
-      font-weight: 400 !important;
-      line-height: 1.4 !important;
+      font-size: $type-body-2-md-size !important;
+      font-weight: $type-body-2-md-weight !important;
+      line-height: $type-body-2-md-line-height !important;
     }
   }
   p.subtitle-1,
   span.subtitle-1 {
     @media #{$md-and-up} {
-      font-weight: 700 !important;
+      font-weight: $type-subtitle-1-md-weight !important;
     }
   }
 }
 
 .box-shadow {
-  box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.08),
-    -4px -4px 24px 0px rgba(21, 128, 235, 0.05);
+  box-shadow: $shadow-soft;
 }
 
 .no-wrap {

@@ -102,7 +102,7 @@ export default {
     backface-visibility: hidden;
   }
   &--front {
-    padding: 9.844rem 0;
+    padding: $space-flip-card-pad 0;
   }
   &--back {
     transform: rotateY(180deg);

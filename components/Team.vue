@@ -69,13 +69,13 @@ export default {
 .team {
   max-width: 58.75rem;
   & h2 {
-    margin: 2rem 0;
+    margin: $space-md 0;
   }
   &__members {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 217px));
     justify-content: center;
-    gap: 1.5rem !important;
+    gap: $space-sm !important;
   }
   &__member {
     &-image {
@@ -87,19 +87,19 @@ export default {
     }
     &-title {
       & span {
-        font-family: 'Roboto', sans-serif;
-        font-size: 20px;
+        font-family: $type-member-name-family;
+        font-size: $type-member-name-size;
         font-style: normal;
-        font-weight: 700;
-        line-height: normal;
+        font-weight: $type-member-name-weight;
+        line-height: $type-member-name-line-height;
       }
       & p {
         color: rgb(var(--v-theme-dark-green));
-        font-family: 'Roboto', sans-serif;
-        font-size: 16px;
+        font-family: $type-member-subtitle-family;
+        font-size: $type-card-subtitle-size;
         font-style: normal;
-        font-weight: 500;
-        line-height: 1.4;
+        font-weight: $type-card-subtitle-weight;
+        line-height: $type-card-subtitle-line-height;
         margin-bottom: 0 !important;
       }
     }

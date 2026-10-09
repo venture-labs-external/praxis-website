@@ -180,19 +180,19 @@ const contactData = computed(() => ({
 
 <style lang="scss" scoped>
 .footer {
-  font-weight: 700;
-  border-radius: 6px 6px 0 0;
+  font-weight: $type-footer-weight;
+  border-radius: $radius-sm $radius-sm 0 0;
   white-space: pre-line;
-  gap: 1.5rem;
+  gap: $space-sm;
   &:first-line {
     line-height: 0;
   }
   &__logo {
     width: 10.5rem;
-    font-family: 'Roboto Serif', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.2;
+    font-family: $type-brand-footer-family;
+    font-size: $type-brand-footer-size;
+    font-weight: $type-brand-footer-weight;
+    line-height: $type-brand-footer-line-height;
   }
   &__column {
     height: 100%;
@@ -200,11 +200,11 @@ const contactData = computed(() => ({
   &__item {
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
+    gap: $space-xs;
   }
   &__imprint {
     white-space: pre-line;
-    margin-top: 30px;
+    margin-top: $space-imprint-top;
     &:first-line {
       line-height: 0;
     }

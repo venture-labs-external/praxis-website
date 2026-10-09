@@ -221,9 +221,9 @@ function scrollTo(hash) {
   border-bottom: 2px solid rgb(var(--v-theme-light-green));
   &__logo {
     width: 10.5rem;
-    font-family: 'Roboto Serif';
-    font-size: 1.25rem;
-    line-height: 1.2;
+    font-family: $type-brand-nav-family;
+    font-size: $type-brand-nav-size;
+    line-height: $type-brand-nav-line-height;
   }
   &__button {
     text-transform: unset !important;
@@ -234,7 +234,7 @@ function scrollTo(hash) {
   }
   &__imprint {
     white-space: pre-line;
-    margin-top: 30px;
+    margin-top: $space-imprint-top;
     &:first-line {
       line-height: 0;
     }
@@ -244,8 +244,8 @@ function scrollTo(hash) {
   list-style: none;
   &__item {
     text-decoration: none;
-    font-size: 1.125rem;
-    line-height: 1.2;
+    font-size: $type-nav-link-size;
+    line-height: $type-nav-link-line-height;
     &--mobile:hover {
       color: rgb(var(--v-theme-mint-blue)) !important;
     }
@@ -256,7 +256,7 @@ function scrollTo(hash) {
 }
 .menu {
   &__logo {
-    padding-bottom: 5rem;
+    padding-bottom: $space-xl;
     max-width: 8.75rem;
   }
 }
