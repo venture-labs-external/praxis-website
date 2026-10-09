@@ -90,8 +90,29 @@ async function main() {
           // (font-display: swap), and the two builds' bundles are different
           // sizes, so they do not swap at exactly the same moment - without
           // this, wrapped-line-count differences show up as pure noise.
-          await oldPage.evaluate(() => document.fonts.ready);
-          await newPage.evaluate(() => document.fonts.ready);
+          // `document.fonts.ready` resolving does not guarantee the reflow
+          // that actually uses the newly-loaded font has been painted yet
+          // (confirmed: an occasional ~700px page-height difference at
+          // 390px, "default" state, every other width/state identical -
+          // the one-frame-stale layout still measuring the fallback font's
+          // wrap) - two animation frames past it is enough margin for that
+          // reflow to have happened.
+          await oldPage.evaluate(
+            () =>
+              new Promise((resolve) => {
+                document.fonts.ready.then(() =>
+                  requestAnimationFrame(() => requestAnimationFrame(resolve)),
+                );
+              }),
+          );
+          await newPage.evaluate(
+            () =>
+              new Promise((resolve) => {
+                document.fonts.ready.then(() =>
+                  requestAnimationFrame(() => requestAnimationFrame(resolve)),
+                );
+              }),
+          );
           await state.apply(oldPage);
           await state.apply(newPage);
 
