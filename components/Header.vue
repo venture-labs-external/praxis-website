@@ -1,7 +1,7 @@
 <template>
   <header class="header mx-auto">
     <div class="header__title">
-      <span class="subtitle-1 dark-green--text">
+      <span class="subtitle-1 text-dark-green">
         {{ $t('homepage.welcome') }}
       </span>
       <h1 class="text-h1">
@@ -12,7 +12,7 @@
       <div class="image__wrapper">
         <img
           class="image"
-          src="header-image/header-image.png"
+          src="/header-image/header-image.png"
           srcset="
             /header-image/header-image_w_330.webp   330w,
             /header-image/header-image_w_714.webp   714w,
@@ -105,7 +105,7 @@ export default {
         bottom: 8%;
         width: 100%;
         height: 100%;
-        border: 3px solid var(--v-dark-green-base);
+        border: 3px solid rgb(var(--v-theme-dark-green));
         border-radius: 6px;
       }
     }
