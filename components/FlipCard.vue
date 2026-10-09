@@ -11,7 +11,7 @@
           </div>
           <h5 class="text-h5 text-center mt-6 mx-10">{{ cardInfo.title }}</h5>
           <div>
-            <v-btn icon class="mx-auto">
+            <v-btn icon size="36" class="mx-auto">
               <img src="/arrow-right.svg" alt="" />
             </v-btn>
           </div>
@@ -25,7 +25,7 @@
         >
           <div @click="show = !show">
             <div class="d-flex flex-row-reverse" @click="show = !show">
-              <v-btn icon>
+              <v-btn icon size="36">
                 <img src="/cross.svg" />
               </v-btn>
             </div>

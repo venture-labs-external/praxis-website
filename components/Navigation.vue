@@ -107,7 +107,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <div class="d-flex flex-row-reverse">
-                  <v-btn icon @click="dialog = false">
+                  <v-btn icon size="36" @click="dialog = false">
                     <img src="/cross.svg" />
                   </v-btn>
                 </div>
