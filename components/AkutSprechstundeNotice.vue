@@ -36,11 +36,13 @@
         <p class="akut-notice__body">
           {{ $t('homepage.akutNoticeBody') }}
         </p>
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <p
-          class="akut-notice__emphasis primary--text"
-          v-html="$t('homepage.akutNoticeEmphasis')"
-        />
+        <p class="akut-notice__emphasis primary--text">
+          {{ $t('homepage.akutNoticeEmphasisBefore') }}
+          <span class="akut-notice__highlight">{{
+            $t('homepage.akutNoticeEmphasisHighlight')
+          }}</span>
+          {{ $t('homepage.akutNoticeEmphasisAfter') }}
+        </p>
         <div class="akut-notice__contact primary white--text">
           <p class="akut-notice__contact-intro">
             {{ $t('homepage.akutNoticeContactIntro') }}
@@ -54,11 +56,10 @@
             {{ $t('homepage.akutNoticePhone') }}
           </a>
         </div>
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <p
-          class="akut-notice__closing"
-          v-html="$t('homepage.akutNoticeClosing')"
-        />
+        <p class="akut-notice__closing">
+          {{ $t('homepage.akutNoticeClosingLine1') }}<br />
+          <strong>{{ $t('homepage.akutNoticeClosingLine2') }}</strong>
+        </p>
       </v-card>
     </v-dialog>
 
@@ -222,7 +223,7 @@ export default {
     line-height: 1.4;
     margin: 0 0 1.5rem;
 
-    ::v-deep .akut-notice__highlight {
+    .akut-notice__highlight {
       color: var(--v-secondary-base);
       text-decoration: underline;
       text-decoration-thickness: 2px;
