@@ -189,6 +189,22 @@ $space-flip-card-pad: 9.844rem;
 // `.footer__imprint`, Navigation's `.nav__imprint` - byte-identical).
 $space-imprint-top: 30px;
 
+// Vuetify 2's `.v-card__text` padding inside the Impressum dialog computed
+// to `0 24px 20px` (confirmed against the `dev` build); Vuetify 3's
+// `.v-card-text` default is `16px 24px 24px` - the extra 16px top padding
+// (on top of `$space-imprint-top`'s own margin) pushed every paragraph down
+// by a near-constant offset, and the 4px-taller bottom padding shifted the
+// dialog's own closing elements. Horizontal padding already matches
+// (`24px`, Vuetify 3's own default), so only top/bottom are restored here.
+$space-imprint-bottom: 20px;
+
+// Same dialog, the `.v-card-title`'s own padding: `dev`'s computed box is
+// `16px 24px 10px` (confirmed against the `dev` build); Vuetify 3's
+// `.v-card-title` default is `8px 16px` (all four sides, shorthand). Top
+// (`$space-xs`) and left/right (`$space-sm`) already exist as tokens;
+// bottom is its own one-off value, 6px short of `$space-2xs`.
+$space-imprint-title-bottom: 10px;
+
 // Soft drop-shadow used on the "about us" doctor cards (`.box-shadow`).
 $shadow-soft: 4px 4px 24px 0px rgba(0, 0, 0, 0.08),
   -4px -4px 24px 0px rgba(21, 128, 235, 0.05);

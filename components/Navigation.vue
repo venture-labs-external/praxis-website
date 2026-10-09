@@ -112,7 +112,7 @@
                   </v-btn>
                 </div>
               </v-card-actions>
-              <v-card-title>
+              <v-card-title class="nav__imprint-title">
                 <span class="text-h2">{{ $t('imprint.imprint') }}</span>
               </v-card-title>
               <v-card-text class="nav__imprint">
@@ -232,9 +232,25 @@ function scrollTo(hash) {
     width: 100vw;
     height: 100vh;
   }
+  // See Footer.vue's identical `.footer__imprint-title` comment.
+  &__imprint-title {
+    padding: $space-xs $space-sm $space-imprint-title-bottom !important;
+    // See Footer.vue's identical `.footer__imprint-title` comment.
+    display: flex !important;
+    align-items: center;
+    .text-h2 {
+      @media #{$md-and-up} {
+        font-size: $type-h2-md-size !important;
+        line-height: $type-h2-md-line-height !important;
+      }
+    }
+  }
   &__imprint {
     white-space: pre-line;
     margin-top: $space-imprint-top;
+    // See Footer.vue's identical `.footer__imprint` padding comment.
+    padding-top: 0 !important;
+    padding-bottom: $space-imprint-bottom !important;
     &:first-line {
       line-height: 0;
     }
@@ -243,10 +259,35 @@ function scrollTo(hash) {
       color: $color-text-secondary;
       margin-bottom: $space-xs !important;
     }
+    // See Footer.vue's identical `.footer__imprint:deep(a)` comment.
+    &:deep(a) {
+      color: rgb(var(--v-theme-primary));
+    }
+    .text-body-2 {
+      @media #{$md-and-up} {
+        font-size: $type-body-2-md-size !important;
+        font-weight: $type-body-2-md-weight !important;
+        line-height: $type-body-2-md-line-height !important;
+      }
+    }
+    .text-subtitle-1 {
+      @media #{$md-and-up} {
+        font-weight: $type-subtitle-1-md-weight !important;
+      }
+    }
   }
 }
 .list {
   list-style: none;
+  // Vuetify 2 did not zero out the browser's own `<ul>` user-agent
+  // indent (`padding-inline-start`), only the bullet itself
+  // (`list-style:none` above); Vuetify 3's own reset zeroes it entirely.
+  // Restored at the dev build's own measured value (confirmed against its
+  // computed style: `padding: 0 0 0 24px`) - the desktop nav list (and,
+  // through it, every `li` after the first) was rendered 24px narrower/
+  // further left than `dev` at every width this shows up at (1440px desktop
+  // nav).
+  padding-left: $space-sm;
   &__item {
     text-decoration: none;
     font-size: $type-nav-link-size;

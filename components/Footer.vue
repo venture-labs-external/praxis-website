@@ -95,7 +95,7 @@
               </v-btn>
             </div>
           </v-card-actions>
-          <v-card-title>
+          <v-card-title class="footer__imprint-title">
             <span class="text-h2">{{ $t('imprint.imprint') }}</span>
           </v-card-title>
           <v-card-text class="footer__imprint">
@@ -214,9 +214,53 @@ const contactData = computed(() => ({
     justify-content: space-between;
     gap: $space-xs;
   }
+  // Vuetify 3's `<v-dialog>` (built on `<v-overlay>`) teleports its content
+  // to a `.v-overlay-container` appended as the last child of `<body>` -
+  // outside `.v-application` entirely (confirmed: Playwright's own
+  // `el.closest('.v-application')` returns null for this dialog's content).
+  // `main.scss`'s `.v-application` breakpoint overrides (the `$md-and-up`
+  // `text-h2`/`text-body-2`/`text-subtitle-1` size/weight/line-height
+  // bumps) and its `.v-application a{color:...}` anchor colour never reach
+  // this dialog for that reason - restored here, scoped directly to it,
+  // from the same theme tokens `main.scss` itself uses.
+  &__imprint-title {
+    // Vuetify 3's `.v-card-title` default padding (`8px 16px`, all four
+    // sides) is not `dev`'s own Vuetify 2 computed box (`16px 24px 10px`).
+    // `!important` to beat Vuetify's own higher-specificity
+    // `.v-card-item .v-card-title{padding:0}` / `.v-card-title{padding:...}`
+    // rules.
+    padding: $space-xs $space-sm $space-imprint-title-bottom !important;
+    // Vuetify 3's `.v-card-title` is `display:block` - an ordinary block
+    // box whose own `line-height:1.6` reserves an invisible "strut" taller
+    // than the `.text-h2` span inside it, vertically centring the span
+    // inside that extra height. `dev`'s own Vuetify 2 title computed to a
+    // content-box height matching the span's own line-height exactly (its
+    // `.v-card__title` is `display:flex`, which sizes to its flex item's
+    // content and never applies a strut at all, regardless of its own
+    // `line-height`) - restored here the same way, `!important` to beat
+    // Vuetify 3's `display:block`.
+    display: flex !important;
+    align-items: center;
+    // `!important` to beat the generated `.text-h2` utility class's own
+    // (also `!important`) font-size - same reason `main.scss`'s identical
+    // override needs it.
+    .text-h2 {
+      @media #{$md-and-up} {
+        font-size: $type-h2-md-size !important;
+        line-height: $type-h2-md-line-height !important;
+      }
+    }
+  }
   &__imprint {
     white-space: pre-line;
     margin-top: $space-imprint-top;
+    // Vuetify 3's `.v-card-text` default padding (`16px 24px 24px`) is not
+    // `dev`'s own Vuetify 2 computed box (`0 24px 20px`) - restored here,
+    // top/bottom only (left/right already match). `!important` to beat
+    // Vuetify's own higher-specificity `.v-dialog>.v-overlay__content>
+    // .v-card>.v-card-text{padding:...}` rule.
+    padding-top: 0 !important;
+    padding-bottom: $space-imprint-bottom !important;
     &:first-line {
       line-height: 0;
     }
@@ -228,6 +272,25 @@ const contactData = computed(() => ({
     & p {
       color: $color-text-secondary;
       margin-bottom: $space-xs !important;
+    }
+    // `v-html`-injected content (every link here comes from the locale
+    // JSON's own markup) never gets this component's scoped `data-v-*`
+    // attribute, so a plain `& a` selector - scoped to only match elements
+    // that carry it - never matches; `:deep()` drops that requirement.
+    &:deep(a) {
+      color: rgb(var(--v-theme-primary));
+    }
+    .text-body-2 {
+      @media #{$md-and-up} {
+        font-size: $type-body-2-md-size !important;
+        font-weight: $type-body-2-md-weight !important;
+        line-height: $type-body-2-md-line-height !important;
+      }
+    }
+    .text-subtitle-1 {
+      @media #{$md-and-up} {
+        font-weight: $type-subtitle-1-md-weight !important;
+      }
     }
   }
   svg {
