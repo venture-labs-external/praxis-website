@@ -36,8 +36,8 @@ export default {
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background-color: var(--v-info-base);
-  color: var(--v-info-text-base);
+  background-color: rgb(var(--v-theme-info));
+  color: rgb(var(--v-theme-info-text));
   border-radius: 6px;
   font-size: 1rem;
   font-weight: 400;

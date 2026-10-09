@@ -94,7 +94,7 @@ export default {
         line-height: normal;
       }
       & p {
-        color: var(--v-dark-green-base);
+        color: rgb(var(--v-theme-dark-green));
         font-family: 'Roboto', sans-serif;
         font-size: 16px;
         font-style: normal;

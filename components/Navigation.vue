@@ -13,7 +13,7 @@
           Frauenärztinnen Gerresheim
         </span>
       </a>
-      <div v-show="$vuetify.breakpoint.mdAndUp">
+      <div v-show="mdAndUp">
         <ul class="nav__list list d-flex justify-space-between">
           <li
             v-for="item in navList"
@@ -26,13 +26,13 @@
         </ul>
       </div>
       <v-btn
-        v-show="$vuetify.breakpoint.mdAndUp"
+        v-show="mdAndUp"
         color="dark-green"
-        depressed
-        class="nav__button white--text font-weight-bold"
+        variant="flat"
+        class="nav__button text-white font-weight-bold"
       >
         <a
-          class="button text-decoration-none white--text"
+          class="button text-decoration-none text-white"
           href="https://www.doctolib.de/praxisgemeinschaft/duesseldorf/frauenaerztinnen-gerresheim?utm_campaign=website-button&amp;utm_source=frauenaerztinnen-gerresheim-website-button&amp;utm_medium=referral&amp;utm_content=option-8&amp;utm_term=frauenaerztinnen-gerresheim"
           rel="noopener noreferrer"
           target="_blank"
@@ -41,14 +41,14 @@
           {{ $t('homepage.bookAppointment') }}
         </a>
       </v-btn>
-      <div v-show="$vuetify.breakpoint.smAndDown">
+      <div v-show="smAndDown">
         <img src="/menu-list.svg" alt="menu" @click="showMenu = true" />
       </div>
     </nav>
     <v-overlay
       :opacity="opacity"
-      :value="showMenu"
-      :color="'dark-green'"
+      v-model="showMenu"
+      scrim="dark-green"
       class="d-flex"
     >
       <div
@@ -66,7 +66,7 @@
                 class="mb-6 text-decoration-none"
               >
                 <span
-                  class="list__item--mobile text-h2 white--text"
+                  class="list__item--mobile text-h2 text-white"
                   @click="scrollTo(item.hash)"
                 >
                   {{ item.name }}
@@ -75,7 +75,7 @@
             </ul>
             <div class="button text-h2 my-8">
               <a
-                class="button text-decoration-none white--text"
+                class="button text-decoration-none text-white"
                 href="https://www.doctolib.de/praxisgemeinschaft/duesseldorf/frauenaerztinnen-gerresheim?utm_campaign=website-button&amp;utm_source=frauenaerztinnen-gerresheim-website-button&amp;utm_medium=referral&amp;utm_content=option-8&amp;utm_term=frauenaerztinnen-gerresheim"
                 rel="noopener noreferrer"
                 target="_blank"
@@ -90,16 +90,15 @@
             </div>
           </div>
           <v-dialog v-model="dialog" width="700px">
-            <template v-slot:activator="{ on, attrs }">
+            <template v-slot:activator="{ props: activatorProps }">
               <div class="d-flex justify-center align-center mt-6 mt-md-4">
                 <a
-                  class="white--text font-weight-regular text-decoration-underline"
-                  v-bind="attrs"
-                  v-on="on"
+                  class="text-white font-weight-regular text-decoration-underline"
+                  v-bind="activatorProps"
                   >{{ $t('homepage.imprint') }}
                 </a>
-                <!-- <a class="white--text mx-1">|</a>
-        <a href="/" class="white--text font-weight-regular">
+                <!-- <a class="text-white mx-1">|</a>
+        <a href="/" class="text-white font-weight-regular">
           {{ $t('homepage.privacyPolicy') }}</a
         > -->
               </div>
@@ -153,7 +152,7 @@
             class="d-flex flex-column justify-center align-center text-decoration-none"
           >
             <img src="/logo-white.svg" alt="Logo" />
-            <span class="flex-wrap text-center white--text">
+            <span class="flex-wrap text-center text-white">
               Frauenärztinnen Gerresheim
             </span>
           </a>
@@ -162,70 +161,64 @@
     </v-overlay>
   </div>
 </template>
-<script>
-export default {
-  name: 'Navigation',
-  data() {
-    return {
-      dialog: false,
-      dialogImprint: false,
-      opacity: 1,
-      showMenu: false,
-    };
-  },
-  computed: {
-    navList() {
-      return [
-        { name: this.$t('homepage.aboutUs'), path: '/', hash: '#about-us' },
-        { name: this.$t('homepage.services'), path: '/', hash: '#services' },
-        { name: this.$t('homepage.contact'), path: '/', hash: '#contact' },
-      ];
-    },
-    menuList() {
-      return [
-        { name: this.$t('homepage.home'), path: '/', hash: '#' },
-        { name: this.$t('homepage.news'), path: '/', hash: '#news' },
-        { name: this.$t('homepage.services'), path: '/', hash: '#services' },
-      ];
-    },
-    impressumData() {
-      return [
-        { label: 'imprint.generalInfo.title', type: 'title' },
-        { label: 'imprint.generalInfo.content', type: 'content' },
-        { label: 'imprint.jobInfo.title', type: 'title' },
-        { label: 'imprint.jobInfo.content', type: 'content' },
-        { label: 'imprint.competenceInfo.title', type: 'title' },
-        { label: 'imprint.competenceInfo.content', type: 'content' },
-        { label: 'imprint.doctorsInfo.title', type: 'title' },
-        { label: 'imprint.doctorsInfo.content', type: 'content' },
-        { label: 'imprint.professionalRegulations.title', type: 'title' },
-        { label: 'imprint.professionalRegulations.content', type: 'content' },
-        { label: 'imprint.legalTitle.title', type: 'title' },
-        { label: 'imprint.legalTitle.content', type: 'content' },
-        { label: 'imprint.liabilityNotice.title', type: 'title' },
-        { label: 'imprint.liabilityNotice.content', type: 'content' },
-        { label: 'imprint.content.title', type: 'title' },
-        { label: 'imprint.content.content', type: 'content' },
-      ];
-    },
-  },
-  methods: {
-    scrollTo(hash) {
-      if (this.showMenu) {
-        this.showMenu = false;
-      }
-      this.$vuetify.goTo(hash, {
-        duration: 500,
-        offset: 0,
-        easing: 'linear',
-      });
-    },
-  },
-};
+<script setup>
+import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useDisplay, useGoTo } from 'vuetify';
+
+defineOptions({ name: 'Navigation' });
+
+const { t } = useI18n();
+const { mdAndUp, smAndDown } = useDisplay();
+const goTo = useGoTo();
+
+const dialog = ref(false);
+const opacity = ref(1);
+const showMenu = ref(false);
+
+const navList = computed(() => [
+  { name: t('homepage.aboutUs'), path: '/', hash: '#about-us' },
+  { name: t('homepage.services'), path: '/', hash: '#services' },
+  { name: t('homepage.contact'), path: '/', hash: '#contact' },
+]);
+const menuList = computed(() => [
+  { name: t('homepage.home'), path: '/', hash: '#' },
+  { name: t('homepage.news'), path: '/', hash: '#news' },
+  { name: t('homepage.services'), path: '/', hash: '#services' },
+]);
+const impressumData = computed(() => [
+  { label: 'imprint.generalInfo.title', type: 'title' },
+  { label: 'imprint.generalInfo.content', type: 'content' },
+  { label: 'imprint.jobInfo.title', type: 'title' },
+  { label: 'imprint.jobInfo.content', type: 'content' },
+  { label: 'imprint.competenceInfo.title', type: 'title' },
+  { label: 'imprint.competenceInfo.content', type: 'content' },
+  { label: 'imprint.doctorsInfo.title', type: 'title' },
+  { label: 'imprint.doctorsInfo.content', type: 'content' },
+  { label: 'imprint.professionalRegulations.title', type: 'title' },
+  { label: 'imprint.professionalRegulations.content', type: 'content' },
+  { label: 'imprint.legalTitle.title', type: 'title' },
+  { label: 'imprint.legalTitle.content', type: 'content' },
+  { label: 'imprint.liabilityNotice.title', type: 'title' },
+  { label: 'imprint.liabilityNotice.content', type: 'content' },
+  { label: 'imprint.content.title', type: 'title' },
+  { label: 'imprint.content.content', type: 'content' },
+]);
+
+function scrollTo(hash) {
+  if (showMenu.value) {
+    showMenu.value = false;
+  }
+  goTo(hash, {
+    duration: 500,
+    offset: 0,
+    easing: 'linear',
+  });
+}
 </script>
 <style lang="scss" scoped>
 .nav {
-  border-bottom: 2px solid var(--v-light-green-base);
+  border-bottom: 2px solid rgb(var(--v-theme-light-green));
   &__logo {
     width: 10.5rem;
     font-family: 'Roboto Serif';
@@ -254,7 +247,7 @@ export default {
     font-size: 1.125rem;
     line-height: 1.2;
     &--mobile:hover {
-      color: var(--v-mint-blue-base) !important;
+      color: rgb(var(--v-theme-mint-blue)) !important;
     }
   }
   &--mobile {
