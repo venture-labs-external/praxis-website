@@ -36,22 +36,31 @@ named variable from `assets/variables.scss`/`assets/theme.js`.
 ## Visual parity (`tools/visual-parity/`)
 
 Dev tooling (not shipped) that judges this branch's static export against
-the `dev` branch's static export - the pre-migration site, still Nuxt 2/
-Vue 2/Vuetify 2. Builds both fresh (the `dev` tree via a disposable
-`git archive`, each inside the Node/Alpine image its own `.nvmrc` names),
-serves them locally, and compares them with Playwright at 390/768/1440px for
-the default/nav-open/dialog-open/flipcard-flipped states: computed
-typography, box geometry (1px tolerance) and a pixel-diffed full-page
-screenshot per width. Needs Docker running.
+the old site - branch `main` by default (equal to the live site; the
+pre-migration site, still Nuxt 2/Vue 2/Vuetify 2), configurable via
+`--baseline=<ref>` (refuses `dev`, which has been the migrated site itself
+since VL-8-S1 merged - see the comment at the top of `run.mjs`), or the live
+site directly via `--live`. Builds both fresh (the baseline via a disposable
+`git archive`, each inside the Node/Alpine image its own `.nvmrc` names;
+skipped for `--live`, which is served directly), serves them locally, and
+compares them with Playwright at 390/768/1440px for every state
+`lib/states.mjs` lists (page load, after scrolling, card flipped, card-button
+hover, phone menu open, each mobile-menu entry tapped, dialog from footer,
+dialog from menu, header-button hover): computed typography, box geometry
+(1px tolerance), the scroll position after a menu-entry tap, the dialog's
+scrim colour/opacity and close-cross position, and a pixel-diffed full-page
+screenshot per width. Needs Docker running (not needed at all for `--live`).
 
 ```bash
 cd tools/visual-parity
 yarn install
 yarn compare
+# or: yarn compare -- --baseline=<ref>   /   yarn compare -- --live
 ```
 
-Writes `docs/visual-parity/report.md` and the raw data/screenshots under
-`tools/visual-parity/output/` (gitignored); exits non-zero while any
-difference outside `tools/visual-parity/allowlist.json` exists.
+Writes `docs/visual-parity/report.md` (naming the commit, or "live", of each
+side compared) and the raw data/screenshots under `tools/visual-parity/output/`
+(gitignored); exits non-zero while any difference outside
+`tools/visual-parity/allowlist.json` exists.
 
 For detailed explanation on how things work, check out [Nuxt docs](https://nuxt.com).
