@@ -33,6 +33,11 @@ export function collectSnapshot() {
     return text.replace(/\s+/g, ' ').trim();
   }
 
+  function isHiddenProbeEl(el) {
+    const rect = el.getBoundingClientRect();
+    return rect.width === 0 && rect.height === 0;
+  }
+
   function isLeafTextElement(el) {
     if (!el.childNodes || el.childNodes.length === 0) return false;
     let hasDirectText = false;
@@ -119,8 +124,103 @@ export function collectSnapshot() {
     });
   }
 
+  // Named, selector-based probes for the handful of elements this task's
+  // own spec names that `isLeafTextElement` above never sees at all (an
+  // icon-only `<v-btn>` has no direct text node, and a scrim is an empty
+  // full-screen div) - computed style + geometry, not text matching. One
+  // probe can legitimately be absent in a given state (no dialog open -> no
+  // scrim) on both sides at once; that is not a difference, only a
+  // present-on-one-side-only mismatch is (handled in diff.mjs).
+  const PROBES = [
+    // Services section: the front face's "open" arrow and the flipped
+    // card's own close cross - 20261009-praxis-gerresheim-last-differences-
+    // to-the-live-s difference 2.
+    { name: 'card-arrow-button', selector: '.flip-card--front .v-btn' },
+    { name: 'card-close-cross', selector: '.flip-card--back .v-btn' },
+    // Impressum dialog's own close cross - difference 4 (position only;
+    // the dialog is already matched by tag+text for its title/body text).
+    // Vuetify 2 names this class `.v-card__actions` (double underscore);
+    // Vuetify 3 renamed it `.v-card-actions` - both listed, each build only
+    // ever matches its own.
+    {
+      name: 'dialog-close-cross',
+      selector: '.v-card-actions .v-btn, .v-card__actions .v-btn',
+    },
+    // The nav's "Termin buchen" button - difference 6 (hover colour,
+    // captured by the `header-button-hover` state hovering it first).
+    { name: 'header-button', selector: '.nav__button' },
+  ];
+  const probes = {};
+  for (const { name, selector } of PROBES) {
+    const el = document.querySelector(selector);
+    // Same visibility check as `isLeafTextElement`'s own rect0 check above:
+    // the nav's "Termin buchen" button is `v-show`-hidden below `md-and-up`
+    // (present in the DOM, 0x0, `display:none`) - without this, it was
+    // reported as a `boxShadow`/position mismatch at every narrow width in
+    // every state, having nothing to do with any real difference there.
+    if (!el || isHiddenProbeEl(el)) {
+      probes[name] = null;
+      continue;
+    }
+    const cs = getComputedStyle(el);
+    const rect = el.getBoundingClientRect();
+    probes[name] = {
+      backgroundColor: cs.backgroundColor,
+      boxShadow: cs.boxShadow,
+      borderRadius: cs.borderRadius,
+      box: {
+        x: Math.round(rect.x),
+        y: Math.round(rect.y + window.scrollY),
+        width: Math.round(rect.width),
+        height: Math.round(rect.height),
+      },
+    };
+  }
+
+  // The dialog's own scrim - difference 3. Vuetify 2 keeps every
+  // `<v-overlay>` it ever mounted in the DOM permanently, toggling only its
+  // own `opacity` between active and inactive; Vuetify 3 does not render an
+  // inactive overlay's scrim at all - either way, a scrim at `opacity: 0`
+  // is never the one actually on screen. Two can be active *at once* (the
+  // dialog opened from inside the already-open mobile menu: both the
+  // dialog's own overlay and the menu's own full-screen one are active
+  // simultaneously) - which one ends up first/last in DOM order differs by
+  // build (confirmed against both: Vuetify 2 mounts every overlay eagerly,
+  // in template order, Vuetify 3 only mounts an active one, in activation
+  // order - the opposite one of the two ends up first each time), so DOM
+  // order cannot tell them apart on both builds at once either. The menu's
+  // own `<v-overlay>` carries the `d-flex` class from its own template
+  // (Navigation.vue, both builds) - the dialog's own never does - which
+  // does distinguish them, regardless of build or activation order.
+  const activeScrims = [
+    ...document.querySelectorAll('.v-overlay__scrim'),
+  ].filter((el) => getComputedStyle(el).opacity !== '0');
+  const scrim =
+    activeScrims.find(
+      (el) => !el.parentElement?.classList.contains('d-flex'),
+    ) ??
+    activeScrims[0] ??
+    null;
+  if (scrim) {
+    const cs = getComputedStyle(scrim);
+    probes.scrim = {
+      backgroundColor: cs.backgroundColor,
+      opacity: cs.opacity,
+    };
+  } else {
+    probes.scrim = null;
+  }
+
+  // `.v-card-text` (Vuetify 3) / `.v-card__text` (Vuetify 2, double
+  // underscore) - the dialog's own scroll height, difference 5.
+  const dialogText = document.querySelector('.v-card-text, .v-card__text');
+
   return {
     elements: results,
     pageHeight: Math.round(document.documentElement.scrollHeight),
+    scrollY: Math.round(window.scrollY),
+    dialogScrollHeight: dialogText ? dialogText.scrollHeight : null,
+    probes,
+    htmlLang: document.documentElement.lang,
   };
 }

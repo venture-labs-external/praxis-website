@@ -39,6 +39,47 @@ async function clickAndEnsureOpen(page, click, selector, waitMs) {
   }
 }
 
+// Difference 1: a tap on *any* mobile-menu entry must still close the menu
+// and scroll to its target - one state per entry (`Navigation.vue`'s own
+// `menuList`: Home, Jüngste Nachrichten/News, Services), by index rather
+// than by text (the text is locale-dependent, the index is not). Bounded to
+// `MOBILE_MENU_ENTRY_COUNT` rather than discovered at run time so a state
+// that silently stops existing (a future menu-list change dropping an
+// entry) is itself a `missing-in-*` difference the report shows, not a
+// state that quietly disappears from the comparison. Declared before
+// `STATES` (which spreads its result) - a `const`/`function` referenced
+// from inside an array literal must already be initialised by the time
+// that literal evaluates, unlike a function declaration hoisted to the top
+// of the whole module.
+const MOBILE_MENU_ENTRY_COUNT = 3;
+function mobileMenuEntryStates() {
+  return Array.from({ length: MOBILE_MENU_ENTRY_COUNT }, (_, index) => ({
+    name: `mobile-menu-entry-${index}`,
+    applicableAt: (width) => width < 960,
+    apply: async (page) => {
+      await clickAndEnsureOpen(
+        page,
+        () => page.locator('img[alt="menu"]').click(),
+        'img[alt="close"]',
+        OVERLAY_TRANSITION_MS,
+      );
+      const items = page.locator('.list__item--mobile');
+      if ((await items.count()) <= index) return;
+      await items.nth(index).click();
+      // The menu's own close-transition length (confirmed, Navigation.vue's
+      // `scrollTo` comment) before `goTo`'s own 500ms scroll animation even
+      // starts, plus a generous margin: a shorter margin (700ms) read
+      // `scrollY` mid-animation under load once (confirmed: a full
+      // `compare` run, two browser pages animating at once, landed ~450px
+      // short of the settled position on one side only, with every element
+      // below the fold shifted as a direct consequence - not a race a
+      // *polling* wait reliably avoids either, since the animation's own
+      // easing briefly plateaus and reads as "settled" too early).
+      await page.waitForTimeout(OVERLAY_TRANSITION_MS + 1500);
+    },
+  }));
+}
+
 export const STATES = [
   {
     name: 'default',
@@ -101,4 +142,52 @@ export const STATES = [
       );
     },
   },
+  // 20261009-praxis-gerresheim-last-differences-to-the-live-s: the states
+  // below exist to catch the 7 differences that slipped past the original
+  // 4 states (none of them ever tapped a menu entry, hovered anything, or
+  // opened the dialog from the menu).
+  {
+    name: 'card-button-hover',
+    // Difference 2: the FlipCard's own front-face arrow button.
+    applicableAt: () => true,
+    apply: async (page) => {
+      await page.locator('.flip-card--front .v-btn').first().hover();
+      await page.waitForTimeout(300);
+    },
+  },
+  {
+    name: 'header-button-hover',
+    // Difference 6 - the "Termin buchen" nav button only exists at
+    // `md-and-up` (`v-show="mdAndUp"` in Navigation.vue); hidden below it.
+    applicableAt: (width) => width >= 960,
+    apply: async (page) => {
+      await page.locator('.nav__button').hover();
+      await page.waitForTimeout(300);
+    },
+  },
+  {
+    name: 'dialog-open-from-menu',
+    // Differences 3-5, the other half of "opened both from the footer and
+    // from the menu" - only reachable where the mobile menu exists at all.
+    applicableAt: (width) => width < 960,
+    apply: async (page) => {
+      await clickAndEnsureOpen(
+        page,
+        () => page.locator('img[alt="menu"]').click(),
+        'img[alt="close"]',
+        OVERLAY_TRANSITION_MS,
+      );
+      const click = () =>
+        page
+          .locator('.nav__menu a', { hasText: 'Impressum' })
+          .evaluate((el) => el.click());
+      await clickAndEnsureOpen(
+        page,
+        click,
+        '.v-card-title, .v-card__title',
+        OVERLAY_TRANSITION_MS,
+      );
+    },
+  },
+  ...mobileMenuEntryStates(),
 ];
