@@ -130,6 +130,15 @@ export default {
   pwa: {
     workboxOptions: {
       importWorkboxFrom: 'local',
+      // Workbox's generateSW defaults (skipWaiting/clientsClaim both false)
+      // leave a returning visitor's open tab controlled by the OLD service
+      // worker - and its precached index.html - until every tab is closed,
+      // so a navigation right after this notice ships would not show it
+      // (criterion 10). skipWaiting activates the new worker immediately
+      // after install; clientsClaim lets it take control of already-open
+      // pages without a manual reload.
+      skipWaiting: true,
+      clientsClaim: true,
     },
   },
   vuetify: {
