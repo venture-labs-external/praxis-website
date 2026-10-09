@@ -1,8 +1,17 @@
 #!/usr/bin/env node
-// Visual parity: judges this branch's static export against the `dev`
-// branch's static export (the pre-migration site, still Nuxt 2/Vue 2/
-// Vuetify 2) - the yardstick the task's spec asks for. Documented command:
+// Visual parity: judges this branch's static export against the old site -
+// branch `main` by default (equal to the live site; configurable via
+// `--baseline=<ref>`, refuses `dev` - see below), or the live site itself
+// directly via `--live`. The pre-migration site is still Nuxt 2/Vue 2/
+// Vuetify 2 - the yardstick the task's spec asks for. Documented command:
 // see README.md ("Visual parity" section).
+//
+// 20261009-praxis-gerresheim-last-differences-to-the-live-s: the baseline
+// used to be hard-coded to `dev`, which was correct only while `dev` was
+// still the pre-migration site. VL-8-S1 merged the migrated site into `dev`
+// itself (PR #50, 2026-10-09 09:14), so a `dev` baseline would from then on
+// compare the new build against itself - `main` (untouched, equal to live)
+// is the real old site and is now the default; `--baseline=dev` is refused.
 //
 // `--skip-build` reuses whatever is already at `.cache/old/dist` and the
 // repo's own `dist/` (for fast local iteration only - the real run always
@@ -17,7 +26,7 @@ import { chromium } from 'playwright';
 import { loadAllowlist, partitionByAllowlist } from './lib/allowlist.mjs';
 import { diffSnapshots } from './lib/diff.mjs';
 import { buildStaticExport } from './lib/docker-build.mjs';
-import { archiveBranch } from './lib/git-archive.mjs';
+import { archiveBranch, resolveCommit } from './lib/git-archive.mjs';
 import { diffScreenshots } from './lib/screenshot-diff.mjs';
 import { collectSnapshot } from './lib/snapshot.mjs';
 import { STATES } from './lib/states.mjs';
@@ -32,34 +41,69 @@ const allowlistPath = join(__dirname, 'allowlist.json');
 const WIDTHS = [390, 768, 1440];
 const PAGE_HEIGHT_TOLERANCE_PX = 2;
 const SCREENSHOT_DIFF_THRESHOLD_PCT = 0.5;
+const LIVE_URL = 'https://www.frauenaerztinnen-gerresheim.de';
 
 const skipBuild = process.argv.includes('--skip-build');
+const liveBaseline = process.argv.includes('--live');
+const baselineArg = process.argv.find((a) => a.startsWith('--baseline='));
+// The old site is `main` (equal to the live site) - never `dev`, which has
+// been the migrated (new) site itself since VL-8-S1 merged (PR #50,
+// 2026-10-09 09:14). A run accidentally pointed at `dev` would compare the
+// new build against itself and silently report "0 differences" - refused
+// outright rather than produced as a misleading report.
+const baseline = baselineArg ? baselineArg.slice('--baseline='.length) : 'main';
+if (baseline === 'dev') {
+  console.error(
+    '[visual-parity] refusing --baseline=dev: the old site is `main` (or --live), never `dev` - `dev` has been the migrated site itself since VL-8-S1.',
+  );
+  process.exit(1);
+}
+if (liveBaseline && baselineArg) {
+  console.error('[visual-parity] pass either --baseline=<ref> or --live, not both');
+  process.exit(1);
+}
 
 async function main() {
   mkdirSync(outputDir, { recursive: true });
   mkdirSync(dirname(reportPath), { recursive: true });
 
-  let oldDist;
+  let oldBaseUrl;
   let newDist;
-  if (skipBuild) {
-    oldDist = join(outputDir, 'old-src', 'dist');
+  let oldServer;
+  let oldCommit;
+  const newCommit = await resolveCommit(repoRoot, 'HEAD');
+
+  if (liveBaseline) {
+    oldBaseUrl = LIVE_URL;
+    oldCommit = 'live';
+    newDist = skipBuild
+      ? join(repoRoot, 'dist')
+      : await buildStaticExport(repoRoot, { label: 'new (this branch)' });
+  } else if (skipBuild) {
+    const oldDist = join(outputDir, 'old-src', 'dist');
     newDist = join(repoRoot, 'dist');
+    oldServer = await listen(oldDist, 0);
+    oldBaseUrl = `http://127.0.0.1:${oldServer.address().port}`;
+    oldCommit = await resolveCommit(repoRoot, baseline);
     console.log('[visual-parity] --skip-build: reusing existing dist/ output');
   } else {
     const oldSrc = mkdtempSync(join(tmpdir(), 'visual-parity-old-'));
-    console.log(`[visual-parity] archiving dev branch into ${oldSrc}`);
-    await archiveBranch(repoRoot, 'dev', oldSrc);
-    oldDist = await buildStaticExport(oldSrc, {
-      label: 'old (dev branch, Node 14)',
+    console.log(`[visual-parity] archiving ${baseline} branch into ${oldSrc}`);
+    await archiveBranch(repoRoot, baseline, oldSrc);
+    oldCommit = await resolveCommit(repoRoot, baseline);
+    const oldDist = await buildStaticExport(oldSrc, {
+      label: `old (${baseline} branch, Node 14)`,
     });
     newDist = await buildStaticExport(repoRoot, { label: 'new (this branch)' });
+    oldServer = await listen(oldDist, 0);
+    oldBaseUrl = `http://127.0.0.1:${oldServer.address().port}`;
   }
 
-  const oldServer = await listen(oldDist, 0);
   const newServer = await listen(newDist, 0);
-  const oldPort = oldServer.address().port;
   const newPort = newServer.address().port;
-  console.log(`[visual-parity] serving old on :${oldPort}, new on :${newPort}`);
+  console.log(
+    `[visual-parity] serving old on ${oldBaseUrl} (commit ${oldCommit}), new on :${newPort} (commit ${newCommit})`,
+  );
 
   const browser = await chromium.launch();
   const allDifferences = [];
@@ -78,7 +122,7 @@ async function main() {
           viewport: { width, height: 900 },
         });
         try {
-          await oldPage.goto(`http://127.0.0.1:${oldPort}/`, {
+          await oldPage.goto(`${oldBaseUrl}/`, {
             waitUntil: 'load',
           });
           await newPage.goto(`http://127.0.0.1:${newPort}/`, {
@@ -150,7 +194,7 @@ async function main() {
     }
   } finally {
     await browser.close();
-    await new Promise((resolve) => oldServer.close(resolve));
+    if (oldServer) await new Promise((resolve) => oldServer.close(resolve));
     await new Promise((resolve) => newServer.close(resolve));
   }
 
@@ -179,6 +223,9 @@ async function main() {
     pageHeights,
     screenshots,
     allowlist,
+    oldLabel: liveBaseline ? 'live' : baseline,
+    oldCommit,
+    newCommit,
   });
   writeFileSync(reportPath, report);
   console.log(`[visual-parity] report written to ${reportPath}`);
@@ -210,12 +257,15 @@ function renderReport({
   pageHeights,
   screenshots,
   allowlist,
+  oldLabel,
+  oldCommit,
+  newCommit,
 }) {
   const lines = [];
   lines.push('# Visual parity report');
   lines.push('');
   lines.push(
-    `Compares this branch's static export (new: Nuxt 4/Vue 3/Vuetify 3) against the \`dev\` branch's static export (old: Nuxt 2/Vue 2/Vuetify 2, the pre-migration site), built fresh each run in the Node version each tree's own \`.nvmrc\` names. German only (locales/en holds the same German strings under English keys, VL-8-D14 - nothing to compare in a second language). Generated by \`tools/visual-parity/run.mjs\` on ${new Date().toISOString()}.`,
+    `Compares this branch's static export (new: Nuxt 4/Vue 3/Vuetify 3, commit \`${newCommit}\`) against the \`${oldLabel}\` static export (old: Nuxt 2/Vue 2/Vuetify 2, the pre-migration site, commit \`${oldCommit}\`${oldLabel === 'live' ? ` - served directly from ${LIVE_URL}` : ''}), built fresh each run in the Node version each tree's own \`.nvmrc\` names (the live baseline is served directly, nothing is built for it). German only (locales/en holds the same German strings under English keys, VL-8-D14 - nothing to compare in a second language). Generated by \`tools/visual-parity/run.mjs\` on ${new Date().toISOString()}.`,
   );
   lines.push('');
   lines.push('## Summary');
@@ -236,7 +286,7 @@ function renderReport({
   lines.push('');
   lines.push('## Page height');
   lines.push('');
-  lines.push('| Width | Old (dev) | New (this branch) | Diff |');
+  lines.push(`| Width | Old (${oldLabel}) | New (this branch) | Diff |`);
   lines.push('|---|---|---|---|');
   for (const p of pageHeights) {
     lines.push(
