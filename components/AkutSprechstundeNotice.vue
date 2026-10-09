@@ -22,14 +22,14 @@
         >
           <img src="/cross.svg" alt="" />
         </v-btn>
-        <div class="akut-notice__overline dark-green--text">
+        <div class="akut-notice__overline primary--text">
           <span class="akut-notice__dash"></span>
           {{ $t('homepage.akutNoticeOverline') }}
         </div>
         <h2 :id="headlineId" class="akut-notice__headline">
           {{ $t('homepage.akutNoticeHeadline') }}
         </h2>
-        <div class="akut-notice__validity dark-green--text">
+        <div class="akut-notice__validity primary--text">
           {{ $t('homepage.akutNoticeValidity') }}
         </div>
         <hr class="akut-notice__rule" />
@@ -41,7 +41,7 @@
           class="akut-notice__emphasis primary--text"
           v-html="$t('homepage.akutNoticeEmphasis')"
         />
-        <div class="akut-notice__contact dark-green white--text">
+        <div class="akut-notice__contact primary white--text">
           <p class="akut-notice__contact-intro">
             {{ $t('homepage.akutNoticeContactIntro') }}
           </p>
