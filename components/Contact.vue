@@ -1,7 +1,7 @@
 <template>
   <div class="contact mx-auto py-10" id="contact">
     <div class="contact__title">
-      <span class="subtitle-1 text-dark-green">{{
+      <span class="text-subtitle-1 text-dark-green">{{
         $t('homepage.location')
       }}</span>
       <h2 class="text-h1">
@@ -50,30 +50,30 @@ export default {
 .contact {
   max-width: 73rem;
   @media #{$md-and-up} {
-    padding: 5rem 0;
+    padding: $space-xl 0;
   }
   &__map {
     border: 7px solid rgb(var(--v-theme-white));
-    border-radius: 6px;
+    border-radius: $radius-sm;
   }
   @media #{$md-and-up} {
     display: grid;
     grid-template:
       'title map map map'
       'card map map map';
-    column-gap: 3rem;
+    column-gap: $space-lg;
   }
   &__title {
     grid-area: title;
     @media #{$md-and-up} {
-      padding-top: 5rem;
+      padding-top: $space-xl;
     }
   }
   &__card {
     grid-area: card;
     max-width: 29rem;
     @media #{$md-and-up} {
-      padding-bottom: 5rem;
+      padding-bottom: $space-xl;
     }
   }
   &__map {

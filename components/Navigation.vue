@@ -89,7 +89,11 @@
               </a>
             </div>
           </div>
-          <v-dialog v-model="dialog" width="700px">
+          <v-dialog
+            v-model="dialog"
+            width="700px"
+            content-class="nav__imprint-overlay"
+          >
             <template v-slot:activator="{ props: activatorProps }">
               <div class="d-flex justify-center align-center mt-6 mt-md-4">
                 <a
@@ -107,12 +111,12 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <div class="d-flex flex-row-reverse">
-                  <v-btn icon @click="dialog = false">
+                  <v-btn icon size="36" @click="dialog = false">
                     <img src="/cross.svg" />
                   </v-btn>
                 </div>
               </v-card-actions>
-              <v-card-title>
+              <v-card-title class="nav__imprint-title">
                 <span class="text-h2">{{ $t('imprint.imprint') }}</span>
               </v-card-title>
               <v-card-text class="nav__imprint">
@@ -120,13 +124,13 @@
                   v-for="element in impressumData"
                   :key="element.label"
                   :class="{
-                    'subtitle-1': element.type === 'title',
-                    'body-2': element.type === 'content',
+                    'text-subtitle-1': element.type === 'title',
+                    'text-body-2': element.type === 'content',
                   }"
                   v-html="$t(element.label)"
                 />
                 <p
-                  class="subtitle-1"
+                  class="text-subtitle-1"
                   v-html="$t('imprint.conceptDesignProgramming.title')"
                 />
                 <div class="d-flex justify-start" style="height: 100%">
@@ -135,7 +139,7 @@
                     <img src="/lab-icons.svg" width="100px" height="15px" />
                   </div>
                   <p
-                    class="body-2 ml-10 mt-2"
+                    class="text-body-2 ml-10 mt-2"
                     v-html="$t('imprint.conceptDesignProgramming.content')"
                   />
                 </div>
@@ -162,7 +166,7 @@
   </div>
 </template>
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay, useGoTo } from 'vuetify';
 
@@ -205,9 +209,41 @@ const impressumData = computed(() => [
   { label: 'imprint.content.content', type: 'content' },
 ]);
 
-function scrollTo(hash) {
+async function scrollTo(hash) {
   if (showMenu.value) {
     showMenu.value = false;
+    // Vuetify 3's `v-overlay` removes its own scroll-lock (`html.v-overlay-
+    // scroll-blocked{position:fixed}`) only once its own close transition's
+    // `afterLeave` hook runs - not synchronously the instant `showMenu` is
+    // set, and not within a plain `nextTick()` either (confirmed by tracing
+    // `document.documentElement.className` on a timer: the class is still
+    // present ~300-500ms after the click). Calling `goTo()` while it is
+    // still there is a no-op (every `scrollTop` write is blocked) - `main`'s
+    // Vue 2 overlay closes and unlocks synchronously, so it never needed
+    // this wait at all. `goTo()`'s own animation loop runs for its full
+    // `duration` regardless of how much of that time the lock ate into, so
+    // waiting for the matching close-transition length (`OVERLAY_TRANSITION
+    // _MS` in tools/visual-parity/lib/states.mjs - the same measured value)
+    // before calling it is enough; `nextTick()` first for the `.nav` height
+    // read below to see the reappeared element.
+    await nextTick();
+    await new Promise((resolve) => setTimeout(resolve, 900));
+    // `main`'s own `$vuetify.goTo` measures its target synchronously, in the
+    // same tick `scrollTo` runs - while `.nav` (`v-if="!showMenu"`) has not
+    // reappeared yet, so its target lands exactly `.nav`'s own height short
+    // of the section's true position (confirmed against the `main` build:
+    // every mobile menu entry's resulting scroll position is short by
+    // precisely `.nav`'s rendered height, at every width). Reproduced here
+    // by the same amount, read from the now-reappeared `.nav` directly
+    // rather than a guessed constant (it does not depend on the hash/width).
+    const navHeight =
+      document.querySelector('.nav')?.getBoundingClientRect().height ?? 0;
+    goTo(hash, {
+      duration: 500,
+      offset: -navHeight,
+      easing: 'linear',
+    });
+    return;
   }
   goTo(hash, {
     duration: 500,
@@ -221,9 +257,9 @@ function scrollTo(hash) {
   border-bottom: 2px solid rgb(var(--v-theme-light-green));
   &__logo {
     width: 10.5rem;
-    font-family: 'Roboto Serif';
-    font-size: 1.25rem;
-    line-height: 1.2;
+    font-family: $type-brand-nav-family;
+    font-size: $type-brand-nav-size;
+    line-height: $type-brand-nav-line-height;
   }
   &__button {
     text-transform: unset !important;
@@ -232,20 +268,70 @@ function scrollTo(hash) {
     width: 100vw;
     height: 100vh;
   }
+  // See Footer.vue's identical `.footer__imprint-overlay` comment.
+  :global(.nav__imprint-overlay) {
+    max-height: 90% !important;
+  }
+  // See Footer.vue's identical `.footer__imprint-title` comment.
+  &__imprint-title {
+    padding: $space-xs $space-sm $space-imprint-title-bottom !important;
+    // See Footer.vue's identical `.footer__imprint-title` comment.
+    display: flex !important;
+    align-items: center;
+    .text-h2 {
+      @media #{$md-and-up} {
+        font-size: $type-h2-md-size !important;
+        line-height: $type-h2-md-line-height !important;
+      }
+    }
+  }
   &__imprint {
     white-space: pre-line;
-    margin-top: 30px;
+    margin-top: $space-imprint-top;
+    // See Footer.vue's identical `.footer__imprint` padding comment.
+    padding-top: 0 !important;
+    padding-bottom: $space-imprint-bottom !important;
     &:first-line {
       line-height: 0;
+    }
+    // See Footer.vue's identical `.footer__imprint & p` comment.
+    & p {
+      color: $color-text-secondary;
+      margin-bottom: $space-xs !important;
+    }
+    // See Footer.vue's identical `.footer__imprint:deep(a)` comment.
+    &:deep(a) {
+      color: rgb(var(--v-theme-primary));
+    }
+    .text-body-2 {
+      @media #{$md-and-up} {
+        font-size: $type-body-2-md-size !important;
+        font-weight: $type-body-2-md-weight !important;
+        line-height: $type-body-2-md-line-height !important;
+      }
+    }
+    .text-subtitle-1 {
+      @media #{$md-and-up} {
+        font-weight: $type-subtitle-1-md-weight !important;
+      }
     }
   }
 }
 .list {
   list-style: none;
+  // Vuetify 2 did not zero out the browser's own `<ul>` user-agent
+  // indent (`padding-inline-start`), only the bullet itself
+  // (`list-style:none` above); Vuetify 3's own reset zeroes it entirely.
+  // Restored at the dev build's own measured value (confirmed against its
+  // computed style: `padding: 0 0 0 24px`) - the desktop nav list (and,
+  // through it, every `li` after the first) was rendered 24px narrower/
+  // further left than `dev` at every width this shows up at (1440px desktop
+  // nav).
+  padding-left: $space-sm;
   &__item {
     text-decoration: none;
-    font-size: 1.125rem;
-    line-height: 1.2;
+    font-size: $type-nav-link-size;
+    line-height: $type-nav-link-line-height;
     &--mobile:hover {
       color: rgb(var(--v-theme-mint-blue)) !important;
     }
@@ -256,8 +342,17 @@ function scrollTo(hash) {
 }
 .menu {
   &__logo {
-    padding-bottom: 5rem;
+    padding-bottom: $space-xl;
     max-width: 8.75rem;
   }
+}
+// Top-level (not nested under `.nav`) on purpose - see Footer.vue's
+// identical top-level `.v-card-actions` rule and comment: the Impressum
+// dialog's `<v-card-actions>` elements are teleported outside `<nav>` once
+// the dialog opens, so a selector nested under `.nav` (which would compile
+// to a descendant combinator) would never match them there.
+.v-card-actions {
+  padding-left: $space-xs !important;
+  padding-right: $space-xs !important;
 }
 </style>

@@ -55,12 +55,28 @@
           class="d-flex flex-column justify-center align-center text-decoration-none"
         >
           <img src="/logo-white.svg" alt="Logo" />
-          <span class="flex-wrap text-center text-white">
-            Frauenärztinnen Gerresheim
+          <!--
+            This span sits under `.footer{white-space:pre-line}`, where a
+            literal leading/trailing newline becomes a real line break. Vue
+            2's template compiler preserved this tag's own indentation
+            whitespace (its text node was literally "\n  Frauenärztinnen
+            Gerresheim\n  ") - Vue 3's default compiler whitespace handling
+            condenses it away, which removed the pre-migration build's
+            leading blank line and re-wrapped this text from 3 lines to 2,
+            shifting everything below it in the footer up by one line.
+            `{{ '\n' }}` restores that leading newline explicitly (a mustache
+            interpolation's own content is never whitespace-condensed).
+          -->
+          <span class="flex-wrap text-center text-white"
+            >{{ '\n' }}Frauenärztinnen Gerresheim
           </span>
         </a>
       </div>
-      <v-dialog v-model="dialog" width="700px">
+      <v-dialog
+        v-model="dialog"
+        width="700px"
+        content-class="footer__imprint-overlay"
+      >
         <template v-slot:activator="{ props: activatorProps }">
           <div class="mt-6 mt-md-4">
             <a
@@ -78,12 +94,12 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <div class="d-flex flex-row-reverse">
-              <v-btn icon @click="dialog = false">
+              <v-btn icon size="36" @click="dialog = false">
                 <img src="/cross.svg" />
               </v-btn>
             </div>
           </v-card-actions>
-          <v-card-title>
+          <v-card-title class="footer__imprint-title">
             <span class="text-h2">{{ $t('imprint.imprint') }}</span>
           </v-card-title>
           <v-card-text class="footer__imprint">
@@ -91,13 +107,13 @@
               v-for="element in impressumData"
               :key="element.label"
               :class="{
-                'subtitle-1': element.type === 'title',
-                'body-2': element.type === 'content',
+                'text-subtitle-1': element.type === 'title',
+                'text-body-2': element.type === 'content',
               }"
               v-html="$t(element.label)"
             />
             <p
-              class="subtitle-1"
+              class="text-subtitle-1"
               v-html="$t('imprint.conceptDesignProgramming.title')"
             />
             <div class="d-flex justify-start" style="height: 100%">
@@ -106,7 +122,7 @@
                 <img src="/lab-icons.svg" width="100px" height="15px" />
               </div>
               <p
-                class="body-2 ml-10 mt-2"
+                class="text-body-2 ml-10 mt-2"
                 v-html="$t('imprint.conceptDesignProgramming.content')"
               />
             </div>
@@ -180,19 +196,19 @@ const contactData = computed(() => ({
 
 <style lang="scss" scoped>
 .footer {
-  font-weight: 700;
-  border-radius: 6px 6px 0 0;
+  font-weight: $type-footer-weight;
+  border-radius: $radius-sm $radius-sm 0 0;
   white-space: pre-line;
-  gap: 1.5rem;
+  gap: $space-sm;
   &:first-line {
     line-height: 0;
   }
   &__logo {
     width: 10.5rem;
-    font-family: 'Roboto Serif', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.2;
+    font-family: $type-brand-footer-family;
+    font-size: $type-brand-footer-size;
+    font-weight: $type-brand-footer-weight;
+    line-height: $type-brand-footer-line-height;
   }
   &__column {
     height: 100%;
@@ -200,13 +216,99 @@ const contactData = computed(() => ({
   &__item {
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
+    gap: $space-xs;
+  }
+  // The Impressum dialog's own wrapper (`content-class` above, landing on
+  // Vuetify 3's `.v-overlay__content`) - not part of this component's own
+  // slot content, so it never gets this file's scoped `data-v-*` attribute;
+  // `:global()` is required to reach it at all. Vuetify 3's own rule caps
+  // it at `calc(100% - 48px)` (`.v-dialog > .v-overlay__content` in
+  // `vuetify.css`); `dev`'s own Vuetify 2 `.v-dialog` computed to `90%`
+  // instead (confirmed against the `dev` build: 810px of a 900px-tall
+  // viewport, not 852px) - restored here, the same relative way, so the
+  // whole dialog (and every paragraph inside it, all measured from its own
+  // top) lands at the same vertical offset as `dev`'s. `!important` to beat
+  // Vuetify's own rule (same specificity, declared first in its bundle).
+  :global(.footer__imprint-overlay) {
+    max-height: 90% !important;
+  }
+  // Vuetify 3's `<v-dialog>` (built on `<v-overlay>`) teleports its content
+  // to a `.v-overlay-container` appended as the last child of `<body>` -
+  // outside `.v-application` entirely (confirmed: Playwright's own
+  // `el.closest('.v-application')` returns null for this dialog's content).
+  // `main.scss`'s `.v-application` breakpoint overrides (the `$md-and-up`
+  // `text-h2`/`text-body-2`/`text-subtitle-1` size/weight/line-height
+  // bumps) and its `.v-application a{color:...}` anchor colour never reach
+  // this dialog for that reason - restored here, scoped directly to it,
+  // from the same theme tokens `main.scss` itself uses.
+  &__imprint-title {
+    // Vuetify 3's `.v-card-title` default padding (`8px 16px`, all four
+    // sides) is not `dev`'s own Vuetify 2 computed box (`16px 24px 10px`).
+    // `!important` to beat Vuetify's own higher-specificity
+    // `.v-card-item .v-card-title{padding:0}` / `.v-card-title{padding:...}`
+    // rules.
+    padding: $space-xs $space-sm $space-imprint-title-bottom !important;
+    // Vuetify 3's `.v-card-title` is `display:block` - an ordinary block
+    // box whose own `line-height:1.6` reserves an invisible "strut" taller
+    // than the `.text-h2` span inside it, vertically centring the span
+    // inside that extra height. `dev`'s own Vuetify 2 title computed to a
+    // content-box height matching the span's own line-height exactly (its
+    // `.v-card__title` is `display:flex`, which sizes to its flex item's
+    // content and never applies a strut at all, regardless of its own
+    // `line-height`) - restored here the same way, `!important` to beat
+    // Vuetify 3's `display:block`.
+    display: flex !important;
+    align-items: center;
+    // `!important` to beat the generated `.text-h2` utility class's own
+    // (also `!important`) font-size - same reason `main.scss`'s identical
+    // override needs it.
+    .text-h2 {
+      @media #{$md-and-up} {
+        font-size: $type-h2-md-size !important;
+        line-height: $type-h2-md-line-height !important;
+      }
+    }
   }
   &__imprint {
     white-space: pre-line;
-    margin-top: 30px;
+    margin-top: $space-imprint-top;
+    // Vuetify 3's `.v-card-text` default padding (`16px 24px 24px`) is not
+    // `dev`'s own Vuetify 2 computed box (`0 24px 20px`) - restored here,
+    // top/bottom only (left/right already match). `!important` to beat
+    // Vuetify's own higher-specificity `.v-dialog>.v-overlay__content>
+    // .v-card>.v-card-text{padding:...}` rule.
+    padding-top: 0 !important;
+    padding-bottom: $space-imprint-bottom !important;
     &:first-line {
       line-height: 0;
+    }
+    // Vuetify 2's `.v-card__text` gave its own text a default "medium
+    // emphasis" colour and a bottom margin per paragraph; Vuetify 3's
+    // `.v-card-text` does neither (see `$color-text-secondary`'s comment in
+    // variables.scss) - restored here, `!important` to beat `v-card-text`'s
+    // own `p:last-child{margin-bottom:0}`-style reset.
+    & p {
+      color: $color-text-secondary;
+      margin-bottom: $space-xs !important;
+    }
+    // `v-html`-injected content (every link here comes from the locale
+    // JSON's own markup) never gets this component's scoped `data-v-*`
+    // attribute, so a plain `& a` selector - scoped to only match elements
+    // that carry it - never matches; `:deep()` drops that requirement.
+    &:deep(a) {
+      color: rgb(var(--v-theme-primary));
+    }
+    .text-body-2 {
+      @media #{$md-and-up} {
+        font-size: $type-body-2-md-size !important;
+        font-weight: $type-body-2-md-weight !important;
+        line-height: $type-body-2-md-line-height !important;
+      }
+    }
+    .text-subtitle-1 {
+      @media #{$md-and-up} {
+        font-weight: $type-subtitle-1-md-weight !important;
+      }
     }
   }
   svg {
@@ -214,5 +316,23 @@ const contactData = computed(() => ({
     width: 24px;
     height: 24px;
   }
+}
+// Top-level (not nested under `.footer`) on purpose: the Impressum dialog's
+// `<v-card-actions>` elements - part of this component's own template, so
+// they do carry this file's scoped `data-v-*` attribute - end up teleported
+// outside `<footer>` to `.v-overlay-container` in `<body>` once the dialog
+// opens (see the `:global(.footer__imprint-overlay)` comment above); a
+// selector nested under `.footer` would need it to still be a DOM
+// descendant of `<footer>`, which it no longer is by then. Vuetify 3's
+// `.v-card-actions` default padding is `8px` on every side; `dev`'s own
+// Vuetify 2 `.v-card__actions` computed to `8px 16px` (confirmed against the
+// `main` build) - the extra 8px of horizontal padding is what held the
+// Impressum dialog's close cross 8px further from the right edge than this
+// component's own default rendered it. Restored here (both `v-card-actions`
+// rows in this dialog: the close-cross row and the trailing spacer-only
+// row), `!important` to beat Vuetify's own rule.
+.v-card-actions {
+  padding-left: $space-xs !important;
+  padding-right: $space-xs !important;
 }
 </style>

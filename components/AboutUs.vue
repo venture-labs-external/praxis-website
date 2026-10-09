@@ -1,7 +1,7 @@
 <template>
   <div id="about-us" class="about-us mx-auto">
     <div class="about-us__title mb-6">
-      <span class="subtitle-1 text-dark-green">
+      <span class="text-subtitle-1 text-dark-green">
         {{ $t('homepage.aboutUs') }}
       </span>
       <h2 class="text-h1">
@@ -68,51 +68,67 @@ export default {
 
 <style lang="scss" scoped>
 .about-us {
-  padding-top: 5rem;
+  padding-top: $space-xl;
   max-width: 58.75rem;
   &__cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    gap: $space-sm;
     width: 100%;
   }
   &__card {
     display: grid;
     grid-template-rows: max-content max-content 1fr;
-    gap: 1.5rem;
-    padding: 2rem;
+    gap: $space-sm;
+    padding: $space-md;
     background-color: rgb(var(--v-theme-white));
-    border-radius: 6px;
+    border-radius: $radius-sm;
     justify-items: center;
     height: 100% !important;
     &-title {
       justify-self: start;
-      & span {
-        font-family: 'Roboto Serif' !important;
-        font-size: 1.5rem !important;
-        font-weight: 700 !important;
-        line-height: 1;
+      // `span`/`p` here keep their real `text-body-2`/`text-body-1` classes
+      // (Vuetify 2 already generated those as aliases of its unprefixed
+      // `body-2`/`body-1` - confirmed in dev's own compiled CSS - so they
+      // were never dead; removing them would lose the real letter-spacing/
+      // family-fallback Vuetify supplies). `main.scss`'s own `.text-body-2`
+      // `@media md-and-up` override now also matches this exact selector
+      // (ties in specificity), so `&.text-body-2` is repeated here to win
+      // deterministically rather than depend on CSS source order.
+      & span.text-body-2 {
+        font-family: $type-card-title-family !important;
+        font-size: $type-card-title-size !important;
+        font-weight: $type-card-title-weight !important;
+        line-height: $type-card-title-line-height !important;
       }
-      & p {
+      & p.text-body-1 {
         color: rgb(var(--v-theme-dark-green));
-        font-family: Roboto;
-        font-size: 16px !important;
+        font-size: $type-card-subtitle-size !important;
         font-style: normal;
-        font-weight: 500 !important;
-        line-height: 1.4;
         margin-bottom: 0 !important;
+        // family/weight/line-height are intentionally left to Vuetify's
+        // real `text-body-1` class - its values are exactly the ones the
+        // pre-migration build rendered here too.
       }
     }
     &-image {
       width: 100%;
       height: 100%;
       & img {
-        border-radius: 6px;
+        border-radius: $radius-sm;
         width: 100%;
         aspect-ratio: 3 / 2;
         object-fit: cover;
         object-position: center;
       }
+    }
+    // This paragraph has no override of its own - its look always came
+    // entirely from Vuetify's real `text-body-1` class (1rem). `main.scss`'s
+    // `.text-body-1` `@media md-and-up` size bump now also matches it with
+    // the same specificity, so it is pinned back to the un-bumped size here
+    // (`&.text-body-1` to win the tie, same as the card-title rule above).
+    &-description p.text-body-1 {
+      font-size: $type-card-subtitle-size !important;
     }
   }
 }

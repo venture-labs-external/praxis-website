@@ -1,0 +1,15 @@
+{
+  "name": "visual-parity",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dev tooling (not shipped): compares this branch's static export against the old site - branch main by default (equal to the live site), configurable, never dev (which has been the migrated site itself since VL-8-S1) - the judge for VL-8's follow-up tasks on this repo. Runs on a current Node, independent of the site's own .nvmrc.",
+  "type": "module",
+  "scripts": {
+    "compare": "node run.mjs"
+  },
+  "devDependencies": {
+    "pixelmatch": "^5.3.0",
+    "playwright": "^1.48.0",
+    "pngjs": "^7.0.0"
+  }
+}

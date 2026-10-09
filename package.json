@@ -9,8 +9,9 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "generate": "nuxt generate",
-    "lint": "eslint .",
+    "lint": "eslint . && node scripts/check-theme-literals.mjs",
     "lint:fix": "eslint . --fix",
+    "check:theme-literals": "node scripts/check-theme-literals.mjs",
     "format": "prettier --write \"**/*.{js,ts,vue}\""
   },
   "dependencies": {
