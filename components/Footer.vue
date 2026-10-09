@@ -220,6 +220,15 @@ const contactData = computed(() => ({
     &:first-line {
       line-height: 0;
     }
+    // Vuetify 2's `.v-card__text` gave its own text a default "medium
+    // emphasis" colour and a bottom margin per paragraph; Vuetify 3's
+    // `.v-card-text` does neither (see `$color-text-secondary`'s comment in
+    // variables.scss) - restored here, `!important` to beat `v-card-text`'s
+    // own `p:last-child{margin-bottom:0}`-style reset.
+    & p {
+      color: $color-text-secondary;
+      margin-bottom: $space-xs !important;
+    }
   }
   svg {
     fill: currentColor;

@@ -20,8 +20,14 @@ export const STATES = [
     name: 'dialog-open',
     applicableAt: () => true,
     apply: async (page) => {
-      // Footer's Impressum link is unconditional at every width.
-      await page.locator('footer a', { hasText: 'Impressum' }).click();
+      // Footer's Impressum link is unconditional at every width. A real
+      // `.click()` would scroll it into view first (it sits at the very
+      // bottom of the page) and then compare every *other* element at that
+      // scrolled position against the un-scrolled old build - a dispatched
+      // click opens the same dialog without moving the viewport.
+      await page
+        .locator('footer a', { hasText: 'Impressum' })
+        .evaluate((el) => el.click());
       await page.waitForTimeout(300); // v-dialog transition
     },
   },

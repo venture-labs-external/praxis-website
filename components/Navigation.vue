@@ -238,6 +238,11 @@ function scrollTo(hash) {
     &:first-line {
       line-height: 0;
     }
+    // See Footer.vue's identical `.footer__imprint & p` comment.
+    & p {
+      color: $color-text-secondary;
+      margin-bottom: $space-xs !important;
+    }
   }
 }
 .list {

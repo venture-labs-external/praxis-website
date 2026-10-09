@@ -259,6 +259,14 @@ $type-body-2-md-weight: 400;
 $type-body-2-md-line-height: 1.4;
 $type-subtitle-1-md-weight: 700;
 
+// Vuetify 2's `.v-card__text` gave its own text content a default
+// "medium emphasis" colour (Material's `rgba(0,0,0,.6)`, Vuetify 2's own
+// `.text--secondary`); Vuetify 3's `.v-card-text` sets no such default, so
+// text inside the Impressum dialog's `v-card-text` (Footer.vue's
+// `.footer__imprint`, Navigation.vue's `.nav__imprint`) fell back to the
+// browser default (`rgba(0,0,0,.87)`, Vuetify 3's own "high emphasis").
+$color-text-secondary: rgba(0, 0, 0, 0.6);
+
 // `pages/index.vue`'s `.info` block - unused today (no element in the
 // template carries the `info` class; pre-existing dead CSS, the same on the
 // `dev` branch - see this task's "Noticed but not touching"), tokenised

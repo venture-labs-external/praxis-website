@@ -38,6 +38,14 @@ export function collectSnapshot() {
     // element on the other build purely because its hidden duplicate
     // happens to sit at a different point in document order there.
     if (rect0.width === 0 && rect0.height === 0) continue;
+    // Skip the page content behind an open modal dialog: Vuetify scroll-
+    // locks the body while a v-dialog is open by repositioning it with a
+    // large negative offset (a well-known scroll-lock technique), and the
+    // two versions do not use the exact same offset - only the dialog's own
+    // content (and anything else still really on screen, within a generous
+    // multiple of the tallest viewport this task checks) matters while a
+    // dialog is open.
+    if (Math.abs(rect0.top) > 5000) continue;
     const tag = el.tagName.toLowerCase();
     const key = `${tag}|${text}`;
     const occurrence = counters.get(key) ?? 0;
