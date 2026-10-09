@@ -84,6 +84,14 @@ async function main() {
           await newPage.goto(`http://127.0.0.1:${newPort}/`, {
             waitUntil: 'load',
           });
+          // Wait for every @font-face to finish loading before measuring
+          // anything: text set in a custom font (Roboto/Roboto Serif) wraps
+          // differently with the fallback it briefly renders with first
+          // (font-display: swap), and the two builds' bundles are different
+          // sizes, so they do not swap at exactly the same moment - without
+          // this, wrapped-line-count differences show up as pure noise.
+          await oldPage.evaluate(() => document.fonts.ready);
+          await newPage.evaluate(() => document.fonts.ready);
           await state.apply(oldPage);
           await state.apply(newPage);
 

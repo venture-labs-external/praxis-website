@@ -55,8 +55,20 @@
           class="d-flex flex-column justify-center align-center text-decoration-none"
         >
           <img src="/logo-white.svg" alt="Logo" />
-          <span class="flex-wrap text-center text-white">
-            Frauenärztinnen Gerresheim
+          <!--
+            This span sits under `.footer{white-space:pre-line}`, where a
+            literal leading/trailing newline becomes a real line break. Vue
+            2's template compiler preserved this tag's own indentation
+            whitespace (its text node was literally "\n  Frauenärztinnen
+            Gerresheim\n  ") - Vue 3's default compiler whitespace handling
+            condenses it away, which removed the pre-migration build's
+            leading blank line and re-wrapped this text from 3 lines to 2,
+            shifting everything below it in the footer up by one line.
+            `{{ '\n' }}` restores that leading newline explicitly (a mustache
+            interpolation's own content is never whitespace-condensed).
+          -->
+          <span class="flex-wrap text-center text-white"
+            >{{ '\n' }}Frauenärztinnen Gerresheim
           </span>
         </a>
       </div>
