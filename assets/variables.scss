@@ -43,6 +43,21 @@
   // then shifted every element below it, which is most of this task's
   // position/box differences before this line was added.
   $container-padding-x: 12px,
+  // `v-container`'s max-width per breakpoint is `$grid-breakpoints.<name> *
+  // 0.9375` - Vuetify 3's own `$grid-breakpoints` default ('lg': 1280px)
+  // differs from Vuetify 2's ('lg': 1264px, already pinned for the JS side
+  // in nuxt.config.ts's `vuetifyOptions.display.thresholds`), so the
+  // `.v-container` on a 1440px-wide page capped at 1200px instead of the old
+  // build's 1185px - a 15px-narrower page that then cascaded into every
+  // image/column width below it on the page. 'xl' pinned for the same
+  // reason even though no width this task checks reaches it.
+  $grid-breakpoints: (
+    'xs': 0,
+    'sm': 600px,
+    'md': 960px,
+    'lg': 1264px,
+    'xl': 1904px,
+  ),
   $typography: (
     'h1': (
       'size': 2rem,
