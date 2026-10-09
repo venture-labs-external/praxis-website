@@ -1,20 +1,32 @@
 <template>
   <div class="akut-notice">
-    <v-dialog
-      v-model="dialogOpen"
-      max-width="640"
-      eager
-      content-class="akut-notice__dialog"
-      overlay-color="dark-green"
-      overlay-opacity="0.6"
+    <!-- Not a v-dialog/v-overlay: Vuetify 3 gates both components' slot
+    content behind `useHydration()` (components/AkutSprechstundeNotice.vue
+    finding, 2026-10-09 Tester round) - it never renders during `nuxt
+    generate`'s SSR pass no matter the `eager` prop, so the headline/phone
+    text required in `dist/index.html` (criterion 9) would never be there.
+    This plain, always-rendered markup (hidden via `v-show`, which only ever
+    toggles an inline `display:none` and never removes the element) keeps
+    the dialog's own role/aria-modal/focus-trap/Escape/overlay-click
+    behaviour (criterion 7) without that gate. `v-card`/`v-btn` are kept -
+    only `VOverlay`/`VDialog` use `useHydration` (confirmed: `grep -rl
+    useHydration node_modules/vuetify/lib/components/` lists only
+    `VOverlay` and `VNoSsr`). -->
+    <div
+      class="akut-notice__overlay"
+      v-show="dialogOpen"
+      @click.self="close"
+      @keydown="onOverlayKeydown"
     >
       <v-card
+        ref="dialogCard"
         role="dialog"
         aria-modal="true"
         :aria-labelledby="headlineId"
         class="akut-notice__card pa-7 pa-sm-8"
       >
         <v-btn
+          ref="closeBtn"
           icon
           class="akut-notice__close"
           :aria-label="$t('homepage.akutNoticeCloseLabel')"
@@ -22,28 +34,28 @@
         >
           <img src="/cross.svg" alt="" />
         </v-btn>
-        <div class="akut-notice__overline primary--text">
+        <div class="akut-notice__overline text-primary">
           <span class="akut-notice__dash"></span>
           {{ $t('homepage.akutNoticeOverline') }}
         </div>
         <h2 :id="headlineId" class="text-h1 akut-notice__headline">
           {{ $t('homepage.akutNoticeHeadline') }}
         </h2>
-        <div class="akut-notice__validity primary--text">
+        <div class="akut-notice__validity text-primary">
           {{ $t('homepage.akutNoticeValidity') }}
         </div>
         <hr class="akut-notice__rule" />
         <p class="akut-notice__body">
           {{ $t('homepage.akutNoticeBody') }}
         </p>
-        <p class="akut-notice__emphasis primary--text">
+        <p class="akut-notice__emphasis text-primary">
           {{ $t('homepage.akutNoticeEmphasisBefore') }}
           <span class="akut-notice__highlight">{{
             $t('homepage.akutNoticeEmphasisHighlight')
           }}</span>
           {{ $t('homepage.akutNoticeEmphasisAfter') }}
         </p>
-        <div class="akut-notice__contact primary white--text">
+        <div class="akut-notice__contact bg-primary text-white">
           <p class="akut-notice__contact-intro">
             {{ $t('homepage.akutNoticeContactIntro') }}
           </p>
@@ -51,7 +63,7 @@
             <img src="/clock-white.svg" alt="" width="20" height="20" />
             {{ $t('homepage.akutNoticeHours') }}
           </p>
-          <a class="akut-notice__phone white--text" href="tel:+49211285009">
+          <a class="akut-notice__phone text-white" href="tel:+49211285009">
             <img src="/phone-white.svg" alt="" width="22" height="22" />
             {{ $t('homepage.akutNoticePhone') }}
           </a>
@@ -61,12 +73,12 @@
           <strong>{{ $t('homepage.akutNoticeClosingLine2') }}</strong>
         </p>
       </v-card>
-    </v-dialog>
+    </div>
 
     <button
       v-if="pillVisible"
       type="button"
-      class="akut-notice__pill info info-text--text"
+      class="akut-notice__pill bg-info text-info-text"
       @click="reopen"
     >
       <span class="akut-notice__dot"></span>
@@ -97,21 +109,26 @@ export default {
       dialogOpen: false,
       pillVisible: false,
       headlineId: 'akut-sprechstunde-notice-headline',
+      // The element focused before the dialog opened (criterion 7: focus
+      // returns there on close); only ever read/written client-side.
+      previouslyFocusedEl: null,
     };
   },
   watch: {
-    // The X button is only one of three ways the dialog closes - Escape and
-    // a click on the overlay both close it purely through v-dialog's own
-    // v-model binding (Reviewer finding, Christian 2026-10-09: the dialog
-    // must stay non-persistent, criterion 4, so this watcher is the one
-    // place every path - button, Escape, overlay - ends up, instead of a
-    // `persistent` prop that would block Escape/overlay entirely). Vue only
-    // fires this when dialogOpen actually changes value, so mounted()'s own
-    // false -> false assignments (already-closed, or expired) never trigger
-    // it - only a real open -> closed transition does.
+    // Every path that flips dialogOpen - the X button's close(), Escape and
+    // an overlay click (both handled by onOverlayKeydown/@click.self below,
+    // criterion 4) - ends up here, the one place persistence and the focus
+    // trap run, instead of duplicating either in three handlers (Reviewer
+    // finding, Christian 2026-10-09). Vue only fires this when dialogOpen
+    // actually changes value, so mounted()'s own false -> false assignments
+    // (already-closed, or expired) never trigger it - only a real
+    // open -> closed or closed -> open transition does.
     dialogOpen(isOpen) {
-      if (!isOpen) {
+      if (isOpen) {
+        this.trapFocus();
+      } else {
         this.persistClose();
+        this.releaseFocus();
       }
     },
   },
@@ -170,21 +187,99 @@ export default {
     reopen() {
       this.dialogOpen = true;
     },
+    // Criterion 7: focus moves into the dialog on open, and the page behind
+    // it is not reachable while it is open - combined with the overlay
+    // covering the full viewport (so a click can't land on anything behind
+    // it) and the Tab trap below (so the keyboard can't reach it either).
+    // Guarded by `typeof document` (not `window`, already used for
+    // localStorage above) so this is a no-op anywhere `document` does not
+    // exist - this method only ever runs client-side in the browser.
+    trapFocus() {
+      if (typeof document === 'undefined') return;
+      this.previouslyFocusedEl = document.activeElement;
+      document.body.style.overflow = 'hidden';
+      this.$nextTick(() => {
+        const closeBtnEl = this.$refs.closeBtn && this.$refs.closeBtn.$el;
+        if (closeBtnEl) closeBtnEl.focus();
+      });
+    },
+    // Criterion 4: after closing, the page scrolls and focus returns to
+    // where it was before opening.
+    releaseFocus() {
+      if (typeof document === 'undefined') return;
+      document.body.style.overflow = '';
+      if (
+        this.previouslyFocusedEl &&
+        typeof this.previouslyFocusedEl.focus === 'function'
+      ) {
+        this.previouslyFocusedEl.focus();
+      }
+      this.previouslyFocusedEl = null;
+    },
+    // Escape closes the dialog (criterion 4); Tab/Shift+Tab cycle only
+    // between the dialog's own focusable elements (criterion 7) instead of
+    // leaving it - replaces the `persistent`/focus-trap behaviour v-dialog
+    // used to provide for free before it was removed (see the template
+    // comment on why).
+    onOverlayKeydown(event) {
+      if (event.key === 'Escape') {
+        this.close();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const focusable = this.getFocusableElements();
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    },
+    getFocusableElements() {
+      const cardEl = this.$refs.dialogCard && this.$refs.dialogCard.$el;
+      if (!cardEl) return [];
+      return Array.from(
+        cardEl.querySelectorAll(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .akut-notice {
-  // Vuetify centers v-dialog's content vertically by default; variant A
-  // anchors the notice near the top of the viewport instead.
-  ::v-deep .v-dialog__content {
+  // Variant A's overlay: full-viewport scrim, anchored near the top of the
+  // viewport (not centered) - `rgba(var(--v-theme-dark-green), 0.6)` is the
+  // existing `dark-green` token at variant A's own 0.6 opacity, not a new
+  // hex value (criterion 13/20; Vuetify 3 exposes each theme colour as a
+  // comma-separated R,G,B custom property for exactly this, confirmed in
+  // `node_modules/vuetify/lib/composables/theme.js`'s `genCssVariables`).
+  // Hidden by the template's `v-show` (inline `display:none`, overridden by
+  // this class's `display:flex` once shown) rather than `v-if`, so it never
+  // leaves the DOM - and `dist/index.html` always carries its text
+  // (criterion 9).
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
     align-items: flex-start;
-    padding-top: 4rem;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    background-color: rgba(var(--v-theme-dark-green), 0.6);
   }
 
   &__card {
     position: relative;
+    width: 100%;
+    max-width: 640px;
+    background-color: rgb(var(--v-theme-white));
     border-radius: 10px !important;
   }
 
@@ -207,7 +302,7 @@ export default {
   &__dash {
     width: 1.25rem;
     height: 2px;
-    background-color: var(--v-dark-green-base);
+    background-color: rgb(var(--v-theme-dark-green));
     display: inline-block;
   }
 
@@ -218,7 +313,7 @@ export default {
     // their own headings - not redeclared here (Reviewer finding: a literal
     // 'Roboto Serif' font-family in this file was a brand-new reference to
     // an unlicensed font; reusing the pre-existing class avoids adding one).
-    color: var(--v-primary-base);
+    color: rgb(var(--v-theme-primary));
     margin: 0.75rem 0 0;
   }
 
@@ -230,7 +325,7 @@ export default {
 
   &__rule {
     border: none;
-    border-top: 1px solid var(--v-mint-blue-base);
+    border-top: 1px solid rgb(var(--v-theme-mint-blue));
     margin: 1.25rem 0;
   }
 
@@ -248,7 +343,7 @@ export default {
     margin: 0 0 1.5rem;
 
     .akut-notice__highlight {
-      color: var(--v-secondary-base);
+      color: rgb(var(--v-theme-secondary));
       text-decoration: underline;
       text-decoration-thickness: 2px;
       text-underline-offset: 3px;
@@ -311,7 +406,7 @@ export default {
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background-color: var(--v-info-text-base);
+    background-color: rgb(var(--v-theme-info-text));
     display: inline-block;
   }
 }

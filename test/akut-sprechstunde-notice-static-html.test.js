@@ -13,7 +13,6 @@
 // all v-dialog/v-overlay content behind client-side hydration regardless of the `eager` prop -
 // node_modules/vuetify/lib/composables/hydration.js - so the notice's text, present and correct
 // in the component and in locales/de/homepage.js, never reaches the static HTML at all).
-const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -27,7 +26,9 @@ function loadLocaleStrings() {
   const pick = (key) => {
     const match = source.match(new RegExp(`${key}:\\s*'([^']+)'`));
     if (!match) {
-      throw new Error(`locales/de/homepage.js has no string literal for "${key}"`);
+      throw new Error(
+        `locales/de/homepage.js has no string literal for "${key}"`,
+      );
     }
     return match[1];
   };
