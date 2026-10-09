@@ -166,7 +166,7 @@
   </div>
 </template>
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay, useGoTo } from 'vuetify';
 
@@ -209,9 +209,41 @@ const impressumData = computed(() => [
   { label: 'imprint.content.content', type: 'content' },
 ]);
 
-function scrollTo(hash) {
+async function scrollTo(hash) {
   if (showMenu.value) {
     showMenu.value = false;
+    // Vuetify 3's `v-overlay` removes its own scroll-lock (`html.v-overlay-
+    // scroll-blocked{position:fixed}`) only once its own close transition's
+    // `afterLeave` hook runs - not synchronously the instant `showMenu` is
+    // set, and not within a plain `nextTick()` either (confirmed by tracing
+    // `document.documentElement.className` on a timer: the class is still
+    // present ~300-500ms after the click). Calling `goTo()` while it is
+    // still there is a no-op (every `scrollTop` write is blocked) - `main`'s
+    // Vue 2 overlay closes and unlocks synchronously, so it never needed
+    // this wait at all. `goTo()`'s own animation loop runs for its full
+    // `duration` regardless of how much of that time the lock ate into, so
+    // waiting for the matching close-transition length (`OVERLAY_TRANSITION
+    // _MS` in tools/visual-parity/lib/states.mjs - the same measured value)
+    // before calling it is enough; `nextTick()` first for the `.nav` height
+    // read below to see the reappeared element.
+    await nextTick();
+    await new Promise((resolve) => setTimeout(resolve, 900));
+    // `main`'s own `$vuetify.goTo` measures its target synchronously, in the
+    // same tick `scrollTo` runs - while `.nav` (`v-if="!showMenu"`) has not
+    // reappeared yet, so its target lands exactly `.nav`'s own height short
+    // of the section's true position (confirmed against the `main` build:
+    // every mobile menu entry's resulting scroll position is short by
+    // precisely `.nav`'s rendered height, at every width). Reproduced here
+    // by the same amount, read from the now-reappeared `.nav` directly
+    // rather than a guessed constant (it does not depend on the hash/width).
+    const navHeight =
+      document.querySelector('.nav')?.getBoundingClientRect().height ?? 0;
+    goTo(hash, {
+      duration: 500,
+      offset: -navHeight,
+      easing: 'linear',
+    });
+    return;
   }
   goTo(hash, {
     duration: 500,
@@ -313,5 +345,14 @@ function scrollTo(hash) {
     padding-bottom: $space-xl;
     max-width: 8.75rem;
   }
+}
+// Top-level (not nested under `.nav`) on purpose - see Footer.vue's
+// identical top-level `.v-card-actions` rule and comment: the Impressum
+// dialog's `<v-card-actions>` elements are teleported outside `<nav>` once
+// the dialog opens, so a selector nested under `.nav` (which would compile
+// to a descendant combinator) would never match them there.
+.v-card-actions {
+  padding-left: $space-xs !important;
+  padding-right: $space-xs !important;
 }
 </style>

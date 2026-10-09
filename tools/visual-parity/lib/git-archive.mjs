@@ -30,3 +30,22 @@ export function archiveBranch(repoRoot, ref, destDir) {
     );
   });
 }
+
+/** Resolves `ref` to the short commit it currently points at, for the report. */
+export function resolveCommit(repoRoot, ref) {
+  return new Promise((resolve, reject) => {
+    const proc = spawn('git', ['rev-parse', '--short', ref], {
+      cwd: repoRoot,
+    });
+    let out = '';
+    proc.stdout.on('data', (chunk) => {
+      out += chunk;
+    });
+    proc.on('error', reject);
+    proc.on('exit', (code) =>
+      code === 0
+        ? resolve(out.trim())
+        : reject(new Error(`git rev-parse ${ref} exited ${code}`)),
+    );
+  });
+}

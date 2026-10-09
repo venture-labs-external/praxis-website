@@ -1,4 +1,9 @@
-import themeLight from '../assets/theme';
+import themeLight, {
+  dialogScrimColor,
+  dialogScrimOpacity,
+  hoverOpacity,
+  iconButtonVariant,
+} from '../assets/theme';
 
 // Ported from Vuetify 2's `optionsPath` (`@nuxtjs/vuetify`) to Vuetify 3's own
 // options shape (passed as `vuetifyOptions` to `vuetify-nuxt-module`). Vuetify 3
@@ -32,6 +37,13 @@ export default {
       light: {
         dark: false,
         colors: themeLight,
+        // Restores Vuetify 2's own historical hover-state strength (see
+        // `assets/theme.js`'s `hoverOpacity` comment) - Vuetify 3's own
+        // default ('hover-opacity': 0.04) halved the darkening every
+        // hovered element (incl. the "Termin buchen" nav button) shows.
+        variables: {
+          'hover-opacity': hoverOpacity,
+        },
       },
     },
   },
@@ -46,5 +58,33 @@ export default {
   },
   icons: {
     defaultSet: 'mdi-svg',
+  },
+  // Global component defaults - restores two Vuetify 2 behaviours Vuetify 3
+  // changed (see `assets/theme.js`'s comments on each token), set once here
+  // rather than per component. Neither affects a `<v-btn>` that sets its own
+  // `variant`/`opacity` explicitly (Navigation.vue's "Termin buchen" button
+  // keeps its own `variant="flat"`), nor Navigation.vue's own `<v-overlay>`
+  // (the mobile menu), which sets its own `opacity`/`scrim` explicitly too.
+  //
+  // The Impressum dialog is a `<v-dialog>`, not a bare `<v-overlay>` - VDialog
+  // declares its own copies of VOverlay's `scrim`/`opacity` props (via
+  // `makeVOverlayProps`) and resolves ITS OWN default for them before ever
+  // rendering the `<v-overlay>` it wraps internally, so a `defaults.VOverlay`
+  // entry never reaches it (confirmed: with only `VOverlay` set here, the
+  // dialog's own scrim still rendered Vuetify 3's own default). Both are set
+  // here so either a `<v-overlay>` or a `<v-dialog>` used anywhere gets the
+  // same restored values.
+  defaults: {
+    VBtn: {
+      variant: iconButtonVariant,
+    },
+    VOverlay: {
+      opacity: dialogScrimOpacity,
+      scrim: dialogScrimColor,
+    },
+    VDialog: {
+      opacity: dialogScrimOpacity,
+      scrim: dialogScrimColor,
+    },
   },
 };
