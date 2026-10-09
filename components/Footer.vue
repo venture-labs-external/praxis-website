@@ -317,4 +317,22 @@ const contactData = computed(() => ({
     height: 24px;
   }
 }
+// Top-level (not nested under `.footer`) on purpose: the Impressum dialog's
+// `<v-card-actions>` elements - part of this component's own template, so
+// they do carry this file's scoped `data-v-*` attribute - end up teleported
+// outside `<footer>` to `.v-overlay-container` in `<body>` once the dialog
+// opens (see the `:global(.footer__imprint-overlay)` comment above); a
+// selector nested under `.footer` would need it to still be a DOM
+// descendant of `<footer>`, which it no longer is by then. Vuetify 3's
+// `.v-card-actions` default padding is `8px` on every side; `dev`'s own
+// Vuetify 2 `.v-card__actions` computed to `8px 16px` (confirmed against the
+// `main` build) - the extra 8px of horizontal padding is what held the
+// Impressum dialog's close cross 8px further from the right edge than this
+// component's own default rendered it. Restored here (both `v-card-actions`
+// rows in this dialog: the close-cross row and the trailing spacer-only
+// row), `!important` to beat Vuetify's own rule.
+.v-card-actions {
+  padding-left: $space-xs !important;
+  padding-right: $space-xs !important;
+}
 </style>

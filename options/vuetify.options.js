@@ -1,4 +1,5 @@
 import themeLight, {
+  dialogScrimColor,
   dialogScrimOpacity,
   hoverOpacity,
   iconButtonVariant,
@@ -62,13 +63,28 @@ export default {
   // changed (see `assets/theme.js`'s comments on each token), set once here
   // rather than per component. Neither affects a `<v-btn>` that sets its own
   // `variant`/`opacity` explicitly (Navigation.vue's "Termin buchen" button
-  // keeps its own `variant="flat"`).
+  // keeps its own `variant="flat"`), nor Navigation.vue's own `<v-overlay>`
+  // (the mobile menu), which sets its own `opacity`/`scrim` explicitly too.
+  //
+  // The Impressum dialog is a `<v-dialog>`, not a bare `<v-overlay>` - VDialog
+  // declares its own copies of VOverlay's `scrim`/`opacity` props (via
+  // `makeVOverlayProps`) and resolves ITS OWN default for them before ever
+  // rendering the `<v-overlay>` it wraps internally, so a `defaults.VOverlay`
+  // entry never reaches it (confirmed: with only `VOverlay` set here, the
+  // dialog's own scrim still rendered Vuetify 3's own default). Both are set
+  // here so either a `<v-overlay>` or a `<v-dialog>` used anywhere gets the
+  // same restored values.
   defaults: {
     VBtn: {
       variant: iconButtonVariant,
     },
     VOverlay: {
       opacity: dialogScrimOpacity,
+      scrim: dialogScrimColor,
+    },
+    VDialog: {
+      opacity: dialogScrimOpacity,
+      scrim: dialogScrimColor,
     },
   },
 };

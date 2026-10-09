@@ -29,8 +29,11 @@ export default themeLight;
 export const iconButtonVariant = 'text';
 
 // Vuetify 3's `v-overlay`/`v-dialog` scrim defaults to `--v-overlay-opacity:
-// 0.32` (black) - lighter than Vuetify 2's own historical dialog overlay,
-// measured against the `main` branch's build by tools/visual-parity.
+// 0.32` over a pure black (`#000`) scrim; Vuetify 2's own historical dialog
+// overlay is `#212121` (Material "grey darken-4") at `0.46` - both measured
+// directly against the `main` branch's build (computed `background-color`/
+// `opacity` of its `.v-overlay__scrim`).
+export const dialogScrimColor = '#212121';
 export const dialogScrimOpacity = 0.46;
 
 // Vuetify 3's theme `variables['hover-opacity']` defaults to 0.04; Vuetify
