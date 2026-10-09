@@ -36,6 +36,13 @@
 @use 'vuetify/settings' with (
   $body-font-family: ('Roboto', sans-serif),
   $heading-font-family: ('Roboto', sans-serif),
+  // Vuetify 2's `.container` (`layouts/default.vue`'s `<v-container>`) pads
+  // 12px on every side; Vuetify 3's own default is `$spacer * 4` = 16px. The
+  // comparison script's very first element ("Willkommen") was 4px lower than
+  // the old build at every width because of exactly this - and the same 4px
+  // then shifted every element below it, which is most of this task's
+  // position/box differences before this line was added.
+  $container-padding-x: 12px,
   $typography: (
     'h1': (
       'size': 2rem,
