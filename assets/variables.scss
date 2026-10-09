@@ -13,8 +13,111 @@
 // `additionalData` (prepended to every `.scss`/`<style lang="scss">` block in the
 // app, replacing `customVariables`'s old global injection), and as
 // `vuetify-nuxt-module`'s `moduleOptions.styles.configFile` (prepended to
-// Vuetify's own SCSS build, replacing Vuetify's default `$typography` map below
-// with the one below before Vuetify's styles compile).
+// Vuetify's own SCSS build).
+//
+// 20261009 fix: that second use is a Sass *module*, loaded as
+// `@use '<this file>'; @use 'vuetify/styles';` (vuetify-nuxt-module's own
+// template, `getTemplate()` in its `module.mjs`) - plain `@use`, not the old
+// Vuetify-2-era `@import`. A bare `$typography: (...)` assignment at the top
+// level of this file therefore lived in *this module's own scope* and never
+// reached Vuetify's settings module at all: `yarn generate` printed this
+// unplugin-styles warning on every build -
+//   "Settings file ... does not import 'vuetify/settings'. Vuetify defaults
+//   will be used. Add `@use 'vuetify/settings' with (...);` to override them."
+// - and that is the actual cause of the whole "fonts are way too big" report:
+// every `.text-h1`...`.text-h6`/`.subtitle-*`/`.body-*` utility class Vuetify
+// generates was built from ITS OWN hard-coded Material defaults (h1 2:
+// 6rem/300/line-height 1, body-2: .875rem/400, etc.), not from the map below.
+// The fix is Sass's own documented mechanism for configuring a reused module:
+// the FIRST `@use` of `vuetify/settings` in the whole compilation decides its
+// configuration for every later plain `@use` of the same module (including
+// Vuetify's own internal ones) - so this file must itself be that first,
+// configuring `@use`, placed before any other rule as Sass requires.
+@use 'vuetify/settings' with (
+  $body-font-family: ('Roboto', sans-serif),
+  $heading-font-family: ('Roboto', sans-serif),
+  $typography: (
+    'h1': (
+      'size': 2rem,
+      'weight': 700,
+      'line-height': 1.1,
+      'letter-spacing': -0.015625em,
+      'font-family': ('Roboto Serif', sans-serif),
+      'text-transform': none,
+    ),
+    'h2': (
+      'size': 1.25rem,
+      'weight': 700,
+      'line-height': 1.1,
+      'letter-spacing': -0.0083333333em,
+      'font-family': ('Roboto Serif', sans-serif),
+      'text-transform': none,
+    ),
+    'h3': (
+      'size': 1.125rem,
+      'weight': 700,
+      'line-height': 1.4,
+      'letter-spacing': normal,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'h4': (
+      'size': 1rem,
+      'weight': 700,
+      'line-height': 1.4,
+      'letter-spacing': 0.0073529412em,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'h5': (
+      'size': 1rem,
+      'weight': 600,
+      'line-height': 1.1,
+      'letter-spacing': normal,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'body-1': (
+      'size': 1rem,
+      'weight': 500,
+      'line-height': 1.4,
+      'letter-spacing': 0.03125em,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'body-2': (
+      'size': 1rem,
+      'weight': 500,
+      'line-height': 1.4,
+      'letter-spacing': 0.0178571429em,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'subtitle-1': (
+      'size': 1rem,
+      'weight': 700,
+      'line-height': 1.2,
+      'letter-spacing': 0.009375em,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'subtitle-2': (
+      'size': 0.875rem,
+      'weight': 500,
+      'line-height': 1.5,
+      'letter-spacing': 0.0071428571em,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+  )
+);
+
+// Everything below is this app's own module-local copy of the same values,
+// for the component `<style lang="scss">` blocks (loaded via Vite's
+// `additionalData: '@use "./assets/variables.scss" as *;'`) - a plain `@use`
+// of this file only sees these bindings, never the `vuetify/settings`
+// configuration above (Sass modules don't leak across files), so the handful
+// of values component styles need are repeated here once, by name.
 $xs-only: 'only screen and (max-width: 599px)';
 $sm-only: 'only screen and (min-width: 600px) and (max-width: 959px)';
 $sm-and-up: 'only screen and (min-width: 600px)';
@@ -29,83 +132,64 @@ $xl-only: 'only screen and (min-width: 1904px)';
 
 $body-font-family: 'Roboto', sans-serif;
 $heading-font-family: 'Roboto', sans-serif;
+$display-font-family: 'Roboto Serif', sans-serif;
 
-// Same per-level values (size/weight/line-height/font-family) as the old
-// Vuetify 2 `$headings` map, now in Vuetify 3's `$typography` map shape
-// (`letter-spacing`/`text-transform` added, using Vuetify's own historical
-// Material-type-scale values for each level so headings/body text keep the
-// same letter-spacing as before).
-$typography: (
-  'h1': (
-    'size': 2rem,
-    'weight': 700,
-    'line-height': 1.1,
-    'letter-spacing': -0.015625em,
-    'font-family': 'Roboto Serif',
-    'text-transform': none,
-  ),
-  'h2': (
-    'size': 1.25rem,
-    'weight': 700,
-    'line-height': 1.1,
-    'letter-spacing': -0.0083333333em,
-    'font-family': 'Roboto Serif',
-    'text-transform': none,
-  ),
-  'h3': (
-    'size': 1.125rem,
-    'weight': 700,
-    'line-height': 1.4,
-    'letter-spacing': normal,
-    'font-family': $body-font-family,
-    'text-transform': none,
-  ),
-  'h4': (
-    'size': 1rem,
-    'weight': 700,
-    'line-height': 1.4,
-    'letter-spacing': 0.0073529412em,
-    'font-family': $body-font-family,
-    'text-transform': none,
-  ),
-  'h5': (
-    'size': 1rem,
-    'weight': 600,
-    'line-height': 1.1,
-    'letter-spacing': normal,
-    'font-family': $body-font-family,
-    'text-transform': none,
-  ),
-  'body-1': (
-    'size': 1rem,
-    'weight': 500,
-    'line-height': 1.4,
-    'letter-spacing': 0.03125em,
-    'font-family': $body-font-family,
-    'text-transform': none,
-  ),
-  'body-2': (
-    'size': 1rem,
-    'weight': 500,
-    'line-height': 1.4,
-    'letter-spacing': 0.0178571429em,
-    'font-family': $body-font-family,
-    'text-transform': none,
-  ),
-  'subtitle-1': (
-    'size': 1rem,
-    'weight': 700,
-    'line-height': 1.2,
-    'letter-spacing': 0.009375em,
-    'font-family': $body-font-family,
-    'text-transform': none,
-  ),
-  'subtitle-2': (
-    'size': 0.875rem,
-    'weight': 500,
-    'line-height': 1.5,
-    'letter-spacing': 0.0071428571em,
-    'font-family': $body-font-family,
-    'text-transform': none,
-  ),
-);
+// ---------------------------------------------------------------------------
+// One small theme, part 2: every value a component `<style>` block used to
+// write as a literal (WHAT TO DO #3) now has a name here instead. Grouped by
+// the handful of distinct roles actually found in `components/*.vue` - not a
+// generic numeric scale, because the page itself never used one (every
+// padding/margin/radius below is copied byte-for-byte from the pre-migration
+// component, just given a name instead of being written twice).
+// ---------------------------------------------------------------------------
+
+// Radii - the one border-radius value used anywhere on the site (cards, the
+// footer's top corners, the header image frame, the Doctolib button card).
+$radius-sm: 6px;
+
+// Soft drop-shadow used on the "about us" doctor cards (`.box-shadow`).
+$shadow-soft: 4px 4px 24px 0px rgba(0, 0, 0, 0.08),
+  -4px -4px 24px 0px rgba(21, 128, 235, 0.05);
+
+// Display heading that is always at its "desktop" size, even on mobile
+// (`Header.vue`'s `<h1 class="text-h1">` - the only heading that does not
+// follow the responsive `h1.text-h1`/`h2.text-h1` rule in `main.scss`).
+$type-display-locked-size: 48px;
+
+// Doctor/team-member name directly under a portrait photo (`AboutUs.vue`'s
+// `.about-us__card-title span`, `Team.vue`'s `.team__member-title span`) -
+// two components, two slightly different literal sizes in the pre-migration
+// source (1.5rem vs. 20px) kept as two named tokens rather than merged into
+// one (merging them would be a visual change, which this task does not make).
+$type-card-title-family: $display-font-family;
+$type-card-title-size: 1.5rem;
+$type-card-title-weight: 700;
+$type-card-title-line-height: 1;
+
+$type-member-name-family: $body-font-family;
+$type-member-name-size: 20px;
+$type-member-name-weight: 700;
+$type-member-name-line-height: normal;
+
+// Doctor/team-member subtitle under the name (same two components) - the one
+// role shared byte-for-byte between both.
+$type-card-subtitle-family: $body-font-family;
+$type-card-subtitle-size: 16px;
+$type-card-subtitle-weight: 500;
+$type-card-subtitle-line-height: 1.4;
+
+// Brand wordmark text next to the logo (`Navigation.vue`'s `.nav__logo`,
+// `Footer.vue`'s `.footer__logo`) - the footer's copy additionally sets
+// `font-weight: 700` where the nav's does not (kept as found).
+$type-brand-family: $display-font-family;
+$type-brand-size: 1.25rem;
+$type-brand-line-height: 1.2;
+
+// Desktop nav link (`Navigation.vue`'s `.list__item`).
+$type-nav-link-size: 1.125rem;
+$type-nav-link-line-height: 1.2;
+
+// News section heading (`News.vue`'s `.news__title`, an `<h4>` with only its
+// size overridden - weight/line-height/family still come from the `h4` role
+// above).
+$type-news-title-size: 1.125rem;
