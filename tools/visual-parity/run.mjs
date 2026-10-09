@@ -59,8 +59,43 @@ if (baseline === 'dev') {
   process.exit(1);
 }
 if (liveBaseline && baselineArg) {
-  console.error('[visual-parity] pass either --baseline=<ref> or --live, not both');
+  console.error(
+    '[visual-parity] pass either --baseline=<ref> or --live, not both',
+  );
   process.exit(1);
+}
+
+/**
+ * Forces every `<img loading="lazy">` on the page (the Team/AboutUs doctor
+ * photos, none of which has an explicit `width`/`height`, so each is 0-
+ * height until it loads) to start fetching immediately, then waits for all
+ * of them to finish loading or error out - resolves either way, never
+ * hangs on a genuinely broken image.
+ *
+ * Native lazy loading's own "near the viewport" distance is a browser
+ * heuristic (it can factor in the estimated connection speed), not a fixed
+ * number - relying on it gave inconsistent results run to run (confirmed:
+ * one `compare` run had every doctor photo settled in time except the
+ * *last* team member's, shifting every element below it by exactly one
+ * photo's own height on one side only; a later run had a different one
+ * unsettled). Forcing every image eager up front removes that variability
+ * instead of chasing which specific image a given run happens to still be
+ * loading.
+ */
+async function waitForImages(page) {
+  await page.evaluate(() =>
+    Promise.all(
+      [...document.images].map((img) => {
+        if (img.loading === 'lazy') img.loading = 'eager';
+        return img.complete
+          ? Promise.resolve()
+          : new Promise((resolve) => {
+              img.addEventListener('load', resolve, { once: true });
+              img.addEventListener('error', resolve, { once: true });
+            });
+      }),
+    ),
+  );
 }
 
 async function main() {
@@ -128,6 +163,11 @@ async function main() {
           await newPage.goto(`http://127.0.0.1:${newPort}/`, {
             waitUntil: 'load',
           });
+          // Force every doctor photo to load right away rather than once
+          // (if ever) native lazy loading's own viewport-distance heuristic
+          // decides to - see `waitForImages`'s own comment.
+          await waitForImages(oldPage);
+          await waitForImages(newPage);
           // Wait for every @font-face to finish loading before measuring
           // anything: text set in a custom font (Roboto/Roboto Serif) wraps
           // differently with the fallback it briefly renders with first
@@ -159,6 +199,11 @@ async function main() {
           );
           await state.apply(oldPage);
           await state.apply(newPage);
+          // Already forced+awaited once right after `goto` above - a cheap
+          // re-check, in case a state's own interaction (there is none
+          // today) ever adds a new image to the page.
+          await waitForImages(oldPage);
+          await waitForImages(newPage);
 
           const oldSnap = await oldPage.evaluate(collectSnapshot);
           const newSnap = await newPage.evaluate(collectSnapshot);
