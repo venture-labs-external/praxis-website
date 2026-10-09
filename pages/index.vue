@@ -1,5 +1,6 @@
 <template>
   <main>
+    <AkutSprechstundeNotice />
     <Header />
     <News />
     <Services />
@@ -10,10 +11,12 @@
 </template>
 
 <script>
+import AkutSprechstundeNotice from '~/components/AkutSprechstundeNotice.vue';
 import Header from '~/components/Header.vue';
 
 export default {
   components: {
+    AkutSprechstundeNotice,
     Header,
     News: () => import('~/components/News'),
     AboutUs: () => import('~/components/AboutUs'),
