@@ -166,7 +166,7 @@
   </div>
 </template>
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay, useGoTo } from 'vuetify';
 
@@ -209,9 +209,17 @@ const impressumData = computed(() => [
   { label: 'imprint.content.content', type: 'content' },
 ]);
 
-function scrollTo(hash) {
+async function scrollTo(hash) {
   if (showMenu.value) {
     showMenu.value = false;
+    // Vuetify 3's `v-overlay` removes its own scroll-lock (`html.v-overlay-
+    // scroll-blocked{position:fixed}`) in the same DOM-update flush that
+    // closing it triggers, not synchronously the instant `showMenu` is set -
+    // calling `goTo()` before that flush has run means the page is still
+    // `position:fixed` and nothing moves. `nextTick()` waits for exactly that
+    // flush (Vue 2's own overlay never needed this: `main`'s identical
+    // `scrollTo` closes and scrolls in the same tick and still works there).
+    await nextTick();
   }
   goTo(hash, {
     duration: 500,
