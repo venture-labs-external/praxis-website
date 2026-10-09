@@ -23,29 +23,9 @@ export function collectSnapshot() {
     return hasDirectText;
   }
 
-  // When a full-viewport overlay (the mobile nav menu, or a dialog's own
-  // backdrop) is open, the page behind its scrim is not actually visible -
-  // but it is not `display:none` either (zero-size filter below would not
-  // catch it), and Vue 3's `<v-overlay>`/`<v-dialog>` teleport their content
-  // to a different point in the DOM than Vue 2's did, so the *same* text
-  // appearing once in the open overlay and once underneath it can end up
-  // matched to a *different* occurrence of itself across the two builds
-  // (e.g. "Services" as a mobile-menu link and as a section heading).
-  // Restricting collection to the overlay's own content once one covers
-  // (most of) the viewport avoids comparing the hidden background at all.
-  const viewportArea = window.innerWidth * window.innerHeight;
-  const scrimOverlay = [
-    ...document.querySelectorAll('[class*="overlay"]'),
-  ].find((el) => {
-    const r = el.getBoundingClientRect();
-    return r.width * r.height >= viewportArea * 0.8;
-  });
-
   const results = [];
   const counters = new Map();
-  const all = scrimOverlay
-    ? scrimOverlay.querySelectorAll('*')
-    : document.querySelectorAll('body *');
+  const all = document.querySelectorAll('body *');
   for (const el of all) {
     if (!isLeafTextElement(el)) continue;
     const text = normalize(el.textContent);
