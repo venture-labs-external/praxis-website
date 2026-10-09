@@ -10,11 +10,35 @@ const TYPE_PROPS = [
   'letterSpacing',
   'color',
 ];
+// `letterSpacing`/`fontSize` are computed from an `em` value times the
+// element's own font-size, which can differ in its last decimal digit
+// between the two builds' own floating-point rounding (e.g. "0.428571px"
+// vs. "0.42857px" - the same 0.0178571429em at a font-size that itself
+// differs by an unmeasurable fraction) without being a real difference a
+// person could ever see; compared numerically, to 2 decimal places, instead
+// of as an exact string.
+const NUMERIC_TOLERANT_PROPS = new Set([
+  'letterSpacing',
+  'fontSize',
+  'lineHeight',
+]);
+const NUMERIC_TOLERANCE = 0.01;
 const BOX_TOLERANCE_PX = 1;
 
 function px(value) {
   const n = Number.parseFloat(value);
   return Number.isNaN(n) ? null : n;
+}
+
+function typographyPropsDiffer(prop, oldValue, newValue) {
+  if (oldValue === newValue) return false;
+  if (NUMERIC_TOLERANT_PROPS.has(prop)) {
+    const oldPx = px(oldValue);
+    const newPx = px(newValue);
+    if (oldPx !== null && newPx !== null)
+      return Math.abs(oldPx - newPx) > NUMERIC_TOLERANCE;
+  }
+  return true;
 }
 
 export function diffSnapshots(oldSnap, newSnap, { width, state, lang }) {
@@ -46,7 +70,7 @@ export function diffSnapshots(oldSnap, newSnap, { width, state, lang }) {
     matchedNewIds.add(id);
 
     for (const prop of TYPE_PROPS) {
-      if (oldEl.style[prop] !== newEl.style[prop]) {
+      if (typographyPropsDiffer(prop, oldEl.style[prop], newEl.style[prop])) {
         differences.push({
           width,
           state,
