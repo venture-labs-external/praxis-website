@@ -26,7 +26,7 @@
           <span class="akut-notice__dash"></span>
           {{ $t('homepage.akutNoticeOverline') }}
         </div>
-        <h2 :id="headlineId" class="akut-notice__headline">
+        <h2 :id="headlineId" class="text-h1 akut-notice__headline">
           {{ $t('homepage.akutNoticeHeadline') }}
         </h2>
         <div class="akut-notice__validity primary--text">
@@ -190,10 +190,12 @@ export default {
   }
 
   &__headline {
-    font-family: 'Roboto Serif', serif;
-    font-weight: 700;
-    font-size: 2rem;
-    line-height: 1.1;
+    // Size/weight/line-height/font-family come from the site's existing
+    // "text-h1" Vuetify typography class (assets/variables.scss $headings),
+    // the same pattern Services.vue/AboutUs.vue/Contact.vue/Team.vue use for
+    // their own headings - not redeclared here (Reviewer finding: a literal
+    // 'Roboto Serif' font-family in this file was a brand-new reference to
+    // an unlicensed font; reusing the pre-existing class avoids adding one).
     color: var(--v-primary-base);
     margin: 0.75rem 0 0;
   }
