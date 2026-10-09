@@ -1,7 +1,7 @@
 <template>
   <div id="services" class="services mx-auto">
     <div class="about-us__title mb-6">
-      <span class="subtitle-1 dark-green--text">
+      <span class="text-subtitle-1 text-dark-green">
         {{ $t('homepage.services') }}
       </span>
       <h2 class="text-h1">
@@ -86,7 +86,7 @@ export default {
 
 <style lang="scss" scoped>
 .services {
-  padding-top: 5rem;
+  padding-top: $space-xl;
   max-width: 58.75rem;
   &__cards {
     display: flex;
@@ -97,7 +97,7 @@ export default {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: $space-sm;
     }
   }
   .slider {

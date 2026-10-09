@@ -1,0 +1,6 @@
+[
+  {
+    "kind": "html-lang",
+    "reason": "The old site shipped <html lang=\"en\"> despite its content being entirely German (locales/en holds the same German strings, VL-8-D14) - corrected to \"de\" here, the one place this migration is deliberately better than the old site rather than byte-identical to it (20261009-praxis-gerresheim-last-differences-to-the-live-s difference 7)."
+  }
+]

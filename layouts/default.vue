@@ -2,7 +2,7 @@
   <v-app class="app d-flex justify-center">
     <Navigation />
     <v-container>
-      <nuxt />
+      <NuxtPage />
     </v-container>
     <Footer />
   </v-app>
@@ -19,7 +19,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .app {
-  color: var(--v-dark-gray-base);
-  background-color: var(--v-beige-base);
+  color: rgb(var(--v-theme-dark-gray));
+  background-color: rgb(var(--v-theme-beige));
 }
 </style>

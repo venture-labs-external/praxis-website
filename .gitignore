@@ -67,6 +67,7 @@ typings/
 
 # nuxt.js build output
 .nuxt
+.output
 
 # Nuxt generate
 dist
@@ -93,3 +94,5 @@ sw.*
 package-lock.json
 
 .DS_Store
+# Dev Manager task specs are not versioned (cluster decision 2026-10-02)
+/docs/specs/

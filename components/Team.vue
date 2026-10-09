@@ -69,13 +69,13 @@ export default {
 .team {
   max-width: 58.75rem;
   & h2 {
-    margin: 2rem 0;
+    margin: $space-md 0;
   }
   &__members {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 217px));
     justify-content: center;
-    gap: 1.5rem !important;
+    gap: $space-sm !important;
   }
   &__member {
     &-image {
@@ -86,20 +86,25 @@ export default {
       }
     }
     &-title {
-      & span {
-        font-family: 'Roboto', sans-serif;
-        font-size: 20px;
+      // Both keep their real `text-body-2`/`text-body-1` classes (see
+      // AboutUs.vue's identical comment). Family/size/letter-spacing here
+      // are byte-identical to what Vuetify's own class already gives, so
+      // only the two properties this component actually changes - the
+      // span's weight and line-height - are set, with the class repeated in
+      // the selector to beat `main.scss`'s equal-specificity `@media
+      // md-and-up` override deterministically.
+      & span.text-body-2 {
         font-style: normal;
-        font-weight: 700;
-        line-height: normal;
+        font-weight: $type-member-name-weight !important;
+        line-height: $type-member-name-line-height !important;
       }
-      & p {
-        color: var(--v-dark-green-base);
-        font-family: 'Roboto', sans-serif;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 1.4;
+      // `main.scss`'s `p.text-body-1` `@media md-and-up` size bump has
+      // higher specificity than Vuetify's own plain `.text-body-1` class
+      // (which this element's size otherwise matches exactly), so it needs
+      // pinning the same way as AboutUs.vue's orphan description paragraph.
+      & p.text-body-1 {
+        color: rgb(var(--v-theme-dark-green));
+        font-size: $type-card-subtitle-size !important;
         margin-bottom: 0 !important;
       }
     }

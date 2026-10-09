@@ -1,7 +1,7 @@
 <template>
   <header class="header mx-auto">
     <div class="header__title">
-      <span class="subtitle-1 dark-green--text">
+      <span class="text-subtitle-1 text-dark-green">
         {{ $t('homepage.welcome') }}
       </span>
       <h1 class="text-h1">
@@ -12,7 +12,7 @@
       <div class="image__wrapper">
         <img
           class="image"
-          src="header-image/header-image.png"
+          src="/header-image/header-image.png"
           srcset="
             /header-image/header-image_w_330.webp   330w,
             /header-image/header-image_w_714.webp   714w,
@@ -49,17 +49,17 @@ export default {
 <style lang="scss" scoped>
 .header {
   max-width: 73rem;
-  padding-top: 0.5rem;
+  padding-top: $space-2xs;
 
   @media #{$md-and-up} {
-    padding-top: 1.5rem;
-    padding-bottom: 5rem;
+    padding-top: $space-sm;
+    padding-bottom: $space-xl;
     display: grid;
     grid-template:
       'title  image '
       'card image  ';
     grid-template-columns: 40% auto;
-    column-gap: 3rem;
+    column-gap: $space-lg;
     align-items: end;
   }
 
@@ -67,7 +67,7 @@ export default {
     grid-area: title;
 
     & h1 {
-      font-size: 48px !important;
+      font-size: $type-display-locked-size !important;
     }
   }
 
@@ -105,8 +105,8 @@ export default {
         bottom: 8%;
         width: 100%;
         height: 100%;
-        border: 3px solid var(--v-dark-green-base);
-        border-radius: 6px;
+        border: 3px solid rgb(var(--v-theme-dark-green));
+        border-radius: $radius-sm;
       }
     }
   }

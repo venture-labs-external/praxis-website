@@ -1,70 +1,307 @@
-// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+// Ported from Vuetify 2 (`@nuxtjs/vuetify`'s `customVariables`) to Vuetify 3.
 //
-// The variables you want to modify
-// $font-size-root: 20px;
-@import '~vuetify/src/styles/settings/_variables';
+// Vuetify 3 no longer ships a `$display-breakpoints` SCSS map (the breakpoints
+// now live in JS only, via `useDisplay()`/`display.thresholds`), so the handful
+// of breakpoint variables the component `<style>` blocks use are defined here
+// directly, pinned to Vuetify 2's own historical default thresholds (xs<600,
+// sm<960, md<1264, lg<1904, xl>=1904) so every `@media #{$md-and-up}` below
+// keeps firing at the same pixel widths as before. `nuxt.config.ts` pins
+// `vuetifyOptions.display.thresholds` to the same values for the JS side
+// (`$vuetify`/`useDisplay()`).
+//
+// This file is used two ways: as the Vite `css.preprocessorOptions.scss`
+// `additionalData` (prepended to every `.scss`/`<style lang="scss">` block in the
+// app, replacing `customVariables`'s old global injection), and as
+// `vuetify-nuxt-module`'s `moduleOptions.styles.configFile` (prepended to
+// Vuetify's own SCSS build).
+//
+// 20261009 fix: that second use is a Sass *module*, loaded as
+// `@use '<this file>'; @use 'vuetify/styles';` (vuetify-nuxt-module's own
+// template, `getTemplate()` in its `module.mjs`) - plain `@use`, not the old
+// Vuetify-2-era `@import`. A bare `$typography: (...)` assignment at the top
+// level of this file therefore lived in *this module's own scope* and never
+// reached Vuetify's settings module at all: `yarn generate` printed this
+// unplugin-styles warning on every build -
+//   "Settings file ... does not import 'vuetify/settings'. Vuetify defaults
+//   will be used. Add `@use 'vuetify/settings' with (...);` to override them."
+// - and that is the actual cause of the whole "fonts are way too big" report:
+// every `.text-h1`...`.text-h6`/`.subtitle-*`/`.body-*` utility class Vuetify
+// generates was built from ITS OWN hard-coded Material defaults (h1 2:
+// 6rem/300/line-height 1, body-2: .875rem/400, etc.), not from the map below.
+// The fix is Sass's own documented mechanism for configuring a reused module:
+// the FIRST `@use` of `vuetify/settings` in the whole compilation decides its
+// configuration for every later plain `@use` of the same module (including
+// Vuetify's own internal ones) - so this file must itself be that first,
+// configuring `@use`, placed before any other rule as Sass requires.
+@use 'vuetify/settings' with (
+  $body-font-family: ('Roboto', sans-serif),
+  $heading-font-family: ('Roboto', sans-serif),
+  // Vuetify 2's `.container` (`layouts/default.vue`'s `<v-container>`) pads
+  // 12px on every side; Vuetify 3's own default is `$spacer * 4` = 16px. The
+  // comparison script's very first element ("Willkommen") was 4px lower than
+  // the old build at every width because of exactly this - and the same 4px
+  // then shifted every element below it, which is most of this task's
+  // position/box differences before this line was added.
+  $container-padding-x: 12px,
+  // `v-container`'s max-width per breakpoint is `$grid-breakpoints.<name> *
+  // 0.9375` - Vuetify 3's own `$grid-breakpoints` default ('lg': 1280px)
+  // differs from Vuetify 2's ('lg': 1264px, already pinned for the JS side
+  // in nuxt.config.ts's `vuetifyOptions.display.thresholds`), so the
+  // `.v-container` on a 1440px-wide page capped at 1200px instead of the old
+  // build's 1185px - a 15px-narrower page that then cascaded into every
+  // image/column width below it on the page. 'xl' pinned for the same
+  // reason even though no width this task checks reaches it.
+  $grid-breakpoints: (
+    'xs': 0,
+    'sm': 600px,
+    'md': 960px,
+    'lg': 1264px,
+    'xl': 1904px,
+  ),
+  $typography: (
+    'h1': (
+      'size': 2rem,
+      'weight': 700,
+      'line-height': 1.1,
+      'letter-spacing': -0.015625em,
+      'font-family': 'Roboto Serif',
+      'text-transform': none,
+    ),
+    'h2': (
+      'size': 1.25rem,
+      'weight': 700,
+      'line-height': 1.1,
+      'letter-spacing': -0.0083333333em,
+      'font-family': 'Roboto Serif',
+      'text-transform': none,
+    ),
+    'h3': (
+      'size': 1.125rem,
+      'weight': 700,
+      'line-height': 1.4,
+      'letter-spacing': normal,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'h4': (
+      'size': 1rem,
+      'weight': 700,
+      'line-height': 1.4,
+      'letter-spacing': 0.0073529412em,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'h5': (
+      'size': 1rem,
+      'weight': 600,
+      'line-height': 1.1,
+      'letter-spacing': normal,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'body-1': (
+      'size': 1rem,
+      'weight': 500,
+      'line-height': 1.4,
+      'letter-spacing': 0.03125em,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'body-2': (
+      'size': 1rem,
+      'weight': 500,
+      'line-height': 1.4,
+      'letter-spacing': 0.0178571429em,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'subtitle-1': (
+      'size': 1rem,
+      'weight': 700,
+      'line-height': 1.2,
+      'letter-spacing': 0.009375em,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+    'subtitle-2': (
+      'size': 0.875rem,
+      'weight': 500,
+      'line-height': 1.5,
+      'letter-spacing': 0.0071428571em,
+      'font-family': ('Roboto', sans-serif),
+      'text-transform': none,
+    ),
+  )
+);
+
+// Everything below is this app's own module-local copy of the same values,
+// for the component `<style lang="scss">` blocks (loaded via Vite's
+// `additionalData: '@use "./assets/variables.scss" as *;'`) - a plain `@use`
+// of this file only sees these bindings, never the `vuetify/settings`
+// configuration above (Sass modules don't leak across files), so the handful
+// of values component styles need are repeated here once, by name.
+$xs-only: 'only screen and (max-width: 599px)';
+$sm-only: 'only screen and (min-width: 600px) and (max-width: 959px)';
+$sm-and-up: 'only screen and (min-width: 600px)';
+$sm-and-down: 'only screen and (max-width: 959px)';
+$md-only: 'only screen and (min-width: 960px) and (max-width: 1263px)';
+$md-and-up: 'only screen and (min-width: 960px)';
+$md-and-down: 'only screen and (max-width: 1263px)';
+$lg-only: 'only screen and (min-width: 1264px) and (max-width: 1903px)';
+$lg-and-up: 'only screen and (min-width: 1264px)';
+$lg-and-down: 'only screen and (max-width: 1903px)';
+$xl-only: 'only screen and (min-width: 1904px)';
 
 $body-font-family: 'Roboto', sans-serif;
 $heading-font-family: 'Roboto', sans-serif;
 
-$xl-only: map-get($display-breakpoints, 'xl-only');
-$lg-and-down: map-get($display-breakpoints, 'lg-and-down');
-$lg-and-up: map-get($display-breakpoints, 'lg-and-up');
-$lg-only: map-get($display-breakpoints, 'lg-only');
-$md-and-up: map-get($display-breakpoints, 'md-and-up');
-$md-only: map-get($display-breakpoints, 'md-only');
-$md-and-down: map-get($display-breakpoints, 'md-and-down');
-$sm-only: map-get($display-breakpoints, 'sm-only');
-$sm-and-up: map-get($display-breakpoints, 'sm-and-up');
-$sm-and-down: map-get($display-breakpoints, 'sm-and-down');
-$xs-only: map-get($display-breakpoints, 'xs-only');
+// ---------------------------------------------------------------------------
+// One small theme, part 2: every value a component `<style>` block used to
+// write as a literal (WHAT TO DO #3) now has a name here instead. Grouped by
+// the handful of distinct roles actually found in `components/*.vue` - not a
+// generic numeric scale, because the page itself never used one (every
+// padding/margin/radius below is copied byte-for-byte from the pre-migration
+// component, just given a name instead of being written twice).
+// ---------------------------------------------------------------------------
 
-$headings: (
-  'h1': (
-    'size': 2rem,
-    'weight': 700,
-    'line-height': 1.1,
-    'font-family': 'Roboto Serif',
-  ),
-  'h2': (
-    'size': 1.25rem,
-    'weight': 700,
-    'line-height': 1.1,
-    'font-family': 'Roboto Serif',
-  ),
-  'h3': (
-    'size': 1.125rem,
-    'weight': 700,
-    'line-height': 1.4,
-  ),
-  'h4': (
-    'size': 1rem,
-    'weight': 700,
-    'line-height': 1.4,
-  ),
-  'h5': (
-    'size': 1rem,
-    'weight': 600,
-    'line-height': 1.1,
-  ),
-  'body-1': (
-  'size': 1rem,
-    'weight': 500,
-    'line-height': 1.4,
-  ),
-  'body-2': (
-    'size': 1rem,
-    'weight': 500,
-    'line-height': 1.4,
-    ),
-  'subtitle-1': (
-  'size': 1rem,
-    'weight': 700,
-    'line-height': 1.2,
-),
-'subtitle-2': (
-  'size': 0.875rem,
-    'weight': 500,
-    'line-height': 1.5,
-)
-);
+// Radii - the one border-radius value used anywhere on the site (cards, the
+// footer's top corners, the header image frame, the Doctolib button card).
+$radius-sm: 6px;
+
+// Spacing scale - every distinct margin/padding/gap literal actually found
+// in `components/*.vue` (`grep`'d once, listed smallest to largest), named
+// instead of repeated. Two one-off values that only ever appear once stay
+// named individually rather than forced into this scale (that would change
+// their value): `$space-flip-card-pad` and `$space-imprint-top` below.
+$space-2xs: 0.5rem; // CardWithButton's row padding
+$space-xs: 1rem; // Footer's icon-column gap
+$space-sm: 1.5rem; // AboutUs/Services/Team/Footer card and grid gaps
+$space-md: 2rem; // AboutUs card padding, Team's `h2` margin
+$space-lg: 3rem; // Header/Contact/News column gaps
+$space-xl: 5rem; // every section's top/bottom padding (Header, Contact, Services, Navigation's mobile menu logo)
+
+// FlipCard's front face padding - a single-use value that does not belong to
+// the scale above (it is sized to the card's own fixed height, not a margin
+// between two things).
+$space-flip-card-pad: 9.844rem;
+
+// Shared margin-top above the Impressum dialog's imprint text (Footer's
+// `.footer__imprint`, Navigation's `.nav__imprint` - byte-identical).
+$space-imprint-top: 30px;
+
+// Vuetify 2's `.v-card__text` padding inside the Impressum dialog computed
+// to `0 24px 20px` (confirmed against the `dev` build); Vuetify 3's
+// `.v-card-text` default is `16px 24px 24px` - the extra 16px top padding
+// (on top of `$space-imprint-top`'s own margin) pushed every paragraph down
+// by a near-constant offset, and the 4px-taller bottom padding shifted the
+// dialog's own closing elements. Horizontal padding already matches
+// (`24px`, Vuetify 3's own default), so only top/bottom are restored here.
+$space-imprint-bottom: 20px;
+
+// Same dialog, the `.v-card-title`'s own padding: `dev`'s computed box is
+// `16px 24px 10px` (confirmed against the `dev` build); Vuetify 3's
+// `.v-card-title` default is `8px 16px` (all four sides, shorthand). Top
+// (`$space-xs`) and left/right (`$space-sm`) already exist as tokens;
+// bottom is its own one-off value, 6px short of `$space-2xs`.
+$space-imprint-title-bottom: 10px;
+
+// Soft drop-shadow used on the "about us" doctor cards (`.box-shadow`).
+$shadow-soft: 4px 4px 24px 0px rgba(0, 0, 0, 0.08),
+  -4px -4px 24px 0px rgba(21, 128, 235, 0.05);
+
+// Display heading that is always at its "desktop" size, even on mobile
+// (`Header.vue`'s `<h1 class="text-h1">` - the only heading that does not
+// follow the responsive `h1.text-h1`/`h2.text-h1` rule in `main.scss`).
+$type-display-locked-size: 48px;
+
+// Doctor card name (`AboutUs.vue`'s `.about-us__card-title span`) - the
+// pre-migration literal has no fallback family, unlike the brand tokens
+// below, so it is kept as its own literal token (adding a fallback here
+// would change the computed `font-family` string).
+$type-card-title-family: 'Roboto Serif';
+$type-card-title-size: 1.5rem;
+$type-card-title-weight: 700;
+$type-card-title-line-height: 1;
+
+// Doctor-card and team-member subtitle size (`AboutUs.vue`'s
+// `.about-us__card-title p`/`.about-us__card-description p`) - family,
+// weight and line-height are deliberately NOT overridden here: they are
+// byte-identical to Vuetify's own real `text-body-1` class already (checked
+// directly against the pre-migration build), only the size needs pinning
+// against `main.scss`'s `@media md-and-up` bump (see AboutUs.vue).
+$type-card-subtitle-size: 16px;
+
+// Team-member name's weight and line-height (`Team.vue`'s
+// `.team__member-title span`) - the only two properties that actually
+// differ from Vuetify's real `text-body-2` class (family/size/letter-
+// spacing are identical to it, checked directly against the pre-migration
+// build, so left unset here).
+$type-member-name-weight: 700;
+$type-member-name-line-height: normal;
+
+// Brand wordmark text next to the logo - `Footer.vue`'s `.footer__logo` has
+// the `sans-serif` fallback and a `font-weight: 700`; `Navigation.vue`'s
+// `.nav__logo` has neither (no fallback, no weight set) - two tokens, kept as
+// found rather than unified (unifying them would be a visual change).
+$type-brand-footer-family: 'Roboto Serif', sans-serif;
+$type-brand-footer-size: 1.25rem;
+$type-brand-footer-weight: 700;
+$type-brand-footer-line-height: 1.2;
+
+$type-brand-nav-family: 'Roboto Serif';
+$type-brand-nav-size: 1.25rem;
+$type-brand-nav-line-height: 1.2;
+
+// Base font-weight of the whole `<footer>` (`Footer.vue`'s `.footer`),
+// inherited by every child that does not set its own.
+$type-footer-weight: 700;
+
+// `main.scss`'s `$md-and-up` typography overrides - Vuetify's own
+// `.text-h1`...`.text-h5`/`.body-1`/`.body-2`/`.subtitle-1` utility classes
+// get a second, larger size at the desktop breakpoint (the mobile size comes
+// from the `$typography` map configured above). Named after the role +
+// breakpoint they belong to, same literal values as the pre-migration file.
+$type-h1-md-size: 3rem;
+$type-h2-md-size: 1.5rem;
+$type-h2-md-line-height: 1.2;
+$type-h3-md-size: 1.25rem;
+$type-h3-md-line-height: 1.2;
+$type-h4-md-size: 1.125rem;
+$type-h5-md-weight: 700;
+$type-h5-md-line-height: 1.2;
+$type-body-1-md-size: 1.125rem;
+$type-body-2-md-size: 1rem;
+$type-body-2-md-weight: 400;
+$type-body-2-md-line-height: 1.4;
+$type-subtitle-1-md-weight: 700;
+
+// Vuetify 2's `.v-card__text` gave its own text content a default
+// "medium emphasis" colour (Material's `rgba(0,0,0,.6)`, Vuetify 2's own
+// `.text--secondary`); Vuetify 3's `.v-card-text` sets no such default, so
+// text inside the Impressum dialog's `v-card-text` (Footer.vue's
+// `.footer__imprint`, Navigation.vue's `.nav__imprint`) fell back to the
+// browser default (`rgba(0,0,0,.87)`, Vuetify 3's own "high emphasis").
+$color-text-secondary: rgba(0, 0, 0, 0.6);
+
+// `pages/index.vue`'s `.info` block - unused today (no element in the
+// template carries the `info` class; pre-existing dead CSS, the same on the
+// `dev` branch - see this task's "Noticed but not touching"), tokenised
+// anyway because the literal-value check scans the file regardless.
+$type-info-size: 1rem;
+$type-info-weight: 400;
+$type-info-line-height: 1.4;
+$type-info-letter-spacing: 0;
+$space-info-margin-top: 4.5rem;
+
+// `layouts/error.vue`'s heading - the error page is not part of the parity
+// check (see that file's own comment) but still may not hold a literal.
+$type-error-heading-size: 20px;
+
+// Desktop nav link (`Navigation.vue`'s `.list__item`).
+$type-nav-link-size: 1.125rem;
+$type-nav-link-line-height: 1.2;
+
+// News section heading (`News.vue`'s `.news__title`, an `<h4>` with only its
+// size overridden - weight/line-height/family still come from the `h4` role
+// above).
+$type-news-title-size: 1.125rem;

@@ -3,7 +3,7 @@
     <div class="mt-4 mt-md-0">
       <img
         class="news__image"
-        src="news-image/news-image.png"
+        src="/news-image/news-image.png"
         srcset="
           /news-image/news-image_w_330.webp   330w,
           /news-image/news-image_w_705.webp   705w,
@@ -18,10 +18,10 @@
     <div class="news__content d-flex align-center">
       <div>
         <h4 class="news__title">{{ news.header }}</h4>
-        <p class="body-1 ma-0">{{ news.description }}</p>
-        <div class="body-1">{{ news.footer }}</div>
-        <div class="body-1">{{ news.name }}</div>
-        <div class="body-1">{{ news.title }}</div>
+        <p class="text-body-1 ma-0">{{ news.description }}</p>
+        <div class="text-body-1">{{ news.footer }}</div>
+        <div class="text-body-1">{{ news.name }}</div>
+        <div class="text-body-1">{{ news.title }}</div>
       </div>
     </div>
   </div>
@@ -52,10 +52,10 @@ export default {
   @media #{$md-and-up} {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
+    gap: $space-lg;
   }
   &__title {
-    font-size: 1.125rem;
+    font-size: $type-news-title-size;
   }
   &__image {
     width: 100%;

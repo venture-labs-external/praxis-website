@@ -6,12 +6,12 @@
     <div class="flip-card--inner">
       <div class="flip-card--front" @click="show = !show">
         <div v-show="!show">
-          <div class="flip-card__icon mint-blue mx-auto">
+          <div class="flip-card__icon bg-mint-blue mx-auto">
             <img :src="cardInfo.iconName" class="pa-5" alt="" />
           </div>
           <h5 class="text-h5 text-center mt-6 mx-10">{{ cardInfo.title }}</h5>
           <div>
-            <v-btn icon class="mx-auto">
+            <v-btn icon size="36" class="mx-auto">
               <img src="/arrow-right.svg" alt="" />
             </v-btn>
           </div>
@@ -25,13 +25,13 @@
         >
           <div @click="show = !show">
             <div class="d-flex flex-row-reverse" @click="show = !show">
-              <v-btn icon>
+              <v-btn icon size="36">
                 <img src="/cross.svg" />
               </v-btn>
             </div>
             <div class="text-left mx-6" @click="show = !show">
               <h5 class="text-h5 mb-4">{{ cardInfo.title }}</h5>
-              <p class="subtitle-2">
+              <p class="text-subtitle-2">
                 {{ cardInfo.description }}
               </p>
             </div>
@@ -94,7 +94,7 @@ export default {
   }
   &--front,
   &--back {
-    background-color: var(--v-white-base);
+    background-color: rgb(var(--v-theme-white));
     position: absolute;
     width: 100%;
     height: 100%;
@@ -102,7 +102,7 @@ export default {
     backface-visibility: hidden;
   }
   &--front {
-    padding: 9.844rem 0;
+    padding: $space-flip-card-pad 0;
   }
   &--back {
     transform: rotateY(180deg);
@@ -115,7 +115,7 @@ export default {
     width: 4rem;
   }
   &__button {
-    border-top: 4px solid var(--v-mint-blue-base);
+    border-top: 4px solid rgb(var(--v-theme-mint-blue));
     height: 3.5rem;
   }
 }

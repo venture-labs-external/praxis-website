@@ -1,24 +1,90 @@
-import LRU from 'lru-cache';
-import minifyTheme from 'minify-css-string';
+import themeLight, {
+  dialogScrimColor,
+  dialogScrimOpacity,
+  hoverOpacity,
+  iconButtonVariant,
+} from '../assets/theme';
 
-import themeLight from '~/assets/theme';
-
-const themeCache = new LRU({
-  max: 10,
-  maxAge: 1000 * 60 * 60, // 1 hour
-});
-
+// Ported from Vuetify 2's `optionsPath` (`@nuxtjs/vuetify`) to Vuetify 3's own
+// options shape (passed as `vuetifyOptions` to `vuetify-nuxt-module`). Vuetify 3
+// has no theme cache / `minifyTheme` step (CSS custom properties replace the old
+// runtime-generated `<style>` theme block), so `lru-cache` and
+// `minify-css-string` are no longer needed (VL-8-D8) - same 10 colour values
+// from `assets/theme.js` otherwise.
+//
+// `display.thresholds` is pinned to Vuetify 2's own historical default
+// breakpoints (rather than trusting Vuetify 3's slightly different lg/xl
+// defaults - 1280/1920 vs. 1264/1904) so `$vuetify`/`useDisplay()` keep
+// switching at the same pixel widths as before; see `assets/variables.scss` for
+// the matching SCSS breakpoint strings.
+//
+// `icons.defaultSet: 'mdi-svg'` matches the old build's `defaultAssets: false`
+// (`@nuxtjs/vuetify`, `dev`'s `nuxt.config.js`): no component here uses a
+// `v-icon`/`icon="mdi-…"` name (every icon is a raw inline SVG component -
+// `Clock.vue`/`MapPin.vue`/`PhoneIcon.vue` - and every `<v-btn icon>` is the
+// boolean "round button" prop wrapping an `<img>`, not an icon name), so
+// `vuetify-nuxt-module`'s own default (`defaultSet: 'mdi'`, the CSS/CDN font
+// icon set) would otherwise inject an unused, unasked-for
+// `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@…">`
+// into every page - a new third-party request the spec's "Will not do" list
+// forbids. `mdi-svg` keeps Vuetify's own internal icon aliases resolvable
+// (bundled SVG paths, no font file, no network request) without reintroducing
+// that CDN line.
 export default {
-  // Would need to set defaultAssets to false for offline support!
   theme: {
-    dark: false,
-    options: {
-      customProperties: true,
-      themeCache,
-      minifyTheme,
-    },
+    defaultTheme: 'light',
     themes: {
-      light: themeLight,
+      light: {
+        dark: false,
+        colors: themeLight,
+        // Restores Vuetify 2's own historical hover-state strength (see
+        // `assets/theme.js`'s `hoverOpacity` comment) - Vuetify 3's own
+        // default ('hover-opacity': 0.04) halved the darkening every
+        // hovered element (incl. the "Termin buchen" nav button) shows.
+        variables: {
+          'hover-opacity': hoverOpacity,
+        },
+      },
+    },
+  },
+  display: {
+    thresholds: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1264,
+      xl: 1904,
+    },
+  },
+  icons: {
+    defaultSet: 'mdi-svg',
+  },
+  // Global component defaults - restores two Vuetify 2 behaviours Vuetify 3
+  // changed (see `assets/theme.js`'s comments on each token), set once here
+  // rather than per component. Neither affects a `<v-btn>` that sets its own
+  // `variant`/`opacity` explicitly (Navigation.vue's "Termin buchen" button
+  // keeps its own `variant="flat"`), nor Navigation.vue's own `<v-overlay>`
+  // (the mobile menu), which sets its own `opacity`/`scrim` explicitly too.
+  //
+  // The Impressum dialog is a `<v-dialog>`, not a bare `<v-overlay>` - VDialog
+  // declares its own copies of VOverlay's `scrim`/`opacity` props (via
+  // `makeVOverlayProps`) and resolves ITS OWN default for them before ever
+  // rendering the `<v-overlay>` it wraps internally, so a `defaults.VOverlay`
+  // entry never reaches it (confirmed: with only `VOverlay` set here, the
+  // dialog's own scrim still rendered Vuetify 3's own default). Both are set
+  // here so either a `<v-overlay>` or a `<v-dialog>` used anywhere gets the
+  // same restored values.
+  defaults: {
+    VBtn: {
+      variant: iconButtonVariant,
+    },
+    VOverlay: {
+      opacity: dialogScrimOpacity,
+      scrim: dialogScrimColor,
+    },
+    VDialog: {
+      opacity: dialogScrimOpacity,
+      scrim: dialogScrimColor,
     },
   },
 };
