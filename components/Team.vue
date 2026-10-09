@@ -98,8 +98,13 @@ export default {
         font-weight: $type-member-name-weight !important;
         line-height: $type-member-name-line-height !important;
       }
-      & p {
+      // `main.scss`'s `p.text-body-1` `@media md-and-up` size bump has
+      // higher specificity than Vuetify's own plain `.text-body-1` class
+      // (which this element's size otherwise matches exactly), so it needs
+      // pinning the same way as AboutUs.vue's orphan description paragraph.
+      & p.text-body-1 {
         color: rgb(var(--v-theme-dark-green));
+        font-size: $type-card-subtitle-size !important;
         margin-bottom: 0 !important;
       }
     }
