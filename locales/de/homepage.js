@@ -73,4 +73,19 @@ export default {
   weAreWorking:
     'Wir arbeiten aber daran, diesen Service so schnell wie möglich anbieten zu können!',
   team: 'Das Praxisteam',
+  akutNoticeOverline: 'Wichtige Information',
+  akutNoticeHeadline: 'Änderung unserer Akut-Sprechstunde',
+  akutNoticeValidity: 'gültig ab 01.01.2027',
+  akutNoticeBody:
+    'Liebe Patientinnen, ab 01.01.2027 werden wir die Terminvergabe unserer Akut-Sprechstunde anpassen.',
+  akutNoticeEmphasis:
+    'Eine direkte Vorstellung in der Praxis <span class="akut-notice__highlight">ohne Termin</span> ist dann nicht mehr möglich.',
+  akutNoticeContactIntro:
+    'Für die Terminvereinbarung zur offenen Sprechstunde bitten wir Sie, uns telefonisch zu kontaktieren:',
+  akutNoticeHours: 'Mo–Fr · 08:00–08:20 Uhr',
+  akutNoticePhone: 'Tel. 0211-285009',
+  akutNoticeClosing:
+    'Vielen Dank für Ihr Verständnis,<br/><strong>Ihr Praxis Team</strong>',
+  akutNoticeCloseLabel: 'Schließen',
+  akutNoticeReopenLabel: 'Hinweis: Akut-Sprechstunde',
 };
