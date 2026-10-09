@@ -14,8 +14,8 @@
             />
           </div>
           <div class="team__member-title">
-            <span>{{ member.name }}</span>
-            <p>{{ member.title }}</p>
+            <span class="text-body-2">{{ member.name }}</span>
+            <p class="text-body-1">{{ member.title }}</p>
           </div>
         </div>
       </div>
@@ -86,20 +86,20 @@ export default {
       }
     }
     &-title {
-      & span {
-        font-family: $type-member-name-family;
-        font-size: $type-member-name-size;
+      // Both keep their real `text-body-2`/`text-body-1` classes (see
+      // AboutUs.vue's identical comment). Family/size/letter-spacing here
+      // are byte-identical to what Vuetify's own class already gives, so
+      // only the two properties this component actually changes - the
+      // span's weight and line-height - are set, with the class repeated in
+      // the selector to beat `main.scss`'s equal-specificity `@media
+      // md-and-up` override deterministically.
+      & span.text-body-2 {
         font-style: normal;
-        font-weight: $type-member-name-weight;
-        line-height: $type-member-name-line-height;
+        font-weight: $type-member-name-weight !important;
+        line-height: $type-member-name-line-height !important;
       }
       & p {
         color: rgb(var(--v-theme-dark-green));
-        font-family: $type-member-subtitle-family;
-        font-size: $type-card-subtitle-size;
-        font-style: normal;
-        font-weight: $type-card-subtitle-weight;
-        line-height: $type-card-subtitle-line-height;
         margin-bottom: 0 !important;
       }
     }

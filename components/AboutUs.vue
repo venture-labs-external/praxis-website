@@ -15,11 +15,11 @@
             <img :src="doctor.photo" :alt="doctor.name" loading="lazy" />
           </div>
           <div class="about-us__card-title">
-            <span>{{ doctor.name }}</span>
-            <p>{{ doctor.title }}</p>
+            <span class="text-body-2">{{ doctor.name }}</span>
+            <p class="text-body-1">{{ doctor.title }}</p>
           </div>
           <div class="about-us__card-description">
-            <p>{{ doctor.description }}</p>
+            <p class="text-body-1">{{ doctor.description }}</p>
           </div>
         </div>
       </div>
@@ -87,20 +87,28 @@ export default {
     height: 100% !important;
     &-title {
       justify-self: start;
-      & span {
+      // `span`/`p` here keep their real `text-body-2`/`text-body-1` classes
+      // (Vuetify 2 already generated those as aliases of its unprefixed
+      // `body-2`/`body-1` - confirmed in dev's own compiled CSS - so they
+      // were never dead; removing them would lose the real letter-spacing/
+      // family-fallback Vuetify supplies). `main.scss`'s own `.text-body-2`
+      // `@media md-and-up` override now also matches this exact selector
+      // (ties in specificity), so `&.text-body-2` is repeated here to win
+      // deterministically rather than depend on CSS source order.
+      & span.text-body-2 {
         font-family: $type-card-title-family !important;
         font-size: $type-card-title-size !important;
         font-weight: $type-card-title-weight !important;
-        line-height: $type-card-title-line-height;
+        line-height: $type-card-title-line-height !important;
       }
-      & p {
+      & p.text-body-1 {
         color: rgb(var(--v-theme-dark-green));
-        font-family: $type-card-subtitle-family;
         font-size: $type-card-subtitle-size !important;
         font-style: normal;
-        font-weight: $type-card-subtitle-weight !important;
-        line-height: $type-card-subtitle-line-height;
         margin-bottom: 0 !important;
+        // family/weight/line-height are intentionally left to Vuetify's
+        // real `text-body-1` class - its values are exactly the ones the
+        // pre-migration build rendered here too.
       }
     }
     &-image {
@@ -113,6 +121,14 @@ export default {
         object-fit: cover;
         object-position: center;
       }
+    }
+    // This paragraph has no override of its own - its look always came
+    // entirely from Vuetify's real `text-body-1` class (1rem). `main.scss`'s
+    // `.text-body-1` `@media md-and-up` size bump now also matches it with
+    // the same specificity, so it is pinned back to the un-bumped size here
+    // (`&.text-body-1` to win the tie, same as the card-title rule above).
+    &-description p.text-body-1 {
+      font-size: $type-card-subtitle-size !important;
     }
   }
 }

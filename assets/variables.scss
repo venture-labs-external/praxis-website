@@ -192,25 +192,21 @@ $type-card-title-size: 1.5rem;
 $type-card-title-weight: 700;
 $type-card-title-line-height: 1;
 
-// Doctor card subtitle (`AboutUs.vue`'s `.about-us__card-title p`) - also its
-// own token: the pre-migration literal is the bare unquoted identifier
-// `Roboto` (no fallback), not the `'Roboto', sans-serif` list every other
-// body-text role uses.
-$type-card-subtitle-family: Roboto;
+// Doctor-card and team-member subtitle size (`AboutUs.vue`'s
+// `.about-us__card-title p`/`.about-us__card-description p`) - family,
+// weight and line-height are deliberately NOT overridden here: they are
+// byte-identical to Vuetify's own real `text-body-1` class already (checked
+// directly against the pre-migration build), only the size needs pinning
+// against `main.scss`'s `@media md-and-up` bump (see AboutUs.vue).
 $type-card-subtitle-size: 16px;
-$type-card-subtitle-weight: 500;
-$type-card-subtitle-line-height: 1.4;
 
-// Team-member name and subtitle (`Team.vue`'s `.team__member-title span`/`p`)
-// - both already match `$body-font-family`'s `'Roboto', sans-serif` list
-// exactly, so they reuse it; sizes/weights still differ from the doctor-card
-// role above (20px vs. 1.5rem, line-height `normal` vs. `1`), kept as found.
-$type-member-name-family: $body-font-family;
-$type-member-name-size: 20px;
+// Team-member name's weight and line-height (`Team.vue`'s
+// `.team__member-title span`) - the only two properties that actually
+// differ from Vuetify's real `text-body-2` class (family/size/letter-
+// spacing are identical to it, checked directly against the pre-migration
+// build, so left unset here).
 $type-member-name-weight: 700;
 $type-member-name-line-height: normal;
-
-$type-member-subtitle-family: $body-font-family;
 
 // Brand wordmark text next to the logo - `Footer.vue`'s `.footer__logo` has
 // the `sans-serif` fallback and a `font-weight: 700`; `Navigation.vue`'s

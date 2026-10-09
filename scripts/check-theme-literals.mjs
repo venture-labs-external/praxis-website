@@ -60,6 +60,16 @@ const SAFE_KEYWORDS = new Set([
 const STYLE_BLOCK_RE = /<style[^>]*>([\s\S]*?)<\/style>/gi;
 const DECLARATION_RE = /([a-zA-Z-]+)\s*:\s*((?:[^;{}]|\n)+);/g;
 
+// Blanks out `//` and `/* */` comment bodies but keeps every newline (so
+// reported line numbers still line up), so a value mentioned in prose inside
+// a comment (e.g. explaining a Vuetify-generated `color:#000!important`
+// rule) is never mistaken for a real declaration.
+function stripComments(css) {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '))
+    .replace(/\/\/[^\n]*/g, (m) => m.replace(/[^\n]/g, ' '));
+}
+
 function isLiteralToken(token) {
   if (token === '') return false;
   if (/^0(px|rem|em|%)?$/.test(token)) return false;
@@ -94,8 +104,10 @@ async function main() {
     const source = readFileSync(file, 'utf8');
     let styleMatch;
     while ((styleMatch = STYLE_BLOCK_RE.exec(source))) {
-      const block = styleMatch[1];
-      const blockStartLine = source.slice(0, styleMatch.index).split('\n').length;
+      const block = stripComments(styleMatch[1]);
+      const blockStartLine = source
+        .slice(0, styleMatch.index)
+        .split('\n').length;
       let declMatch;
       while ((declMatch = DECLARATION_RE.exec(block))) {
         const [, rawProp, rawValue] = declMatch;
@@ -103,7 +115,10 @@ async function main() {
         if (!GUARDED_PROPS.has(prop)) continue;
         const literals = findViolations(rawValue);
         if (literals.length > 0) {
-          const line = blockStartLine + block.slice(0, declMatch.index).split('\n').length - 1;
+          const line =
+            blockStartLine +
+            block.slice(0, declMatch.index).split('\n').length -
+            1;
           violations.push({
             file,
             line,
@@ -120,7 +135,9 @@ async function main() {
       `check-theme-literals: ${violations.length} literal font/spacing/colour value(s) outside the theme:\n`,
     );
     for (const v of violations) {
-      console.error(`  ${v.file}:${v.line}  ${v.declaration}  (literal: ${v.literals.join(', ')})`);
+      console.error(
+        `  ${v.file}:${v.line}  ${v.declaration}  (literal: ${v.literals.join(', ')})`,
+      );
     }
     console.error(
       '\nMove each value into assets/variables.scss (or assets/theme.js) as a named variable and reference it here instead.',
@@ -128,7 +145,9 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`check-theme-literals: OK (${files.length} files checked, no literal found outside the theme)`);
+  console.log(
+    `check-theme-literals: OK (${files.length} files checked, no literal found outside the theme)`,
+  );
 }
 
 main();
