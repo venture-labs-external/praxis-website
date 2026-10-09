@@ -1,4 +1,8 @@
-import themeLight from '../assets/theme';
+import themeLight, {
+  dialogScrimOpacity,
+  hoverOpacity,
+  iconButtonVariant,
+} from '../assets/theme';
 
 // Ported from Vuetify 2's `optionsPath` (`@nuxtjs/vuetify`) to Vuetify 3's own
 // options shape (passed as `vuetifyOptions` to `vuetify-nuxt-module`). Vuetify 3
@@ -32,6 +36,13 @@ export default {
       light: {
         dark: false,
         colors: themeLight,
+        // Restores Vuetify 2's own historical hover-state strength (see
+        // `assets/theme.js`'s `hoverOpacity` comment) - Vuetify 3's own
+        // default ('hover-opacity': 0.04) halved the darkening every
+        // hovered element (incl. the "Termin buchen" nav button) shows.
+        variables: {
+          'hover-opacity': hoverOpacity,
+        },
       },
     },
   },
@@ -46,5 +57,18 @@ export default {
   },
   icons: {
     defaultSet: 'mdi-svg',
+  },
+  // Global component defaults - restores two Vuetify 2 behaviours Vuetify 3
+  // changed (see `assets/theme.js`'s comments on each token), set once here
+  // rather than per component. Neither affects a `<v-btn>` that sets its own
+  // `variant`/`opacity` explicitly (Navigation.vue's "Termin buchen" button
+  // keeps its own `variant="flat"`).
+  defaults: {
+    VBtn: {
+      variant: iconButtonVariant,
+    },
+    VOverlay: {
+      opacity: dialogScrimOpacity,
+    },
   },
 };

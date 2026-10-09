@@ -21,6 +21,12 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      // The pre-migration site shipped `<html lang="en">` even though every
+      // word of its content is German (locales/en holds the same German
+      // strings, VL-8-D14) - the one place this migration is allowed to be
+      // better than the old site rather than byte-identical to it (see
+      // tools/visual-parity/allowlist.json).
+      htmlAttrs: { lang: 'de' },
       title: 'Frauenärztinnen Gerresheim',
       meta: [
         { charset: 'utf-8' },
