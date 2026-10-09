@@ -15,11 +15,11 @@
             <img :src="doctor.photo" :alt="doctor.name" loading="lazy" />
           </div>
           <div class="about-us__card-title">
-            <span class="text-body-2">{{ doctor.name }}</span>
-            <p class="text-body-1">{{ doctor.title }}</p>
+            <span>{{ doctor.name }}</span>
+            <p>{{ doctor.title }}</p>
           </div>
           <div class="about-us__card-description">
-            <p class="text-body-1">{{ doctor.description }}</p>
+            <p>{{ doctor.description }}</p>
           </div>
         </div>
       </div>

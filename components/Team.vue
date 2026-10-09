@@ -14,8 +14,8 @@
             />
           </div>
           <div class="team__member-title">
-            <span class="text-body-2">{{ member.name }}</span>
-            <p class="text-body-1">{{ member.title }}</p>
+            <span>{{ member.name }}</span>
+            <p>{{ member.title }}</p>
           </div>
         </div>
       </div>

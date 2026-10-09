@@ -93,6 +93,12 @@ export default {
 <style lang="scss" scoped>
 .card {
   border-radius: $radius-sm;
+  // Vuetify 2's `white` background utility only ever set
+  // `background-color`; Vuetify 3's `bg-white` utility additionally forces
+  // `color: #000 !important` (it auto-computes an "on-white" text colour for
+  // every bg-* utility). This card has no text-colour class of its own and
+  // relied on inheriting `.app`'s dark-gray - restored explicitly here.
+  color: rgb(var(--v-theme-dark-gray)) !important;
   &__title {
     border-bottom: 1px solid rgb(var(--v-theme-dark-gray));
   }

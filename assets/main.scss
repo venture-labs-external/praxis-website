@@ -2,6 +2,13 @@
 @import 'typography';
 
 .v-application {
+  // Vuetify 2's base reset sets the whole app's base font-family and
+  // line-height here (`.v-application{font-family:Roboto,sans-serif;
+  // line-height:1.5}`) - every text element without its own typography
+  // class inherited this. Vuetify 3 ships no equivalent rule.
+  font-family: $body-font-family;
+  line-height: 1.5;
+
   // Vuetify 2 auto-derives an "anchor" theme colour from `primary` when none
   // is set (`--v-anchor-base` here was `#0c2750`, exactly `theme.js`'s
   // `primary`) and applies it to every plain `<a>` via `.v-application
@@ -12,6 +19,14 @@
   // colour Vuetify 2 was deriving it from.
   a {
     color: rgb(var(--v-theme-primary));
+  }
+
+  // Vuetify 2's base reset gives every `<p>` a `margin-bottom: 16px`
+  // (`.v-application p{margin-bottom:16px}`); Vuetify 3 ships no equivalent
+  // rule, so every paragraph that did not already set its own margin lost
+  // this spacing. `$space-xs` is the same 16px.
+  p {
+    margin-bottom: $space-xs;
   }
 
   h1.text-h1,
