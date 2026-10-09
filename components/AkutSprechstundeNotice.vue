@@ -99,6 +99,22 @@ export default {
       headlineId: 'akut-sprechstunde-notice-headline',
     };
   },
+  watch: {
+    // The X button is only one of three ways the dialog closes - Escape and
+    // a click on the overlay both close it purely through v-dialog's own
+    // v-model binding (Reviewer finding, Christian 2026-10-09: the dialog
+    // must stay non-persistent, criterion 4, so this watcher is the one
+    // place every path - button, Escape, overlay - ends up, instead of a
+    // `persistent` prop that would block Escape/overlay entirely). Vue only
+    // fires this when dialogOpen actually changes value, so mounted()'s own
+    // false -> false assignments (already-closed, or expired) never trigger
+    // it - only a real open -> closed transition does.
+    dialogOpen(isOpen) {
+      if (!isOpen) {
+        this.persistClose();
+      }
+    },
+  },
   mounted() {
     if (this.isExpired()) {
       this.dialogOpen = false;
@@ -122,13 +138,16 @@ export default {
       let stored = null;
       try {
         stored = JSON.parse(window.localStorage.getItem(STORAGE_KEY));
-      } catch (error) {
+      } catch {
         stored = null;
       }
       return !!stored && stored.version === CONTENT_VERSION;
     },
-    close() {
-      this.dialogOpen = false;
+    // Writes the single localStorage close-entry and shows the re-open
+    // pill; called by the dialogOpen watcher for every path that closes the
+    // dialog (X button, Escape, overlay click), so none of them needs its
+    // own copy of this logic (criterion 5).
+    persistClose() {
       try {
         window.localStorage.setItem(
           STORAGE_KEY,
@@ -137,13 +156,16 @@ export default {
             closedAt: new Date().toISOString(),
           }),
         );
-      } catch (error) {
+      } catch {
         // localStorage can be unavailable (private mode); closing still
         // works for this visit, it just is not remembered for the next one.
       }
       if (!this.isExpired()) {
         this.pillVisible = true;
       }
+    },
+    close() {
+      this.dialogOpen = false;
     },
     reopen() {
       this.dialogOpen = true;
