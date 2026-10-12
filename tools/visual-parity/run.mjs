@@ -1,17 +1,24 @@
 #!/usr/bin/env node
 // Visual parity: judges this branch's static export against the old site -
-// branch `main` by default (equal to the live site; configurable via
-// `--baseline=<ref>`, refuses `dev` - see below), or the live site itself
-// directly via `--live`. The pre-migration site is still Nuxt 2/Vue 2/
-// Vuetify 2 - the yardstick the task's spec asks for. Documented command:
-// see README.md ("Visual parity" section).
+// the fixed pre-migration commit `OLD_SITE_COMMIT` below by default (equal
+// to the live site; configurable via `--baseline=<ref>`, refuses `dev` -
+// see below), or the live site itself directly via `--live`. The
+// pre-migration site is still Nuxt 2/Vue 2/Vuetify 2 - the yardstick the
+// task's spec asks for. Documented command: see README.md ("Visual
+// parity" section).
 //
 // 20261009-praxis-gerresheim-last-differences-to-the-live-s: the baseline
-// used to be hard-coded to `dev`, which was correct only while `dev` was
-// still the pre-migration site. VL-8-S1 merged the migrated site into `dev`
-// itself (PR #50, 2026-10-09 09:14), so a `dev` baseline would from then on
-// compare the new build against itself - `main` (untouched, equal to live)
-// is the real old site and is now the default; `--baseline=dev` is refused.
+// used to be hard-coded to `dev`, then to the branch `main`, which was
+// correct only while `main` still pointed at the pre-migration site -
+// `main` is a moving ref, so pointing the old side at it keeps "the old
+// site" meaning whatever `main` happens to be on a given day instead of
+// the one commit this task's spec names. 20261009-praxis-gerresheim-
+// impressum-dialog-end-menu-scro fixes the default to that one commit
+// instead (fetched from `origin` below if not already present locally -
+// see `ensureRefFetched`); `--baseline=dev` stays refused (VL-8-S1 merged
+// the migrated site into `dev` itself, PR #50, 2026-10-09 09:14 - a `dev`
+// baseline would compare the new build against itself and silently report
+// "0 differences").
 //
 // `--skip-build` reuses whatever is already at `.cache/old/dist` and the
 // repo's own `dist/` (for fast local iteration only - the real run always
@@ -26,7 +33,11 @@ import { chromium } from 'playwright';
 import { loadAllowlist, partitionByAllowlist } from './lib/allowlist.mjs';
 import { diffSnapshots } from './lib/diff.mjs';
 import { buildStaticExport } from './lib/docker-build.mjs';
-import { archiveBranch, resolveCommit } from './lib/git-archive.mjs';
+import {
+  archiveBranch,
+  ensureRefFetched,
+  resolveCommit,
+} from './lib/git-archive.mjs';
 import { diffScreenshots } from './lib/screenshot-diff.mjs';
 import { collectSnapshot } from './lib/snapshot.mjs';
 import { STATES } from './lib/states.mjs';
@@ -42,16 +53,26 @@ const WIDTHS = [390, 768, 1440];
 const PAGE_HEIGHT_TOLERANCE_PX = 2;
 const SCREENSHOT_DIFF_THRESHOLD_PCT = 0.5;
 const LIVE_URL = 'https://www.frauenaerztinnen-gerresheim.de';
+// The old site, never a branch and never the live domain (this task's own
+// constraint) - the pre-migration commit named in its spec.
+const OLD_SITE_COMMIT = '2a00b647d83b875152eb233559197e20fbf7c783';
+// Criterion 2's own tolerance: a mobile-menu-entry tap may take up to this
+// much longer on the new build than it did on the old one before it is a
+// blocking difference.
+const TAP_TIMING_TOLERANCE_MS = 150;
 
 const skipBuild = process.argv.includes('--skip-build');
 const liveBaseline = process.argv.includes('--live');
 const baselineArg = process.argv.find((a) => a.startsWith('--baseline='));
-// The old site is `main` (equal to the live site) - never `dev`, which has
-// been the migrated (new) site itself since VL-8-S1 merged (PR #50,
-// 2026-10-09 09:14). A run accidentally pointed at `dev` would compare the
-// new build against itself and silently report "0 differences" - refused
-// outright rather than produced as a misleading report.
-const baseline = baselineArg ? baselineArg.slice('--baseline='.length) : 'main';
+// The old site is the fixed commit above (equal to the live site) - never
+// `dev`, which has been the migrated (new) site itself since VL-8-S1
+// merged (PR #50, 2026-10-09 09:14). A run accidentally pointed at `dev`
+// would compare the new build against itself and silently report "0
+// differences" - refused outright rather than produced as a misleading
+// report.
+const baseline = baselineArg
+  ? baselineArg.slice('--baseline='.length)
+  : OLD_SITE_COMMIT;
 if (baseline === 'dev') {
   console.error(
     '[visual-parity] refusing --baseline=dev: the old site is `main` (or --live), never `dev` - `dev` has been the migrated site itself since VL-8-S1.',
@@ -98,6 +119,35 @@ async function waitForImages(page) {
   );
 }
 
+/**
+ * Dismisses VL-7's Akut-Sprechstunde notice if it is present and open -
+ * no-op on the old/baseline build, which never had it. Called right after
+ * `goto`, before any state is applied or anything is measured, so every
+ * later state/measurement sees the ordinary page, not the notice sitting
+ * on top of it. Not fixed in component code - VL-7's own notice behaviour
+ * is out of scope for this task (see its spec's "Out of scope").
+ */
+async function dismissAkutNotice(page) {
+  const closeBtn = page.locator('.akut-notice__close');
+  if ((await closeBtn.count()) === 0) return;
+  await closeBtn.first().click();
+}
+
+/**
+ * Builds the "new" side (this branch) from its own disposable `git archive
+ * HEAD` scratch copy, reusing the same `archiveBranch` helper the old side
+ * already builds from - never `buildStaticExport(repoRoot, ...)` directly,
+ * which runs the Docker install/generate against the worktree's own root
+ * and overwrites its `node_modules` with Linux binaries on every run
+ * (VL-8-S3's open decision d1).
+ */
+async function buildNewSide() {
+  const newSrc = mkdtempSync(join(tmpdir(), 'visual-parity-new-'));
+  console.log(`[visual-parity] archiving HEAD (this branch) into ${newSrc}`);
+  await archiveBranch(repoRoot, 'HEAD', newSrc);
+  return buildStaticExport(newSrc, { label: 'new (this branch)' });
+}
+
 async function main() {
   mkdirSync(outputDir, { recursive: true });
   mkdirSync(dirname(reportPath), { recursive: true });
@@ -111,9 +161,7 @@ async function main() {
   if (liveBaseline) {
     oldBaseUrl = LIVE_URL;
     oldCommit = 'live';
-    newDist = skipBuild
-      ? join(repoRoot, 'dist')
-      : await buildStaticExport(repoRoot, { label: 'new (this branch)' });
+    newDist = skipBuild ? join(repoRoot, 'dist') : await buildNewSide();
   } else if (skipBuild) {
     const oldDist = join(outputDir, 'old-src', 'dist');
     newDist = join(repoRoot, 'dist');
@@ -122,14 +170,15 @@ async function main() {
     oldCommit = await resolveCommit(repoRoot, baseline);
     console.log('[visual-parity] --skip-build: reusing existing dist/ output');
   } else {
+    await ensureRefFetched(repoRoot, baseline);
     const oldSrc = mkdtempSync(join(tmpdir(), 'visual-parity-old-'));
-    console.log(`[visual-parity] archiving ${baseline} branch into ${oldSrc}`);
+    console.log(`[visual-parity] archiving ${baseline} into ${oldSrc}`);
     await archiveBranch(repoRoot, baseline, oldSrc);
     oldCommit = await resolveCommit(repoRoot, baseline);
     const oldDist = await buildStaticExport(oldSrc, {
-      label: `old (${baseline} branch, Node 14)`,
+      label: `old (${baseline}, Node 14)`,
     });
-    newDist = await buildStaticExport(repoRoot, { label: 'new (this branch)' });
+    newDist = await buildNewSide();
     oldServer = await listen(oldDist, 0);
     oldBaseUrl = `http://127.0.0.1:${oldServer.address().port}`;
   }
@@ -163,6 +212,14 @@ async function main() {
           await newPage.goto(`http://127.0.0.1:${newPort}/`, {
             waitUntil: 'load',
           });
+          // VL-7's Akut-Sprechstunde notice opens by default on every fresh
+          // page load (no `localStorage` entry yet) - dismissed here,
+          // right after `goto`, before any state is applied or anything is
+          // measured, so it does not sit on top of every later
+          // state/measurement. No-op on the old build (never had it) - see
+          // `dismissAkutNotice`'s own comment.
+          await dismissAkutNotice(oldPage);
+          await dismissAkutNotice(newPage);
           // Force every doctor photo to load right away rather than once
           // (if ever) native lazy loading's own viewport-distance heuristic
           // decides to - see `waitForImages`'s own comment.
@@ -197,8 +254,11 @@ async function main() {
                 );
               }),
           );
-          await state.apply(oldPage);
-          await state.apply(newPage);
+          // Each `apply` may return timing data (today: only the
+          // `mobile-menu-entry-*` states' own `{ scrollTapMs }`) - captured
+          // for the tap-timing comparison below.
+          const oldApplyResult = (await state.apply(oldPage)) ?? {};
+          const newApplyResult = (await state.apply(newPage)) ?? {};
           // Already forced+awaited once right after `goto` above - a cheap
           // re-check, in case a state's own interaction (there is none
           // today) ever adds a new image to the page.
@@ -213,6 +273,27 @@ async function main() {
               state: state.name,
               lang: 'de',
             });
+          // Criterion 2: a mobile-menu-entry tap must reach its final
+          // scroll position within the old build's own time for that tap,
+          // plus at most `TAP_TIMING_TOLERANCE_MS`.
+          if (
+            typeof oldApplyResult.scrollTapMs === 'number' &&
+            typeof newApplyResult.scrollTapMs === 'number' &&
+            newApplyResult.scrollTapMs >
+              oldApplyResult.scrollTapMs + TAP_TIMING_TOLERANCE_MS
+          ) {
+            differences.push({
+              width,
+              state: state.name,
+              lang: 'de',
+              tag: 'window',
+              text: '(mobile-menu-entry tap to settled scroll)',
+              kind: 'tap-timing',
+              property: 'scrollTapMs',
+              old: oldApplyResult.scrollTapMs,
+              new: newApplyResult.scrollTapMs,
+            });
+          }
           allDifferences.push(...differences);
           if (state.name === 'default') {
             pageHeights.push({
