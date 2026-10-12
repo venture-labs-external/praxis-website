@@ -180,6 +180,34 @@ const dialog = ref(false);
 const opacity = ref(1);
 const showMenu = ref(false);
 
+// Upper safety bound for `waitForOverlayUnlock()` below - the flat delay
+// this replaces, kept so a tap can never end up waiting longer than it did
+// before even if the lock class never clears for some reason.
+const OVERLAY_UNLOCK_TIMEOUT_MS = 900;
+const OVERLAY_UNLOCK_POLL_MS = 20;
+
+/**
+ * Polls `document.documentElement` for Vuetify 3's own scroll-lock class to
+ * clear, instead of waiting a flat, worst-case-sized delay - see the
+ * comment above this function's one call site.
+ */
+function waitForOverlayUnlock() {
+  return new Promise((resolve) => {
+    const start = Date.now();
+    function check() {
+      const locked = document.documentElement.classList.contains(
+        'v-overlay-scroll-blocked',
+      );
+      if (!locked || Date.now() - start >= OVERLAY_UNLOCK_TIMEOUT_MS) {
+        resolve();
+        return;
+      }
+      setTimeout(check, OVERLAY_UNLOCK_POLL_MS);
+    }
+    check();
+  });
+}
+
 const navList = computed(() => [
   { name: t('homepage.aboutUs'), path: '/', hash: '#about-us' },
   { name: t('homepage.services'), path: '/', hash: '#services' },
@@ -220,14 +248,16 @@ async function scrollTo(hash) {
     // present ~300-500ms after the click). Calling `goTo()` while it is
     // still there is a no-op (every `scrollTop` write is blocked) - `main`'s
     // Vue 2 overlay closes and unlocks synchronously, so it never needed
-    // this wait at all. `goTo()`'s own animation loop runs for its full
-    // `duration` regardless of how much of that time the lock ate into, so
-    // waiting for the matching close-transition length (`OVERLAY_TRANSITION
-    // _MS` in tools/visual-parity/lib/states.mjs - the same measured value)
-    // before calling it is enough; `nextTick()` first for the `.nav` height
-    // read below to see the reappeared element.
+    // this wait at all. Rather than a flat delay sized to the worst case,
+    // poll for the lock class itself to clear - it is usually gone well
+    // under the close transition's own measured settle time - and keep that
+    // settle time only as the poll's own safety ceiling (`OVERLAY_UNLOCK_
+    // TIMEOUT_MS` below, the same value `OVERLAY_TRANSITION_MS` in
+    // tools/visual-parity/lib/states.mjs uses), so a tap never waits longer
+    // than it did before, usually much less; `nextTick()` first for the
+    // `.nav` height read below to see the reappeared element.
     await nextTick();
-    await new Promise((resolve) => setTimeout(resolve, 900));
+    await waitForOverlayUnlock();
     // `main`'s own `$vuetify.goTo` measures its target synchronously, in the
     // same tick `scrollTo` runs - while `.nav` (`v-if="!showMenu"`) has not
     // reappeared yet, so its target lands exactly `.nav`'s own height short
@@ -351,8 +381,17 @@ async function scrollTo(hash) {
 // dialog's `<v-card-actions>` elements are teleported outside `<nav>` once
 // the dialog opens, so a selector nested under `.nav` (which would compile
 // to a descendant combinator) would never match them there.
+//
+// `min-height` restores Vuetify 2's `.v-card__actions` computed height
+// (`16px`, confirmed against the old site) on both rows (close-cross row
+// and the trailing spacer-only row); Vuetify 3's own `.v-card-actions`
+// default is `min-height: 52px`, which inflated the trailing row alone
+// (the close-cross row is already taller than either default, so it is
+// unaffected either way) and left the dialog's scrolling container 36px
+// taller than the old site's.
 .v-card-actions {
   padding-left: $space-xs !important;
   padding-right: $space-xs !important;
+  min-height: $space-imprint-actions-min-height !important;
 }
 </style>
