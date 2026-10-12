@@ -212,14 +212,52 @@ export function collectSnapshot() {
   }
 
   // `.v-card-text` (Vuetify 3) / `.v-card__text` (Vuetify 2, double
-  // underscore) - the dialog's own scroll height, difference 5.
+  // underscore) locates the Impressum dialog specifically (the only place
+  // either class exists - the Akut-Sprechstunde notice's own card uses
+  // plain markup, no `v-card-text`); `.closest('.v-card')` from there finds
+  // the dialog's *real* scrolling container - the element Vuetify actually
+  // sets `overflow-y:auto` on, not the text block alone (`.v-card` is not
+  // renamed between Vuetify 2 and 3). Its own `scrollHeight` (difference 5)
+  // and its last child's box (the trailing, otherwise-empty
+  // `<v-card-actions>` row) both move when that row's own height does -
+  // the text block's `scrollHeight` alone never saw that at all.
   const dialogText = document.querySelector('.v-card-text, .v-card__text');
+  const dialogCard = dialogText ? dialogText.closest('.v-card') : null;
+  // Not simply `.lastElementChild`: Vuetify 3's own `VCard` always renders
+  // a zero-size `<span class="v-card__underlay">` as its actual last
+  // child, regardless of content (`genOverlays()` in Vuetify's own
+  // `variant.js` - unconditional, not only for a clickable card). The old
+  // (Vuetify 2) build has no such element, so picking the last *visible*
+  // (non-zero) child instead of the raw last element finds the real
+  // trailing `<v-card-actions>` row on both builds alike.
+  let dialogLastChild = null;
+  if (dialogCard) {
+    for (let i = dialogCard.children.length - 1; i >= 0; i -= 1) {
+      const child = dialogCard.children[i];
+      const rect = child.getBoundingClientRect();
+      if (rect.width > 0 || rect.height > 0) {
+        dialogLastChild = child;
+        break;
+      }
+    }
+  }
+  let dialogLastChildBox = null;
+  if (dialogLastChild) {
+    const rect = dialogLastChild.getBoundingClientRect();
+    dialogLastChildBox = {
+      x: Math.round(rect.x),
+      y: Math.round(rect.y + window.scrollY),
+      width: Math.round(rect.width),
+      height: Math.round(rect.height),
+    };
+  }
 
   return {
     elements: results,
     pageHeight: Math.round(document.documentElement.scrollHeight),
     scrollY: Math.round(window.scrollY),
-    dialogScrollHeight: dialogText ? dialogText.scrollHeight : null,
+    dialogScrollHeight: dialogCard ? dialogCard.scrollHeight : null,
+    dialogLastChildBox,
     probes,
     htmlLang: document.documentElement.lang,
   };
