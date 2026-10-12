@@ -331,8 +331,16 @@ const contactData = computed(() => ({
 // component's own default rendered it. Restored here (both `v-card-actions`
 // rows in this dialog: the close-cross row and the trailing spacer-only
 // row), `!important` to beat Vuetify's own rule.
+//
+// `min-height` restores Vuetify 2's `.v-card__actions` computed height
+// (`16px`, confirmed against the old site) on both rows; Vuetify 3's own
+// `.v-card-actions` default is `min-height: 52px`, which inflated the
+// trailing row alone (the close-cross row is already taller than either
+// default, so it is unaffected either way) and left the dialog's scrolling
+// container 36px taller than the old site's.
 .v-card-actions {
   padding-left: $space-xs !important;
   padding-right: $space-xs !important;
+  min-height: $space-imprint-actions-min-height !important;
 }
 </style>

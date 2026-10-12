@@ -39,6 +39,64 @@ async function clickAndEnsureOpen(page, click, selector, waitMs) {
   }
 }
 
+// Upper safety bound for `waitForScrollSettled` below: the menu's own
+// close-transition length (confirmed, Navigation.vue's `scrollTo` comment)
+// before `goTo`'s own 500ms scroll animation even starts, plus the same
+// generous margin the flat wait this replaces used - kept as a ceiling so a
+// tap can never end up measured as slower than that flat wait would have
+// made it, even if `scrollY` never settles for some reason.
+const SCROLL_SETTLE_TIMEOUT_MS = OVERLAY_TRANSITION_MS + 1500;
+const SCROLL_SETTLE_POLL_MS = 50;
+// Number of consecutive identical `scrollY` reads, `SCROLL_SETTLE_POLL_MS`
+// apart, required before the scroll position is considered settled - a
+// single identical read can land on the animation easing's own brief
+// plateau mid-flight (confirmed: a shorter margin read `scrollY` mid-
+// animation under load once, see the flat-wait comment this replaces).
+const SCROLL_SETTLE_STABLE_READS = 3;
+
+/**
+ * Polls `window.scrollY` until it stops changing (`SCROLL_SETTLE_STABLE_
+ * READS` identical reads in a row), or `SCROLL_SETTLE_TIMEOUT_MS` passes -
+ * used both to wait out the mobile-menu-entry tap's own scroll animation
+ * and, via its own elapsed time, to measure how long that animation
+ * actually took (criterion 2/3 of this task's spec).
+ *
+ * An unchanged read is only trusted as "settled" once either `scrollY` has
+ * moved at least once already (so an unchanged read afterwards is the
+ * animation's own end, not just a value that has not started moving yet),
+ * or `OVERLAY_TRANSITION_MS` - the longest the overlay's own close
+ * transition (and, on the new build, Navigation.vue's own lock-clear poll)
+ * can plausibly still be blocking the scroll from starting at all - has
+ * already passed. Without that guard, a tap whose menu/lock takes a while
+ * to clear reads several identical "still at the old position" samples in
+ * a row *before* the scroll animation has even begun, and gets reported
+ * as "settled" at the wrong (pre-tap) position - confirmed: an early
+ * version of this function did exactly that against the unfixed flat
+ * 900ms wait, reporting a tap settled at `scrollY: 0` while the page was
+ * still actually mid-close, menu still open.
+ */
+async function waitForScrollSettled(page) {
+  const start = Date.now();
+  let lastY = await page.evaluate(() => window.scrollY);
+  let changedAtLeastOnce = false;
+  let stableCount = 0;
+  while (Date.now() - start < SCROLL_SETTLE_TIMEOUT_MS) {
+    await page.waitForTimeout(SCROLL_SETTLE_POLL_MS);
+    const y = await page.evaluate(() => window.scrollY);
+    if (y !== lastY) {
+      changedAtLeastOnce = true;
+      lastY = y;
+      stableCount = 0;
+      continue;
+    }
+    if (changedAtLeastOnce || Date.now() - start >= OVERLAY_TRANSITION_MS) {
+      stableCount += 1;
+      if (stableCount >= SCROLL_SETTLE_STABLE_READS) break;
+    }
+  }
+  return Date.now() - start;
+}
+
 // Difference 1: a tap on *any* mobile-menu entry must still close the menu
 // and scroll to its target - one state per entry (`Navigation.vue`'s own
 // `menuList`: Home, Jüngste Nachrichten/News, Services), by index rather
@@ -56,6 +114,11 @@ function mobileMenuEntryStates() {
   return Array.from({ length: MOBILE_MENU_ENTRY_COUNT }, (_, index) => ({
     name: `mobile-menu-entry-${index}`,
     applicableAt: (width) => width < 960,
+    // Returns `{ scrollTapMs }` - the elapsed time from the entry's own
+    // click to the page's scroll position settling (null when the entry
+    // itself does not exist at all, e.g. a future menu-list change) - read
+    // by run.mjs to compare the old and new build's own tap-to-settled
+    // time against each other (this task's criterion 2).
     apply: async (page) => {
       await clickAndEnsureOpen(
         page,
@@ -64,18 +127,11 @@ function mobileMenuEntryStates() {
         OVERLAY_TRANSITION_MS,
       );
       const items = page.locator('.list__item--mobile');
-      if ((await items.count()) <= index) return;
+      if ((await items.count()) <= index) return { scrollTapMs: null };
+      const start = Date.now();
       await items.nth(index).click();
-      // The menu's own close-transition length (confirmed, Navigation.vue's
-      // `scrollTo` comment) before `goTo`'s own 500ms scroll animation even
-      // starts, plus a generous margin: a shorter margin (700ms) read
-      // `scrollY` mid-animation under load once (confirmed: a full
-      // `compare` run, two browser pages animating at once, landed ~450px
-      // short of the settled position on one side only, with every element
-      // below the fold shifted as a direct consequence - not a race a
-      // *polling* wait reliably avoids either, since the animation's own
-      // easing briefly plateaus and reads as "settled" too early).
-      await page.waitForTimeout(OVERLAY_TRANSITION_MS + 1500);
+      await waitForScrollSettled(page);
+      return { scrollTapMs: Date.now() - start };
     },
   }));
 }

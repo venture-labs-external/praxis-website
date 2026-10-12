@@ -207,12 +207,49 @@ export function diffSnapshots(oldSnap, newSnap, { width, state, lang }) {
       width,
       state,
       lang,
-      tag: 'v-card-text',
+      tag: 'v-card',
       text: '(dialog scroll height)',
       kind: 'scroll-height',
       old: oldSnap.dialogScrollHeight,
       new: newSnap.dialogScrollHeight,
     });
+  }
+
+  // The dialog's real scrolling container's own last child (the trailing,
+  // otherwise-empty `<v-card-actions>` row) - where a mismatched row
+  // `min-height` actually shows up as a moved box, not just a taller
+  // `scrollHeight` (which a compensating change elsewhere could mask).
+  // Same tolerance as the `scrollHeight` check above (both are this task's
+  // own criterion 1).
+  if (oldSnap.dialogLastChildBox && newSnap.dialogLastChildBox) {
+    for (const [axis, oldVal, newVal] of [
+      ['x', oldSnap.dialogLastChildBox.x, newSnap.dialogLastChildBox.x],
+      ['y', oldSnap.dialogLastChildBox.y, newSnap.dialogLastChildBox.y],
+      [
+        'width',
+        oldSnap.dialogLastChildBox.width,
+        newSnap.dialogLastChildBox.width,
+      ],
+      [
+        'height',
+        oldSnap.dialogLastChildBox.height,
+        newSnap.dialogLastChildBox.height,
+      ],
+    ]) {
+      if (Math.abs(oldVal - newVal) > SCROLL_HEIGHT_TOLERANCE_PX) {
+        differences.push({
+          width,
+          state,
+          lang,
+          tag: 'v-card',
+          text: '(dialog last child position)',
+          kind: 'scroll-height',
+          property: axis,
+          old: oldVal,
+          new: newVal,
+        });
+      }
+    }
   }
 
   differences.push(

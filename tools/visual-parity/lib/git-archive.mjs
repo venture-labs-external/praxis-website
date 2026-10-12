@@ -31,6 +31,44 @@ export function archiveBranch(repoRoot, ref, destDir) {
   });
 }
 
+/**
+ * Makes sure `ref` is reachable in `repoRoot`'s local history, fetching it
+ * from `origin` by its own name/SHA first if it is not - lets a fresh clone
+ * (no local `main`/old branch already checked out or fetched) run the
+ * documented `yarn compare` command unmodified, with the baseline commit
+ * (never a branch, never the live domain - this task's own constraint)
+ * resolved and archived below without a human having to fetch it by hand
+ * first. A no-op (one quick `git cat-file`) when `ref` is already present,
+ * which is the common case once a run has fetched it once.
+ */
+export function ensureRefFetched(repoRoot, ref) {
+  return new Promise((resolve, reject) => {
+    const check = spawn('git', ['cat-file', '-e', `${ref}^{commit}`], {
+      cwd: repoRoot,
+    });
+    check.on('error', reject);
+    check.on('exit', (code) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+      console.log(
+        `[visual-parity] ${ref} not found locally, fetching from origin...`,
+      );
+      const fetch = spawn('git', ['fetch', 'origin', ref], {
+        cwd: repoRoot,
+        stdio: 'inherit',
+      });
+      fetch.on('error', reject);
+      fetch.on('exit', (fetchCode) =>
+        fetchCode === 0
+          ? resolve()
+          : reject(new Error(`git fetch origin ${ref} exited ${fetchCode}`)),
+      );
+    });
+  });
+}
+
 /** Resolves `ref` to the short commit it currently points at, for the report. */
 export function resolveCommit(repoRoot, ref) {
   return new Promise((resolve, reject) => {

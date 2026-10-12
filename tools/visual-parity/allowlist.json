@@ -2,5 +2,11 @@
   {
     "kind": "html-lang",
     "reason": "The old site shipped <html lang=\"en\"> despite its content being entirely German (locales/en holds the same German strings, VL-8-D14) - corrected to \"de\" here, the one place this migration is deliberately better than the old site rather than byte-identical to it (20261009-praxis-gerresheim-last-differences-to-the-live-s difference 7)."
+  },
+  {
+    "kind": "missing-in-old",
+    "tag": "button",
+    "text": "Hinweis: Akut-Sprechstunde",
+    "reason": "VL-7's Akut-Sprechstunde notice (PR #51) is dismissed right after goto, before any state is applied, so it does not sit on top of this task's own measurements - dismissing it reveals its own reopen pill (.akut-notice__pill), which the old (pre-VL-7) build never had. Not a regression this task causes or may fix; VL-7's own notice behaviour and code are explicitly out of scope here (20261009-praxis-gerresheim-impressum-dialog-end-menu-scro)."
   }
 ]

@@ -205,6 +205,14 @@ $space-imprint-bottom: 20px;
 // bottom is its own one-off value, 6px short of `$space-2xs`.
 $space-imprint-title-bottom: 10px;
 
+// Same dialog, both `.v-card-actions` rows' own `min-height` (Navigation.vue
+// and Footer.vue, both close-cross row and the trailing spacer-only row):
+// the old site's Vuetify 2 `.v-card__actions` computed to `16px`; Vuetify
+// 3's own `.v-card-actions` default is `52px`, which left the dialog's real
+// scrolling container (`.v-card`) 36px taller than the old site's on its
+// trailing, otherwise-empty row.
+$space-imprint-actions-min-height: 16px;
+
 // Soft drop-shadow used on the "about us" doctor cards (`.box-shadow`).
 $shadow-soft: 4px 4px 24px 0px rgba(0, 0, 0, 0.08),
   -4px -4px 24px 0px rgba(21, 128, 235, 0.05);
