@@ -36,13 +36,17 @@ named variable from `assets/variables.scss`/`assets/theme.js`.
 ## Visual parity (`tools/visual-parity/`)
 
 Dev tooling (not shipped) that judges this branch's static export against
-the old site - branch `main` by default (equal to the live site; the
-pre-migration site, still Nuxt 2/Vue 2/Vuetify 2), configurable via
-`--baseline=<ref>` (refuses `dev`, which has been the migrated site itself
-since VL-8-S1 merged - see the comment at the top of `run.mjs`), or the live
-site directly via `--live`. Builds both fresh (the baseline via a disposable
-`git archive`, each inside the Node/Alpine image its own `.nvmrc` names;
-skipped for `--live`, which is served directly), serves them locally, and
+the old site - the fixed pre-migration commit `2a00b647d83b875152eb233559197e20fbf7c783`
+by default (equal to the live site, still Nuxt 2/Vue 2/Vuetify 2; fetched
+from `origin` by the tool itself if not already present locally),
+configurable via `--baseline=<ref>` (refuses `dev`, which has been the
+migrated site itself since VL-8-S1 merged - see the comment at the top of
+`run.mjs`), or the live site directly via `--live`. Builds both sides fresh
+from their own disposable `git archive` scratch copy (old: the baseline
+commit; new: this branch's own `HEAD` - never the worktree's root directly,
+so the build's own install step never touches this checkout's
+`node_modules`), each inside the Node/Alpine image its own `.nvmrc` names
+(skipped for `--live`, which is served directly), serves them locally, and
 compares them with Playwright at 390/768/1440px for every state
 `lib/states.mjs` lists (page load, after scrolling, card flipped, card-button
 hover, phone menu open, each mobile-menu entry tapped, dialog from footer,
