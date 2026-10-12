@@ -75,7 +75,7 @@ const baseline = baselineArg
   : OLD_SITE_COMMIT;
 if (baseline === 'dev') {
   console.error(
-    '[visual-parity] refusing --baseline=dev: the old site is `main` (or --live), never `dev` - `dev` has been the migrated site itself since VL-8-S1.',
+    `[visual-parity] refusing --baseline=dev: the old site is ${OLD_SITE_COMMIT} (or --live), never \`dev\` - \`dev\` has been the migrated site itself since VL-8-S1.`,
   );
   process.exit(1);
 }
