@@ -53,7 +53,7 @@ export default {
     'Natürlich lassen wir unsere Patientinnen auch mit schwierigen Diagnosen nicht allein. Eine regelmäßige und sorgfältige Nachsorge, entsprechend den aktuellsten Leitlinien hat hier für uns höchste Priorität.',
   emergencyConsultation: 'Notfallsprechstunde',
   suddenlyIll:
-    'Plötzlich krank? Wir sind für Sie da! Gerne dürfen Sie bei akuten Beschwerden in unserer täglich stattfindende Notfallsprechstunde kommen.',
+    'Wichtige Information: Änderung unserer Akut-Sprechstunde, gültig ab 01.01.2027. Eine direkte Vorstellung in der Praxis ohne Termin ist dann nicht mehr möglich. Für die Terminvereinbarung zur offenen Sprechstunde bitten wir Sie, uns telefonisch zu kontaktieren: Mo–Fr · 08:00–08:20 Uhr, Tel. 0211-285009.',
   breastDisease: 'Brusterkrankung',
   mondayThursdayLong: 'Montag-Donnerstag:',
   fridayLong: 'Freitag:',
