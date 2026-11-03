@@ -132,6 +132,15 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <div class="mt-2">
+        <a
+          href="https://venturelabs.team"
+          target="_blank"
+          rel="noopener"
+          class="text-white font-weight-regular text-decoration-underline text-caption"
+          >{{ $t('homepage.creditVentureLabs') }}</a
+        >
+      </div>
     </div>
   </footer>
 </template>

@@ -61,6 +61,7 @@ export default {
   fax: 'Fax:',
   email: 'Email:',
   imprint: 'Impressum',
+  creditVentureLabs: 'Umgesetzt von Venture Labs',
   privacy: 'Datenschutz',
   privacyPolicy: 'Datenschutzbestimmungen',
   news: 'Jüngste Nachrichten',
