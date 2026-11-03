@@ -36,7 +36,10 @@ assert.match(
 );
 assert.equal(withAttr('name', 'twitter:card').length, 1, 'one twitter:card');
 assert.equal(withAttr('name', 'theme-color').length, 1, 'one theme-color');
-assert.equal(contentOf(withAttr('name', 'theme-color')[0]), manifest.theme_color);
+assert.equal(
+  contentOf(withAttr('name', 'theme-color')[0]),
+  manifest.theme_color,
+);
 
 const manifestText = JSON.stringify(manifest);
 assert.ok(!/vue-website-template/i.test(manifestText), 'no template strings');
