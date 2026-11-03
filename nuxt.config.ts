@@ -4,6 +4,12 @@ const TITLE =
   'Frauenärztinnen Gerresheim - Dr.med. Heike Weydandt und Dr.med. Rahel Korbmacher';
 const DESCRIPTION =
   'Herzlich Willkommen! Wir freuen uns auf ihren Besuch in unserer Praxis.';
+// Absolute: a posted link needs a full URL to show the image. The live host
+// (README.md, cloudbuild-live.yaml), as the dev preview has no image of its own.
+const OG_IMAGE =
+  'https://www.frauenaerztinnen-gerresheim.de/featured-image.jpg';
+// `primary` of assets/theme.js.
+const THEME_COLOR = '#0C2750';
 
 // Ported from Nuxt 2's `nuxt.config.js` to Nuxt 3/4's config shape (VL-8-S1).
 export default defineNuxtConfig({
@@ -39,10 +45,16 @@ export default defineNuxtConfig({
         {
           key: 'og:image',
           property: 'og:image',
-          content: '/featured-image.jpg',
+          content: OG_IMAGE,
         },
+        {
+          key: 'twitter:card',
+          name: 'twitter:card',
+          content: 'summary_large_image',
+        },
+        { key: 'theme-color', name: 'theme-color', content: THEME_COLOR },
         { key: 'title', name: 'title', content: TITLE },
-        { key: 'og:title', name: 'og:title', content: TITLE },
+        { key: 'og:title', property: 'og:title', content: TITLE },
         {
           key: 'apple-mobile-web-app-title',
           name: 'apple-mobile-web-app-title',
@@ -52,7 +64,7 @@ export default defineNuxtConfig({
         { key: 'description', name: 'description', content: DESCRIPTION },
         {
           key: 'og:description',
-          name: 'og:description',
+          property: 'og:description',
           content: DESCRIPTION,
         },
         {
